@@ -1,0 +1,54 @@
+*{
+    box-sizing: border-box;
+}
+
+html,
+body{
+    margin:0;
+    padding:0;
+    background-color: #FFF;
+    font-size:16px;
+}
+
+.article{
+    margin:5% auto;
+    max-width:90%;
+    padding:40px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.176);
+    box-sizing: border-box;
+    overflow:hidden;
+}
+
+.article-title{
+    text-align:center;
+    font-size:2em;
+}
+
+.article-meta{
+    margin:0 auto;
+    padding:20px 15px 15px;
+    border-top:1px solid #DDD;
+    overflow:hidden;
+}
+
+.article-meta li{
+    line-height:1.5em;
+}
+
+.article-content{
+    padding:1em 0;
+    line-height:1.5em;
+}
+
+.image{
+    text-align:center;
+}
+
+.code{
+    margin: 2em auto;
+    border:1px solid #ddd;
+    background-color:#f4f5f9;
+    padding:1.5em;
+    font-size:14px;
+    font-family: 'Courier New', "Helvetica Neue", Helvetica, Arial, sans-serif;
+}

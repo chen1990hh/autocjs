@@ -1,0 +1,117 @@
+.toc{
+    position:fixed;
+    z-index:10;
+    top:0;
+    left:-300px;
+    width:300px;
+    height:100%;
+    margin:0;
+    padding:0;
+    background-clip: padding-box;
+    background-color: #FFF;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
+    overflow:visible;
+}
+
+.toc-hd{
+    margin:0 auto;
+    line-height:30px;
+    font-size:18px;
+    color:#333;
+    font-family: 'Courier New', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    border-bottom:1px solid #DDD;
+    padding:9px 15px;
+    text-align:center;
+    overflow:hidden;
+}
+
+.toc-bar{
+    position:absolute;
+    z-index:11;
+    top:50%;
+    right:-39px;
+    width:40px;
+    height:40px;
+    margin:-20px 0 0;
+    background-color:#fff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-left:none;
+    cursor:pointer;
+    text-align:center;
+    line-height:40px;
+    font-size:26px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
+    overflow:hidden;
+}
+
+.toc-show .toc-bar{
+    box-shadow: none;
+}
+
+.toc-bd{
+    position: relative;
+    z-index:1;
+    margin:0 auto;
+    width:100%;
+    overflow: auto;
+}
+
+.toc-list{
+    position:absolute;
+    z-index:2;
+    top:0;
+    left:0;
+    width:100%;
+    margin:0;
+    padding:9px 0;
+    list-style-type:none;
+    overflow:hidden;
+}
+
+.toc-item{
+    margin:0 auto;
+    padding:0 15px;
+    height:30px;
+    line-height:30px;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    list-style-type:none;
+    font-size:14px;
+    overflow:hidden;
+}
+
+.toc-item a:link,
+.toc-item a:visited,
+.toc-item a:hover{
+    color:#333;
+    text-decoration: none;
+}
+
+.toc-item a:hover{
+    color:#008cff;
+}
+
+.toc-list li.divider {
+    background-color: #e5e5e5;
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+}
+
+.toc-overlay{
+    position: fixed;
+    z-index:9;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:#333;
+    opacity: 0.2;
+    filter:alpha(opacity=20);
+    overflow:hidden;
+}
+
+.hide{
+    display:none;
+}
