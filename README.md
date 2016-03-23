@@ -16,3 +16,18 @@ AutocJS 的调用很简单，只需要以下3步便可以轻松搞定。
 ### 第一步：引用 autoc.css
 <pre class="code"><code>&lt;link type="text/css" rel="stylesheet" href="autoc.css"&gt;</code></pre>
 
+### 第二步：引用 autoc.js
+<pre class="code"><code>// AutocJS 依赖 jQuery（稍后会开发没有任何依赖的版本）
+&lt;script type="text/javascript" src="jquery.js"&gt;&lt;/script&gt;
+// 调用 autoc.js
+&lt;script type="text/javascript" src="autoc.js"&gt;&lt;/script&gt;</code></pre>
+
+### 第三步：调用 autoc.js
+<pre class="code"><code>
+// 语法：autoc(selector, prefix);
+// 参数：selector（String 类型） - 文章中需要统计的标题的选择器
+//      prefix (String 类型) - selector 选择的标题要生成的 id 的前缀（默认值：anchor)
+autoc('#content h2, #content h3, #content h4, #content h5, #content h6');</code></pre>
+
+## DEMO
+演示地址：[http://www.yaohaixiao.com/github/autocjs/index.html](http://www.yaohaixiao.com/github/autocjs/index.html)
