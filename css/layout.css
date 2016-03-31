@@ -10,11 +10,20 @@ body{
     font-size:16px;
 }
 
+a:link,
+a:visited,
+a:hover{
+    color:#008cff;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
 .article{
-    margin:5% auto;
-    max-width:90%;
+    margin:0 auto;
     padding:40px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.176);
     box-sizing: border-box;
     overflow:hidden;
 }
@@ -50,5 +59,11 @@ body{
     background-color:#f4f5f9;
     padding:1.5em;
     font-size:14px;
+    font-family: 'Courier New', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    overflow:hidden;
+}
+
+.copyright{
+    text-align:center;
     font-family: 'Courier New', "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
