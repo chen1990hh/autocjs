@@ -1,4 +1,4 @@
-(function ($) {
+(function (global,$) {
     'use strict';
 
     var CLS_SHOW = 'toc-show',
@@ -64,6 +64,11 @@
         $overlay = $(OVERLAY);
     }
 
+    /**
+     * 获得文章的段落索引
+     *
+     * @returns {Array}
+     */
     function getChapters(){
         var chapters = [],
             prevNum = 1,
@@ -88,9 +93,10 @@
                     pid = i - 1;
                 }
             } else {
-                // 2.（同级标题，同级标题），当前标题的序号 === 前一个标题的序号
-                if (curNum === prevNum || (curNum <= prevNum && curNum>level)) {
-                    level = level;
+                // 2.（同级标题，同级标题）
+                // A. 当前标题的序号 === 前一个标题的序号
+                // B. 当前标题的序号 < 前一个标题的序号 && 当前标题的序号 > 等级
+                if (curNum === prevNum || (curNum < prevNum && curNum > level)) {
 
                     pid = chapters[i - 1].pid;
                 } else {
@@ -98,10 +104,14 @@
                     if (curNum <= level) {
                         level = level - (prevNum - curNum);
 
+                        // 第一级的标题
                         if (level === 1) {
                             pid = -1
                         }
                         else {
+
+                            // 最大只有5系的差距
+                            // 虽然看上去差点，不过能工作啊
                             switch(prevNum - curNum){
                                 case 1:
                                     pid = chapters[chapters[i - 1].pid].pid;
@@ -140,7 +150,7 @@
     }
 
     /**
-     * 绘制导航索引
+     * 更具段落索引绘制完整的导航
      */
     function renderChapters(){
         var chapters = getChapters();
@@ -203,7 +213,9 @@
         updateLayout();
     }
 
-    // 显示目录导航
+    /**
+     * 显示菜单
+     */
     function show() {
         $overlay.removeClass(CLS_HIDE);
 
@@ -214,7 +226,9 @@
         });
     }
 
-    // 隐藏目录导航
+    /**
+     * 隐藏菜单
+     */
     function hide() {
 
         $wrap.animate({
@@ -225,7 +239,9 @@
         });
     }
 
-    // 隐藏/显示导航
+    /**
+     * 隐藏/显示导航
+     */
     function toggle() {
 
         if ($wrap.hasClass(CLS_SHOW)) {
@@ -236,6 +252,9 @@
         }
     }
 
+    /**
+     * 更新界面的高度
+     */
     function updateLayout(){
         var wrapHeight = $wrap[0].offsetHeight,
             titleHeight = $('#toc-anchors-title')[0].offsetHeight;
@@ -243,7 +262,9 @@
         $body.height(wrapHeight-titleHeight);
     }
 
-    // 给导航菜单的各个 DOM 节点绑定事件处理器
+    /**
+     * 给导航菜单的各个 DOM 节点绑定事件处理器
+     */
     function attachEvents(){
         // 点击目录标题，隐藏/显示目录导航
         $title.on('click', toggle);
@@ -260,7 +281,7 @@
         $(window).on('resize', updateLayout);
     }
 
-    var autoc = function (article) {
+    global.autoc = function (article) {
 
         // 初始化
         init(article);
@@ -270,7 +291,5 @@
 
         // 绑定事件处理器
         attachEvents();
-    };
-
-    window.autoc = autoc;
-})(jQuery);
+    }; 
+})(window, jQuery);
