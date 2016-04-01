@@ -12,6 +12,7 @@
         SUB_LIST = '<ol class="toc-sub-list"></ol>',
         ITEM = '<li class="toc-item"></li>',
         LINK = '<a></a>',
+        CHAPTER = '<em class="toc-chapter"></em>',
         OVERLAY = '<div id="toc-overlay" class="toc-overlay toc-hide"></div>',
         ANCHORS = 'h1,h2,h3,h4,h5,h6',
         $article = null,
@@ -63,23 +64,16 @@
         $overlay = $(OVERLAY);
     }
 
-    /**
-     * 绘制界面
-     */
-    function render(){
-        var levels = [],
+    function getChapters(){
+        var chapters = [],
             prevNum = 1,
             level = 0;
 
-        // 绘制head
-        $head.append($title).append($top);
-
-        // TODO:生成目录列表
+        // 获得目录索引信息
         $anchors.each(function(i, anchor){
             var $anchor = $(anchor),
                 curNum = $anchor[0].tagName.toUpperCase().replace(/[H]/ig,''),
-                pid = -1,
-                chapter = '';
+                pid = -1;
 
             $anchor.attr('id', guid('anchor'));
 
@@ -91,26 +85,40 @@
                     pid = -1;
                 }
                 else{
-                    pid = i-1;
+                    pid = i - 1;
                 }
             } else {
-                // 2.（同级标题，同级标题）
-                // A - 当前标题的序号 === 前一个标题的序号
-                // B - 当前标题的序号 > 前一个标题的层次 && 当前标题的序号 <= 前一个标题的序号
-                if (curNum === prevNum || (curNum > level && curNum <= prevNum )) {
+                // 2.（同级标题，同级标题），当前标题的序号 === 前一个标题的序号
+                if (curNum === prevNum || (curNum <= prevNum && curNum>level)) {
                     level = level;
 
-                    pid = levels[i - 1].pid;
+                    pid = chapters[i - 1].pid;
                 } else {
-                    // 3.（子标题，父级标题）：当前标题的序号 < 前一个标题的层次
+                    // 3.（子标题，父级标题）：当前标题的序号 < 前一个标题的序号
                     if (curNum <= level) {
                         level = level - (prevNum - curNum);
 
                         if (level === 1) {
-                            pid = -1;
+                            pid = -1
                         }
                         else {
-                            pid = levels[levels[i - 1].pid - (prevNum - curNum) - 1].pid;
+                            switch(prevNum - curNum){
+                                case 1:
+                                    pid = chapters[chapters[i - 1].pid].pid;
+                                    break;
+                                case 2:
+                                    pid = chapters[chapters[chapters[i - 1].pid].pid].pid;
+                                    break;
+                                case 3:
+                                    pid = chapters[chapters[chapters[chapters[i - 1].pid].pid].pid].pid;
+                                    break;
+                                case 4:
+                                    pid = chapters[chapters[chapters[chapters[chapters[i - 1].pid].pid].pid].pid].pid;
+                                    break;
+                                case 5:
+                                    pid = chapters[chapters[chapters[chapters[chapters[chapters[i - 1].pid].pid].pid].pid].pid].pid;
+                                    break;
+                            }
                         }
                     }
                 }
@@ -118,17 +126,69 @@
 
             prevNum = curNum;
 
-            levels.push({
+            chapters.push({
                 id: i,
                 level:level,
                 text: $anchor.html(),
                 value: $anchor.attr('id'),
-                chapter: chapter,
                 tag: anchor.tagName,
                 pid: pid
             });
         });
 
+        return chapters;
+    }
+
+    /**
+     * 绘制导航索引
+     */
+    function renderChapters(){
+        var chapters = getChapters();
+
+        $(chapters).each(function(i, chapter) {
+            var $item = $(ITEM),
+                $link = $(LINK),
+                chapterText = '',
+                chapterCount = 0,
+                $chapter = $(CHAPTER),
+                $sublist = $('#toc-list-' + chapter.pid);
+
+            $link.attr({
+                id: 'toc-link-' + chapter.id,
+                href: '#' + chapter.value
+            }).html(chapter.text);
+
+            $item.attr('id', 'toc-item-' + chapter.id).append($link);
+
+            if (chapter.pid === -1) {
+                $list.append($item);
+                chapterCount = $item.index() + 1;
+                chapterText = chapterCount;
+            }
+            else {
+                if (!$sublist[0]) {
+                    $sublist = $(SUB_LIST).attr('id', 'toc-list-' + chapter.pid);
+
+                    $('#toc-item-' + chapter.pid).append($sublist);
+                }
+
+                $sublist.append($item);
+
+                chapterCount = $item.index() + 1;
+                chapterText = $sublist.parent().find('.toc-chapter').html() + '.' + chapterCount;
+            }
+
+            $chapter.attr('data-chapter', chapterCount).html(chapterText);
+            $chapter.insertBefore($link);
+        });
+    }
+
+    /**
+     * 绘制界面
+     */
+    function render(){
+        // 绘制head
+        $head.append($title).append($top);
         // 绘制body
         $body.append($list);
 
@@ -138,39 +198,7 @@
         // 将导航和遮罩层添加到页面
         $(document.body).append($wrap).append($overlay);
 
-        // 绘制导航索引
-        $(levels).each(function(i, level) {
-            var $item = $(ITEM),
-                $link = $(LINK),
-                sublist = document.getElementById('toc-list-'+level.pid);
-
-            $link.attr({
-                id: 'toc-link-'+level.id,
-                href: '#'+level.value
-            }).html(level.text);
-
-            if(i===0){
-                $item.addClass('toc-first-item');
-            }
-
-            $item.attr('id', 'toc-item-'+level.id).append($link);
-
-            if (level.pid === -1) {
-                $list.append($item);
-            }
-            else {
-                if(sublist){
-                    $(sublist).append($item);
-                }
-                else{
-                    sublist = $(SUB_LIST).attr('id','toc-list-' + level.pid);
-
-                    sublist.append($item);
-
-                    $('#toc-item-'+level.pid).append(sublist);
-                }
-            }
-        });
+        renderChapters();
 
         updateLayout();
     }

@@ -2,14 +2,6 @@
     box-sizing: border-box;
 }
 
-html,
-body{
-    margin:0;
-    padding:0;
-    background-color: #FFF;
-    font-size:16px;
-}
-
 a:link,
 a:visited,
 a:hover{
@@ -21,31 +13,33 @@ a:hover{
     text-decoration: underline;
 }
 
-.article{
-    margin:0 auto;
+.page{
+    margin:3% auto;
     padding:40px;
+    width:94%;
     box-sizing: border-box;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
     overflow:hidden;
 }
 
-.article-title{
+.title{
     text-align:center;
     font-size:2em;
 }
 
-.article-meta{
-    margin:0 auto;
+.meta{
+    margin:0 1em;
     padding:20px 15px 15px;
     border-top:1px solid #DDD;
     overflow:hidden;
 }
 
-.article-meta li{
+.meta li{
     line-height:1.5em;
 }
 
-.article-content{
-    padding:1em 0;
+.article{
+    padding:1em;
     line-height:1.5em;
 }
 
@@ -65,5 +59,5 @@ a:hover{
 
 .copyright{
     text-align:center;
-    font-family: 'Courier New', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: Georgia, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

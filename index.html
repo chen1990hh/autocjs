@@ -3,26 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>AutocJS - 为你的文章自动创建目录导航菜单</title>
+    <link href="assets/normalize/normalize.css" rel="stylesheet" type="text/css" media="all">
     <link href="css/layout.css" rel="stylesheet" type="text/css" media="all">
     <link href="css/autoc.css" rel="stylesheet" type="text/css" media="all">
 </head>
 <body>
-<article class="article">
-    <section class="article-header">
-    <h1 class="article-title">AutocJS - 为你的文章自动创建目录导航菜单</h1>
-    <ul class="article-meta">
+<section class="page">
+    <header class="header">
+    <h1 class="title">AutocJS - 为你的文章自动创建目录导航菜单</h1>
+    <ul class="meta">
         <li>Author: <a href="http://www.yaohaixiao.com/">Yaohaixiao</a></li>
-        <li>Date: March 22, 2016</li>
+        <li>Date: April 1, 2016</li>
     </ul>
-    </section>
-<section class="article-content" id="content">
+    </header>
+<article class="article" id="article">
     <h2>创作的灵感</h2>
+    <h4>Title - 14</h4>
+    <h3>Title - 1</h3>
+    <h4>Title - 2</h4>
+    <h4>Title - 3</h4>
+    <h3>Title - 4</h3>
+    <h4>Title - 5</h4>
+    <h4>Title - 6</h4>
+    <h5>Title - 12</h5>
+    <h6>Title - 13</h6>
+    <h3>Title - 7</h3>
+    <h4>Title - 8</h4>
+    <h4>Title - 9</h4>
     <p><a href="http://bryanbraun.github.io/anchorjs/">AnchorJS</a> 是 AutocJS 的创作灵感。既然 AnchorJS 可创建标题的链接，为什么不直接给文章生成一个目录（Table of Contents）导航呢？</p>
     <h2>What is AutocJS?</h2>
     <p>AutocJS 是一个专门用来给文章生成目录（Table of Contents）导航菜单的工具。AutocJS 会查找文章中的所有h1~h6的标签，并自动生成文章的目录导航菜单。</p>
     <p class="image"><img src="AutocJS.png" alt="AutocJS" width="632" height="326"></p>
     <h2>Why AutocJS?</h2>
     <p>其实，一开始 AutocJS 是依赖 AnchorJS 生成的标题链接的，但是在使用的过程中发现 AnchorJS 不支撑中文标题生成锚点。即便是修改了 AnchorJS 中的正则表达式，生成的锚点是中文的也很奇怪。于是就自己编写了 AutocJS。如果你想对中文支持的更好，AutocJS 就是一个不错的选择。</p>
+    <h3>Title - 10</h3>
+    <h3>Title - 11</h3>
     <h2>调用方法</h2>
     <p>AutocJS 的调用很简单，只需要以下3步便可以轻松搞定。</p>
     <h3>第一步：引用 autoc.css</h3>
@@ -37,16 +52,16 @@
 // 参数：selector（String 类型） - 文章中需要统计的标题的选择器
 //      prefix (String 类型) - selector 选择的标题要生成的 id 的前缀（默认值：anchor)
 autoc('#content h2, #content h3, #content h4, #content h5, #content h6');</code></pre>
-</section>
-    <p class="copyright">Copyright &copy; 2016 <a href="http://www.yaohaixiao.com/">YAOHAIXIAO</a>, All right reserved.</p>
 </article>
+    <footer class="copyright"><p>Copyright &copy; 2016 <a href="http://www.yaohaixiao.com/">YAOHAIXIAO</a>, All right reserved.</p></footer>
+</section>
 </body>
-<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="assets/jquery/jquery.js"></script>
 <script type="text/javascript" src="js/autoc.js"></script>
 <script type="text/javascript">
     // 语法：autoc(selector, prefix);
     // 参数：selector（String 类型） - 文章中需要统计的标题的选择器
     //      prefix (String 类型) - selector 选择的标题要生成的 id 的前缀
-    autoc('#content');
+    autoc('#article');
 </script>
 </html>

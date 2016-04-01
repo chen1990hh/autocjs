@@ -119,6 +119,10 @@
     overflow: hidden;
 }
 
+.toc-chapter{
+    padding-right:5px;
+}
+
 .toc-overlay{
     position: fixed;
     z-index:9;
