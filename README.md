@@ -1,7 +1,6 @@
 # AutocJS
 AutocJS - 为你的文章自动创建目录导航菜单。
 
-## 创作的灵感
 [AnchorJS](http://bryanbraun.github.io/anchorjs/) 是 AutocJS 的创作灵感。既然 AnchorJS 可创建标题的链接，为什么不直接给文章生成一个目录（Table of Contents）导航呢？
 
 ## What is AutocJS?
