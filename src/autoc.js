@@ -15,6 +15,7 @@
         CHAPTER = '<em class="toc-chapter"></em>',
         OVERLAY = '<div id="toc-overlay" class="toc-overlay toc-hide"></div>',
         ANCHORS = 'h1,h2,h3,h4,h5,h6',
+        PREFIX = 'anchor',
         $article = null,
         $anchors = null,
         $wrap = null,
@@ -24,7 +25,13 @@
         $body = null,
         $list = null,
         $overlay = null,
-        _uid = -1;
+        _uid = -1,
+        defaults = {
+            article: '#article',
+            anchors: ANCHORS,
+            prefix: PREFIX
+        },
+        attributes = {};
 
     /**
      * 生成唯一的 id
@@ -43,16 +50,26 @@
     }
 
     /**
-     * 初始化程序
+     * 配置参数
      *
-     * @param {String|HTMLElement} article - 文章正文的节点的 ID
+     * @param {Object} config
      */
-    function init(article){
+    function set(config){
+        if($.isPlainObject(config)){
+            $.extend(attributes, config);
+        }
+    }
+
+    /**
+     * 初始化各个 DOM 节点
+     * @private
+     */
+    function _init() {
         // 获得文章内容的 DOM 节点
-        $article = $(article);
+        $article = $(attributes.article);
 
         // 获得文章中所有的标题
-        $anchors = $article.find(ANCHORS);
+        $anchors = $article.find(attributes.anchors);
 
         // 初始化 DOM 部件
         $wrap = $(WRAP);
@@ -62,6 +79,22 @@
         $body = $(BODY);
         $list = $(LIST);
         $overlay = $(OVERLAY);
+    }
+
+    /**
+     * 初始化程序
+     *
+     * @param {Object} config - 配置信息
+     * @param {String|HTMLElement} config.article
+     * @param {String} [config.selector]
+     * @param {String} [config.prefix]
+     */
+    function init(config){
+
+        set(defaults);
+        set(config);
+
+        _init();
     }
 
     /**
@@ -80,7 +113,7 @@
                 curNum = $anchor[0].tagName.toUpperCase().replace(/[H]/ig,''),
                 pid = -1;
 
-            $anchor.attr('id', guid('anchor'));
+            $anchor.attr('id', guid(attributes.prefix));
 
             // 1.（父标题，子标题）：当前标题的序号 > 前一个标题的序号
             if (curNum > prevNum) {
@@ -281,10 +314,10 @@
         $(window).on('resize', updateLayout);
     }
 
-    global.autoc = function (article) {
+    global.autoc = function (config) {
 
         // 初始化
-        init(article);
+        init(config);
 
         // 绘制界面
         render();
