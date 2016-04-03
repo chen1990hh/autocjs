@@ -108,9 +108,9 @@
             level = 0;
 
         // 获得目录索引信息
-        $anchors.each(function(i, anchor){
+        $anchors.each(function(i, anchor) {
             var $anchor = $(anchor),
-                curNum = $anchor[0].tagName.toUpperCase().replace(/[H]/ig,''),
+                curNum = parseInt($anchor[0].tagName.toUpperCase().replace(/[H]/ig, ''),10),
                 pid = -1;
 
             $anchor.attr('id', guid(attributes.prefix));
@@ -119,10 +119,11 @@
             if (curNum > prevNum) {
                 level += 1;
 
-                if(level===1){
+                // 第一层级的 pid 是 -1
+                if (level === 1) {
                     pid = -1;
                 }
-                else{
+                else {
                     pid = i - 1;
                 }
             } else {
@@ -131,21 +132,35 @@
                 // B. 当前标题的序号 < 前一个标题的序号 && 当前标题的序号 > 等级
                 if (curNum === prevNum || (curNum < prevNum && curNum > level)) {
 
-                    pid = chapters[i - 1].pid;
+                    // H1 的层级肯定是 1
+                    if (curNum === 1) {
+                        level = 1;
+
+                        pid = -1;
+                    }
+                    else {
+                        pid = chapters[i - 1].pid;
+                    }
                 } else {
                     // 3.（子标题，父级标题）：当前标题的序号 < 前一个标题的序号
                     if (curNum <= level) {
-                        level = level - (prevNum - curNum);
+
+                        // H1 的层级肯定是 1
+                        if(curNum === 1){
+                            level = 1;
+                        }
+                        else {
+                            level = level - (prevNum - curNum);
+                        }
 
                         // 第一级的标题
                         if (level === 1) {
                             pid = -1
                         }
                         else {
-
                             // 最大只有5系的差距
                             // 虽然看上去差点，不过能工作啊
-                            switch(prevNum - curNum){
+                            switch (prevNum - curNum) {
                                 case 1:
                                     pid = chapters[chapters[i - 1].pid].pid;
                                     break;
@@ -171,7 +186,7 @@
 
             chapters.push({
                 id: i,
-                level:level,
+                level: level,
                 text: $anchor.html(),
                 value: $anchor.attr('id'),
                 tag: anchor.tagName,
@@ -324,5 +339,5 @@
 
         // 绑定事件处理器
         attachEvents();
-    }; 
+    };
 })(window, jQuery);

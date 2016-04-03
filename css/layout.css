@@ -1,63 +1,77 @@
-*{
+* {
     box-sizing: border-box;
 }
 
 a:link,
 a:visited,
-a:hover{
-    color:#008cff;
+a:hover {
+    color: #008cff;
     text-decoration: none;
 }
 
-a:hover{
+a:hover {
     text-decoration: underline;
 }
 
-.page{
-    margin:3% auto;
-    padding:40px;
-    width:94%;
+code {
+    color: #666;
+}
+
+.page {
+    margin: 3% auto;
+    padding: 40px;
+    width: 94%;
     box-sizing: border-box;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
-    overflow:hidden;
+    border: 1px solid #DDD;
+    overflow: hidden;
 }
 
-.title{
-    text-align:center;
-    font-size:2em;
+.title {
+    text-align: center;
+    font-size: 2em;
 }
 
-.meta{
-    margin:0 1em;
-    padding:20px 15px 15px;
-    border-top:1px solid #DDD;
-    overflow:hidden;
+.meta {
+    margin: 3em 1em 0;
+    padding: 30px 15px 20px;
+    border-top: 1px solid #DDD;
+    overflow: hidden;
 }
 
-.meta li{
-    line-height:1.5em;
+.meta li {
+    line-height: 1.5em;
 }
 
-.article{
-    padding:1em;
-    line-height:1.5em;
+.article {
+    padding: 1em;
+    line-height: 1.5em;
 }
 
-.image{
-    text-align:center;
+.image {
+    text-align: center;
 }
 
-.code{
+.code {
     margin: 2em auto;
-    border:1px solid #ddd;
-    background-color:#f4f5f9;
-    padding:1.5em;
-    font-size:14px;
+    border: 1px solid #ddd;
+    background-color: #FFF;
+    padding: 1.5em;
+    font-size: 14px;
     font-family: 'Courier New', "Helvetica Neue", Helvetica, Arial, sans-serif;
-    overflow:hidden;
+    cursor: pointer;
+    overflow: hidden;
 }
 
-.copyright{
-    text-align:center;
+.code:hover {
+    background-color: #666;
+}
+
+.code:hover code {
+    color: #FFF;
+}
+
+.copyright {
+    text-align: center;
     font-family: Georgia, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
