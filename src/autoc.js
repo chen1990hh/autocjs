@@ -1,4 +1,29 @@
-(function (global,$) {
+(function (global, factory) {
+    if ( typeof define === 'function' && define.amd ) {
+        // AMD (Register as an anonymous module)
+        define( [ 'jquery' ], factory( global, $ ) );
+    }
+    else {
+
+        if ( typeof define === 'function' && define.cmd ) {
+            // CMD (Register as an anonymous module)
+            define( 'done', function( require, exports, module ) {
+                module.exports = factory( global, require( 'jquery' ) );
+            } );
+        }
+        else {
+
+            if ( typeof exports === 'object' ) {
+                // Node/CommonJS
+                module.exports = factory( global, require( 'jquery' ) );
+            }
+            else {
+                // Browser globals
+                factory( global, jQuery );
+            }
+        }
+    }
+}(typeof window !== "undefined" ? window : this, function (window, $) {
     'use strict';
 
     var CLS_SHOW = 'toc-show',
@@ -216,7 +241,10 @@
                 href: '#' + chapter.value
             }).html(chapter.text);
 
-            $item.attr('id', 'toc-item-' + chapter.id).append($link);
+            $item.attr({
+                'id': 'toc-item-' + chapter.id,
+                'title': chapter.text
+            }).append($link);
 
             if (chapter.pid === -1) {
                 $list.append($item);
@@ -247,6 +275,7 @@
     function render(){
         // 绘制head
         $head.append($title).append($top);
+        
         // 绘制body
         $body.append($list);
 
@@ -329,7 +358,7 @@
         $(window).on('resize', updateLayout);
     }
 
-    global.autoc = function (config) {
+    var AutocJS = function (config) {
 
         // 初始化
         init(config);
@@ -340,4 +369,8 @@
         // 绑定事件处理器
         attachEvents();
     };
-})(window, jQuery);
+
+    window.autoc = AutocJS;
+
+    return AutocJS;
+}));
