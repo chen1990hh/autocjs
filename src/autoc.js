@@ -1,25 +1,25 @@
 (function (global, factory) {
-    if ( typeof define === 'function' && define.amd ) {
+    if (typeof define === 'function' && define.amd) {
         // AMD (Register as an anonymous module)
-        define( [ 'jquery' ], factory( global, $ ) );
+        define(['jquery'], factory(global, $));
     }
     else {
 
-        if ( typeof define === 'function' && define.cmd ) {
+        if (typeof define === 'function' && define.cmd) {
             // CMD (Register as an anonymous module)
-            define( 'done', function( require, exports, module ) {
-                module.exports = factory( global, require( 'jquery' ) );
-            } );
+            define('done', function (require, exports, module) {
+                module.exports = factory(global, require('jquery'));
+            });
         }
         else {
 
-            if ( typeof exports === 'object' ) {
+            if (typeof exports === 'object') {
                 // Node/CommonJS
-                module.exports = factory( global, require( 'jquery' ) );
+                module.exports = factory(global, require('jquery'));
             }
             else {
                 // Browser globals
-                factory( global, jQuery );
+                factory(global, jQuery);
             }
         }
     }
@@ -79,8 +79,8 @@
      *
      * @param {Object} config
      */
-    function set(config){
-        if($.isPlainObject(config)){
+    function set(config) {
+        if ($.isPlainObject(config)) {
             $.extend(attributes, config);
         }
     }
@@ -114,7 +114,7 @@
      * @param {String} [config.selector]
      * @param {String} [config.prefix]
      */
-    function init(config){
+    function init(config) {
 
         set(defaults);
         set(config);
@@ -127,15 +127,15 @@
      *
      * @returns {Array}
      */
-    function getChapters(){
+    function getChapters() {
         var chapters = [],
             prevNum = 1,
             level = 0;
 
         // 获得目录索引信息
-        $anchors.each(function(i, anchor) {
+        $anchors.each(function (i, anchor) {
             var $anchor = $(anchor),
-                curNum = parseInt($anchor[0].tagName.toUpperCase().replace(/[H]/ig, ''),10),
+                curNum = parseInt($anchor[0].tagName.toUpperCase().replace(/[H]/ig, ''), 10),
                 pid = -1;
 
             $anchor.attr('id', guid(attributes.prefix));
@@ -171,7 +171,7 @@
                     if (curNum <= level) {
 
                         // H1 的层级肯定是 1
-                        if(curNum === 1){
+                        if (curNum === 1) {
                             level = 1;
                         }
                         else {
@@ -223,12 +223,12 @@
     }
 
     /**
-     * 更具段落索引绘制完整的导航
+     * 根据段落索引绘制完整的导航
      */
-    function renderChapters(){
+    function renderChapters() {
         var chapters = getChapters();
 
-        $(chapters).each(function(i, chapter) {
+        $(chapters).each(function (i, chapter) {
             var $item = $(ITEM),
                 $link = $(LINK),
                 chapterText = '',
@@ -272,10 +272,10 @@
     /**
      * 绘制界面
      */
-    function render(){
+    function render() {
         // 绘制head
         $head.append($title).append($top);
-        
+
         // 绘制body
         $body.append($list);
 
@@ -332,17 +332,17 @@
     /**
      * 更新界面的高度
      */
-    function updateLayout(){
+    function updateLayout() {
         var wrapHeight = $wrap[0].offsetHeight,
             titleHeight = $('#toc-anchors-title')[0].offsetHeight;
 
-        $body.height(wrapHeight-titleHeight);
+        $body.height(wrapHeight - titleHeight);
     }
 
     /**
      * 给导航菜单的各个 DOM 节点绑定事件处理器
      */
-    function attachEvents(){
+    function attachEvents() {
         // 点击目录标题，隐藏/显示目录导航
         $title.on('click', toggle);
 
@@ -363,11 +363,15 @@
         // 初始化
         init(config);
 
-        // 绘制界面
-        render();
+        // 只有正文的 DOM 存在才绘制导航
+        if ($article[0]) {
 
-        // 绑定事件处理器
-        attachEvents();
+            // 绘制界面
+            render();
+
+            // 绑定事件处理器
+            attachEvents();
+        }
     };
 
     window.autoc = AutocJS;
