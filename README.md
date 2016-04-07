@@ -95,4 +95,8 @@ autoc({
 
 ## License
 
+<<<<<<< HEAD
 Available via the MIT license.
+=======
+Available via the MIT license.
+>>>>>>> d01f56efd6a1b80d4539dc564c5a99538d9486ee
