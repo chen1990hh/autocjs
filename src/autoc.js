@@ -393,7 +393,7 @@
         }
     };
 
-    // 给jQuery添加 autoc 静态方法
+    // 将 autoc 扩展为一个 jquery 插件
     $.extend( $.fn, {
         autoc: function ( selector, prefix ) {
             var self = this,
