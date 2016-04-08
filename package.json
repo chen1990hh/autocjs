@@ -1,6 +1,6 @@
 {
-  "name": "autoc",
-  "version": "0.1.1",
+  "name": "autocjs",
+  "version": "0.1.2",
   "author": "yaohaixiao",
   "license": "MIT",
   "description": "Simple & Fast to create a table of contents menu for your article.",
