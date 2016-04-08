@@ -4,11 +4,9 @@
   "author": "yaohaixiao",
   "license": "MIT",
   "description": "Simple & Fast to create a table of contents menu for your article.",
-  "main": "dist/autoc.js",
+  "main": "dist/autoc.min.js",
   "files": [
-    "dist/autoc.js",
     "dist/autoc.min.js",
-    "dist/autoc.css",
     "dist/autoc.min.css",
     "src"
   ],
