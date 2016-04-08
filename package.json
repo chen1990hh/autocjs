@@ -1,13 +1,13 @@
-﻿{
+{
   "name": "autoc",
   "version": "0.1.1",
   "author": "yaohaixiao",
   "license": "MIT",
   "description": "Simple & Fast to create a table of contents menu for your article.",
-  "main": "dist/autoc.min.js",
+  "main": "build/autoc.min.js",
   "files": [
-    "dist/autoc.min.js",
-    "dist/autoc.min.css",
+    "build/autoc.min.js",
+    "build/autoc.min.css",
     "src"
   ],
   "keywords": [
@@ -19,8 +19,10 @@
     "jquery": "^1.12.0"
   },
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-uglify": "^0.5.1"
+    "grunt": "^1.0.1",
+    "grunt-contrib-uglify": "^0.5.1",
+    "grunt-contrib-jshint": "^0.5.1",
+    "grunt-contrib-cssmin": "^0.4.0"
   },
   "scripts": {
     "test": "npm run lint && npm run cover"
