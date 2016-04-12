@@ -15,6 +15,8 @@ AnchorJS 由于是国外的程序员开发的，所以对中文支持不好，�
   * 简洁大方的界面，采用绝对应为导航，不会破坏页面的美观
   * 弹性的界面布局，可以根据不同的窗口高度，自动调节菜单布局
   * 精确的章节统计，文章层次结构一目了然
+  * 支持 AMD 和 CMD 规范
+  * 可以作为 jQuery 插件使用
 
 ## DEMO
 演示地址：[http://www.yaohaixiao.com/github/autocjs/index.html](http://www.yaohaixiao.com/github/autocjs/index.html)
@@ -91,6 +93,12 @@ autoc({
     anchors: 'h3,h4',
     prefix: 'p'
 });
+```
+
+#### 作为 jQuery 插件调用
+
+```javascript
+$('#article').autoc ();
 ```
 
 ## License
