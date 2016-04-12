@@ -95,7 +95,7 @@ autoc({
 });
 ```
 
-#### 作为 jQuery 插件调用
+##### 作为 jQuery 插件调用
 
 ```javascript
 $('#article').autoc ();
