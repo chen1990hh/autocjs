@@ -7,14 +7,14 @@
                 banner: '/* \n AutocJS - <%=pkg.description%> \n Copyright (c) 2016 yaohaixiao, all right reserved. \n homepage: <%=pkg.homepage%> \n version: <%=pkg.version%> \n author: <%=pkg.author%>  \n license: <%=pkg.license%> \n */\n'
             },
             js: {
-                src: 'src/<%=pkg.name%>.js',
-                dest: 'build/<%=pkg.name%>.min.js'
+                src: 'src/autoc.js',
+                dest: 'build/autoc.min.js'
             }
         },
         cssmin: {
             css: {
-                src: 'src/<%=pkg.name%>.css',
-                dest: 'build/<%=pkg.name%>.min.css'
+                src: 'src/autoc.css',
+                dest: 'build/autoc.min.css'
             }
         }
     } );
