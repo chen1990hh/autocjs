@@ -22,7 +22,7 @@ AnchorJS 由于是国外的程序员开发的，所以对中文支持不好，�
 演示地址：[http://www.yaohaixiao.com/github/autocjs/index.html](http://www.yaohaixiao.com/github/autocjs/index.html)
 
 ## API Documentation
-AutoJS 目前提供了一个方法 <code>autoc()</code> 和一个 AutocJS (AMD，CMD，Node模块) 对象，简单易用。具体的 API 说明如下：
+AutocJS 目前提供了一个方法 <code>autoc()</code> 和一个 AutocJS (AMD，CMD，Node模块) 对象，简单易用。具体的 API 说明如下：
 
 ### 语法
 
