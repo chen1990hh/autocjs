@@ -31,13 +31,15 @@
             <li>简洁大方的界面，采用绝对应为导航，不会破坏页面的美观</li>
             <li>弹性的界面布局，可以根据不同的窗口高度，自动调节菜单布局</li>
             <li>精确的章节统计，文章层次结构一目了然</li>
+            <li>支持 AMD 和 CMD 规范</li>
+            <li>可以作为 jQuery 插件使用</li>
         </ol>
         <h2>DEMO</h2>
         <p>演示地址：<a href="http://www.yaohaixiao.com/github/autocjs/">http://www.yaohaixiao.com/github/autocjs/</a></p>
         <h2>API Documentation</h2>
-        <p>AutoJS 目前只提供一个方法 <code>autoc()</code>，简单易用。具体的 API 说明如下：</p>
+        <p>AutoJS 目前提供了一个方法 <code>autoc()</code> 和一个 AutocJS (AMD，CMD，Node模块) 对象，简单易用。具体的 API 说明如下：</p>
         <h3>语法</h3>
-        <pre class="code"><code>autoc(config);</code></pre>
+        <pre class="code"><code>AutocJS.init(config);</code></pre>
         <h3>参数说明</h3>
         <ul>
             <li>
@@ -86,10 +88,19 @@
     <pre class="code"><code>// 最基础的方法，只需要指定文章内容的 DOM 节点的　id
 autoc({
     article: '#article'
+});
+
+AutocJS.init({
+    article: '#article'
 });</code></pre>
         <h5>指定要记录的标题</h5>
     <pre class="code"><code>// 索引只会提取文章 h3 和 h4 的标题
 autoc({
+    article: '#article',
+    anchors: 'h3,h4'
+});
+
+AutocJS.init({
     article: '#article',
     anchors: 'h3,h4'
 });</code></pre>
@@ -99,7 +110,17 @@ autoc({
     article: '#article',
     anchors: 'h3,h4',
     prefix: 'p'
+});
+
+AutocJS.init({
+    article: '#article',
+    anchors: 'h3,h4',
+    prefix: 'p'
 });</code></pre>
+        <h5>作为 jQuery 插件调用</h5>
+    <pre class="code"><code>
+    $('#article').autoc();
+</code></pre>
         <h2>License</h2>
         <p>Available via the MIT license.</p>
     </article>
@@ -108,8 +129,8 @@ autoc({
 </section>
 </body>
 <script type="text/javascript" src="../lib/jquery.js"></script>
-<script type="text/javascript" src="../build/autoc.min.js"></script>
+<script type="text/javascript" src="../src/autoc.js"></script>
 <script type="text/javascript">
-    $('article').autoc ();
+    $('#article').autoc();
 </script>
 </html>

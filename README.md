@@ -22,7 +22,7 @@ AnchorJS 由于是国外的程序员开发的，所以对中文支持不好，�
 演示地址：[http://www.yaohaixiao.com/github/autocjs/index.html](http://www.yaohaixiao.com/github/autocjs/index.html)
 
 ## API Documentation
-AutoJS 目前只提供一个方法 <code>autoc()</code>，简单易用。具体的 API 说明如下：
+AutoJS 目前提供了一个方法 <code>autoc()</code> 和一个 AutocJS (AMD，CMD，Node模块) 对象，简单易用。具体的 API 说明如下：
 
 ### 语法
 
@@ -74,6 +74,10 @@ autoc() 方法接受 3 个参数，具体的调用方法如下：
 autoc({
     article: '#article'
 });
+
+AutocJS.init({
+    article: '#article'
+});
 ```
 ##### 指定要记录的标题
 
@@ -83,12 +87,24 @@ autoc({
     article: '#article',
     anchors: 'h3,h4'
 });
+
+AutocJS.init({
+    article: '#article',
+    anchors: 'h3,h4'
+});
 ```
 
 ##### 指定标题锚点的 id 的前缀
 ``` js
 // h3,h4 的锚点会是 p-1, p-2
 autoc({
+    article: '#article',
+    anchors: 'h3,h4',
+    prefix: 'p'
+});
+
+
+AutocJS.init({
     article: '#article',
     anchors: 'h3,h4',
     prefix: 'p'
