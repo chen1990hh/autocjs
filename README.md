@@ -133,6 +133,18 @@ require(['jquery','autocjs'], function($,autocjs){
 });
 ```
 
+##### 作为 CMD 模块调用
+
+```javascript
+seajs.use(['jquery','autocjs'], function($,autocjs){
+    // jquery 插件
+    $('#article').autoc();
+
+    // 独立的模块
+    autocjs.init();
+});
+```
+
 ## License
 
 Available via the MIT license.
