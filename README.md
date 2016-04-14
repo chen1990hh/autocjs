@@ -59,9 +59,9 @@ AutocJS 的调用很简单，只需要以下3步便可以轻松搞定。
 
 ``` html
 // 使用 requirejs (作为 AMD 模块) 
-&lt;script type="text/javascript" src="../lib/require.js"&gt;&lt;/script&gt;
+<script type="text/javascript" src="../lib/require.js"><script>
 // 使用 seajs　(作为 CMD 模块)
-&lt;script type="text/javascript" src="../lib/sea.js"&gt;&lt;/script&gt;
+<script type="text/javascript" src="../lib/sea.js"></script>
 // AutocJS 依赖 jQuery（稍后会开发没有任何依赖的版本）
 <script type="text/javascript" src="jquery.js"></script>
 // 调用 autoc.js
