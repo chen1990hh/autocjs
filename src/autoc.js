@@ -3,13 +3,13 @@
 
     if ( typeof define === 'function' && define.amd ) {
         // AMD (Register as an anonymous module)
-        define( [ 'jquery' ], factory( global, $ ) );
+        define('autocjs', [ 'jquery' ], factory( global, $ ) );
     }
     else {
         
         if ( typeof define === 'function' && define.cmd ) {
             // CMD (Register as an anonymous module)
-            define( 'done', function ( require, exports, module ) {
+            define( 'autocjs', function ( require, exports, module ) {
                 module.exports = factory( global, require( 'jquery' ) );
             } );
         }

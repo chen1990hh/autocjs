@@ -78,7 +78,12 @@
         <h4>第一步：引用 CSS 样式</h4>
         <pre class="code"><code>&lt;link type="text/css" rel="stylesheet" href="autoc.css"&gt;</code></pre>
         <h4>第二步：引用 JS 脚本</h4>
-    <pre class="code"><code>// AutocJS 依赖 jQuery（稍后会开发没有任何依赖的版本）
+    <pre class="code"><code>
+// 使用 requirejs　(作为 AMD 模块)
+&lt;script type="text/javascript" src="../lib/require.js"&gt;&lt;/script&gt;
+// 使用 seajs　(作为 CMD 模块)
+&lt;script type="text/javascript" src="../lib/sea.js"&gt;&lt;/script&gt;
+// AutocJS 依赖 jQuery（稍后会开发没有任何依赖的版本）
 &lt;script type="text/javascript" src="jquery.js"&gt;&lt;/script&gt;
 // 调用 autoc.js
 &lt;script type="text/javascript" src="autoc.js"&gt;&lt;/script&gt;</code></pre>
@@ -121,6 +126,22 @@ AutocJS.init({
     <pre class="code"><code>
     $('#article').autoc();
 </code></pre>
+        <h5>作为 AMD 模块调用</h5>
+    <pre class="code"><code>require(['jquery','autocjs'], function($,autocjs){
+    // jquery 插件
+    $('#article').autoc();
+
+    // 独立的模块
+    autocjs.init();
+});</code></pre>
+        <h5>作为 CMD 模块调用</h5>
+    <pre class="code"><code>seajs.use(['jquery','autocjs'], function($,autocjs){
+    // jquery 插件
+    $('#article').autoc();
+
+    // 独立的模块
+    autocjs.init();
+});</code></pre>
         <h2>License</h2>
         <p>Available via the MIT license.</p>
     </article>
@@ -131,6 +152,7 @@ AutocJS.init({
 <script type="text/javascript" src="../lib/jquery.js"></script>
 <script type="text/javascript" src="../src/autoc.js"></script>
 <script type="text/javascript">
-    $('#article').autoc();
+        // jquery 插件
+        $('#article').autoc();
 </script>
 </html>
