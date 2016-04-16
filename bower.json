@@ -1,0 +1,21 @@
+{
+  "name": "autocjs",
+  "description": "Simple & Fast to create a table of contents menu for your article.",
+  "main": "build/autoc.min.js",
+  "authors": [
+    "yaohaixiao"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "jquery",
+    "jquery-plugin"
+  ],
+  "homepage": "https://github.com/yaohaixiao/AutocJS",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
