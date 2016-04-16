@@ -155,4 +155,6 @@ seajs.use(['jquery','autocjs'], function($,autocjs){
 
 ## License
 
-Available via the MIT license.
+Copyright (c) 2016 [Yaohaixiao](http://www.yaohaixiao.com/)
+
+Licensed under the MIT License
