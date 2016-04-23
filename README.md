@@ -156,3 +156,7 @@ seajs.use(['jquery','autocjs'], function($,autocjs){
 ## License
 
 Available via the MIT license.
+
+## Release History
+
+See the [CHANGELOG](https://www.github.com/yaohaixiao/AutocJS/CHANGELOG.md)</a>.

@@ -5,7 +5,7 @@
     <title>AutocJS - 为你的文章自动创建目录导航菜单</title>
     <link href="css/normalize.css" rel="stylesheet" type="text/css" media="all">
     <link href="css/layout.css" rel="stylesheet" type="text/css" media="all">
-    <link href="../build/autoc.min.css" rel="stylesheet" type="text/css" media="all">
+    <link href="../src/autoc.css" rel="stylesheet" type="text/css" media="all">
 </head>
 <body>
 <section class="page">
@@ -132,7 +132,7 @@ AutocJS.init({
     $('#article').autoc();
 
     // 独立的模块
-    autocjs.init();
+    AutocJS.init();
 });</code></pre>
         <h5>作为 CMD 模块调用</h5>
     <pre class="code"><code>seajs.use(['jquery','autocjs'], function($,autocjs){
@@ -140,19 +140,23 @@ AutocJS.init({
     $('#article').autoc();
 
     // 独立的模块
-    autocjs.init();
+    AutocJS.init();
 });</code></pre>
         <h2>License</h2>
         <p>Available via the MIT license.</p>
+        <h2>Release History</h2>
+        <p>See the <a href="https://www.github.com/yaohaixiao/AutocJS/CHANGELOG.md">CHANGELOG</a>.</p>
     </article>
-    <footer class="copyright"><p>Copyright &copy; 2016 <a href="http://www.yaohaixiao.com/">YAOHAIXIAO.COM</a>, All
-        right reserved.</p></footer>
+    <footer class="copyright">
+        <p><i class="toc-icon"></i>Copyright &copy; 2016 <a href="http://www.yaohaixiao.com/">YAOHAIXIAO.COM</a>,
+            Allright reserved.</p>
+    </footer>
 </section>
 </body>
 <script type="text/javascript" src="../lib/jquery.js"></script>
 <script type="text/javascript" src="../src/autoc.js"></script>
 <script type="text/javascript">
-        // jquery 插件
-        $('#article').autoc();
+    // jquery 插件
+    $( '#article' ).autoc();
 </script>
 </html>

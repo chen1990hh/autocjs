@@ -3,7 +3,7 @@
 
     if ( typeof define === 'function' && define.amd ) {
         // AMD (Register as an anonymous module)
-        define('autocjs', [ 'jquery' ], factory( global, $ ) );
+        define( 'autocjs', [ 'jquery' ], factory( global, $ ) );
     }
     else {
         
@@ -30,18 +30,21 @@
     
     var CLS_SHOW = 'toc-show',
         CLS_HIDE = 'toc-hide',
-        WRAP = '<div id="toc" class="toc toc-hide"></div>',
-        TITLE = '<h3 class="toc-title" id="toc-title">Table of Contents</h3>',
-        BAR = '<div class="toc-bar"></div>',
-        SWITCH = '<h2 class="toc-switch" class="toc-switch" title="Toggle Menu">&#926;</h2>',
-        TOP = '<a class="toc-top" id="toc-top" href="#top">TOP</a>',
-        BODY = '<nav id="toc-bd" class="toc-bd"></nav>',
-        LIST = '<ol id="toc-list" class="toc-list"></ol>',
-        SUB_LIST = '<ol class="toc-sub-list"></ol>',
-        ITEM = '<li class="toc-item"></li>',
-        LINK = '<a></a>',
-        CHAPTER = '<em class="toc-chapter"></em>',
-        OVERLAY = '<div id="toc-overlay" class="toc-overlay toc-hide"></div>',
+        CLS_ANCHOR = 'autocjs-anchor',
+        CLS_ICON = 'toc-icon',
+        WRAP = '<div id="toc" class="toc toc-hide" aria-hidden="true"></div>',
+        TITLE = '<h3 class="toc-title" id="toc-title" aria-hidden="true">Table of Contents</h3>',
+        BAR = '<div class="toc-bar" aria-hidden="true"></div>',
+        SWITCH = '<h2 class="toc-switch" class="toc-switch" title="Toggle Menu" aria-hidden="true">&#926;</h2>',
+        TOP = '<a class="toc-top" id="toc-top" href="#top" aria-hidden="true">TOP</a>',
+        BODY = '<nav id="toc-bd" class="toc-bd" aria-hidden="true"></nav>',
+        LIST = '<ol id="toc-list" class="toc-list" aria-hidden="true"></ol>',
+        SUB_LIST = '<ol class="toc-sub-list" aria-hidden="true"></ol>',
+        ITEM = '<li class="toc-item" aria-hidden="true"></li>',
+        LINK = '<a aria-hidden="true"></a>',
+        ANCHOR_LINK = '<a aria-hidden="true" class="toc-anchor-link"></a>',
+        CHAPTER = '<em class="toc-chapter" aria-hidden="true"></em>',
+        OVERLAY = '<div id="toc-overlay" class="toc-overlay toc-hide" aria-hidden="true"></div>',
         ANCHORS = 'h1,h2,h3,h4,h5,h6',
         PREFIX = 'anchor',
         $article = null,
@@ -54,7 +57,8 @@
         $body = null,
         $list = null,
         $overlay = null,
-        _uid = -1;
+        _uid = -1,
+        chapters = [];
     
     /**
      * 生成唯一的 id
@@ -74,12 +78,16 @@
 
 
     var AutocJS = {
-        version: '0.1.2',
+        version: '0.1.3',
         /**
          * Default Configration
+         *
+         * @prperty
          */
         defaults: {
             article: '#article',
+            selector: ANCHORS,
+            prefix: PREFIX,
             Templates: {
                 WRAP: WRAP,
                 TITLE: TITLE,
@@ -91,12 +99,16 @@
                 SUB_LIST: LIST,
                 ITEM: ITEM,
                 LINK: LINK,
+                ANCHOR_LINK: ANCHOR_LINK,
                 CHAPTER: CHAPTER,
                 OVERLAY: OVERLAY
-            },
-            selector: ANCHORS,
-            prefix: PREFIX
+            }
         },
+        /**
+         * AutocJS 对象的属性
+         *
+         * @prperty
+         */
         attributes: {},
         /**
          * 设置部件属性
@@ -163,6 +175,7 @@
          * @returns {AutocJS}
          */
         render: function () {
+            var chapters = this.getChapters();
 
             // 绘制head
             $bar.append( $switch ).append( $top );
@@ -176,8 +189,11 @@
             // 将导航和遮罩层添加到页面
             $( document.body ).append( $wrap ).append( $overlay );
 
+            // 给标题绘制 AnchorJS 类型的链接
+            this.renderAnchorLinks(chapters);
+
             // 绘制具体的菜单项
-            this.renderChapters();
+            this.renderChapters(chapters);
 
             // 全部绘制完成，再显示完整的菜单
             $wrap.removeClass( CLS_HIDE );
@@ -188,33 +204,70 @@
             return this;
         },
         /**
+         * 绘制类似 AnchorJS 的标题链接，此方法是借鉴 AnchorJS 的解决方案
+         *
+         * @see AnchorJS: http://bryanbraun.github.io/anchorjs/
+         * @param {Array} chapters - 重页面中获取的h1~h6标题的章节数据
+         * @returns {AutocJS}
+         */
+        renderAnchorLinks: function(chapters) {
+            var attrs = this.attributes,
+                Tmpl = attrs.Templates,
+                LINK = Tmpl.ANCHOR_LINK;
+
+            $( chapters ).each( function ( i, chapter ) {
+                var $anchor = $( $anchors[ i ] ),
+                    id = chapter.value,
+                    $link = $( LINK ).attr( {
+                                         'href': '#' + id,
+                                         'aria-label': chapter.text
+                                     } )
+                                     .addClass( CLS_ICON )
+                                     .addClass( CLS_HIDE );
+
+                $anchor.attr( 'id', id )
+                       .addClass( CLS_ANCHOR )
+                       .append( $link );
+            } );
+
+            return this;
+        },
+        /**
          * 绘制章节内容
          *
          * @returns {AutocJS}
          */
-        renderChapters: function () {
-            var chapters = this.getChapters();
+        renderChapters: function (chapters) {
+            var attrs = this.attributes,
+                Tmpl = attrs.Templates,
+                ITEM = Tmpl.ITEM,
+                LINK = Tmpl.LINK;
+
+            $list.empty();
 
             $( chapters ).each( function ( i, chapter ) {
-
-                var $item = $( ITEM ),
-                    $parent = null,
+                var $parent = null,
+                    $item = $( ITEM ),
                     $link = $( LINK ),
+                    $chapter = $( CHAPTER ),
+                    $sublist = $( '#toc-list-' + chapter.pid ),
                     chapterText = '',
                     chapterCount = 0,
-                    $chapter = $( CHAPTER ),
-                    $sublist = $( '#toc-list-' + chapter.pid );
+                    id = chapter.value;
 
+                // 创建菜单的链接
                 $link.attr( {
                     id: 'toc-link-' + chapter.id,
                     href: '#' + chapter.value
                 } ).html( chapter.text );
 
+                // 创建菜单项
                 $item.attr( {
                     'id': 'toc-item-' + chapter.id,
                     'title': chapter.text
                 } ).append( $link );
 
+                // 一级标题直接创建标题链接即可
                 if ( chapter.pid === -1 ) {
                     $list.append( $item );
                     chapterCount = $item.index() + 1;
@@ -222,6 +275,7 @@
                 }
                 else {
 
+                    // 子级的标题，需要找到上级章节
                     $parent = $( '#toc-item-' + chapter.pid );
 
                     // 没有绘制子菜单，则绘制它
@@ -263,6 +317,8 @@
         },
         /**
          * 隐藏菜单
+         *
+         * @returns {AutocJS}
          */
         hide: function () {
 
@@ -277,6 +333,8 @@
         },
         /**
          * 隐藏/显示导航
+         *
+         * @returns {AutocJS}
          */
         toggle: function () {
 
@@ -303,23 +361,35 @@
             return this;
         },
         /**
+         * 重新绘制界面
+         *
+         * @param {Array} data
+         * @returns {AutocJS}
+         */
+        reload: function(data){
+            this.setChapters(data)
+                .renderChapters(data);
+
+            return this;
+        },
+        /**
          * 获得文章完整的章节索引数据
          *
          * @returns {Array}
          */
         getChapters: function () {
-            var self = this,
-                chapters = [],
-                prevNum = 1,
-                level = 0;
+            var prevNum = 1,
+                level = 0,
+                attrs = this.attributes,
+                prefix = attrs.prefix;
 
             // 获得目录索引信息
             $anchors.each( function ( i, anchor ) {
-                var $anchor = $( anchor ),
+                var id = guid( prefix ),
+                    $anchor = $( anchor ),
+                    text = $anchor.html(),
                     curNum = parseInt( $anchor[ 0 ].tagName.toUpperCase().replace( /[H]/ig, '' ), 10 ),
                     pid = -1;
-
-                $anchor.attr( 'id', guid( self.attributes.prefix ) );
 
                 // 1.（父标题，子标题）：当前标题的序号 > 前一个标题的序号
                 if ( curNum > prevNum ) {
@@ -395,8 +465,8 @@
                 chapters.push( {
                     id: i,
                     level: level,
-                    text: $anchor.html(),
-                    value: $anchor.attr( 'id' ),
+                    text: text,
+                    value: id,
                     tag: anchor.tagName,
                     pid: pid
                 } );
@@ -404,12 +474,17 @@
 
             return chapters;
         },
+        setChapters: function (data) {
+            chapters = data;
+
+            return this;
+        },
         /**
          * 获得所有的标题标签
          *
          * @returns {HTMLElement}
          */
-        getAnchors: function(){
+        getAnchors: function () {
             return $anchors;
         },
         /**
@@ -417,7 +492,7 @@
          *
          * @returns {HTMLElement}
          */
-        getWrap: function(){
+        getWrap: function () {
             return $wrap;
         },
         /**
@@ -425,7 +500,7 @@
          *
          * @returns {HTMLElement}
          */
-        getTitle: function(){
+        getTitle: function () {
             return $title;
         },
         /**
@@ -433,7 +508,7 @@
          *
          * @returns {HTMLElement}
          */
-        getBar: function(){
+        getBar: function () {
             return $bar;
         },
         /**
@@ -441,7 +516,7 @@
          *
          * @returns {HTMLElement}
          */
-        getSwitchButton: function(){
+        getSwitchButton: function () {
             return $switch;
         },
         /**
@@ -449,7 +524,7 @@
          *
          * @returns {HTMLElement}
          */
-        getTopButton: function(){
+        getTopButton: function () {
             return $top;
         },
         /**
@@ -457,7 +532,7 @@
          *
          * @returns {HTMLElement}
          */
-        getBody: function(){
+        getBody: function () {
             return $body;
         },
         /**
@@ -465,7 +540,7 @@
          *
          * @returns {HTMLElement}
          */
-        getList: function(){
+        getList: function () {
             return $list;
         },
         /**
@@ -473,7 +548,7 @@
          *
          * @returns {HTMLElement}
          */
-        getOverlay: function(){
+        getOverlay: function () {
             return $overlay;
         },
         /**
@@ -482,6 +557,12 @@
          * @returns {AutocJS}
          */
         attachEvents: function () {
+
+            // 鼠标滑过标题，显示标题的 AutocJS 链接
+            $article.delegate( '.' + CLS_ANCHOR, 'mouseenter', this._onAutocJSAnchorMouseEnter );
+
+            // 鼠标离开标题，隐藏标题的 AutocJS 链接
+            $article.delegate( '.' + CLS_ANCHOR, 'mouseleave', this._onAutocJSAnchorMouseLeave );
 
             // 点击目录标题，隐藏/显示目录导航
             $switch.on( 'click', this._onSwitchClick );
@@ -499,13 +580,27 @@
 
             return this;
         },
+        _onAutocJSAnchorMouseEnter: function () {
+            var $link = $( this ).find( '.' + CLS_ICON );
+
+            $link.removeClass( CLS_HIDE );
+
+            return AutocJS;
+        },
+        _onAutocJSAnchorMouseLeave: function () {
+            var $link = $( this ).find( '.' + CLS_ICON );
+
+            $link.addClass( CLS_HIDE );
+
+            return AutocJS;
+        },
         /**
          *
          * @param evt
          * @returns {AutocJS}
          * @private
          */
-        _onSwitchClick: function(evt){
+        _onSwitchClick: function ( evt ) {
             AutocJS.toggle();
 
             evt.stopPropagation();
@@ -519,32 +614,7 @@
          * @returns {AutocJS}
          * @private
          */
-        _onTopClick: function(evt){
-            AutocJS.hide();
-
-            evt.stopPropagation();
-            evt.preventDefault();
-
-            return AutocJS;
-        },
-        /**
-         *
-         * @param evt
-         * @returns {AutocJS}
-         * @private
-         */
-        _onChapterClick: function(){
-            AutocJS.hide();
-
-            return AutocJS;
-        },
-        /**
-         *
-         * @param evt
-         * @returns {AutocJS}
-         * @private
-         */
-        _onOverlayClick: function(evt){
+        _onTopClick: function ( evt ) {
             AutocJS.hide();
 
             evt.stopPropagation();
@@ -557,7 +627,31 @@
          * @returns {AutocJS}
          * @private
          */
-        _onWindowResize: function(){
+        _onChapterClick: function () {
+            AutocJS.hide();
+
+            return AutocJS;
+        },
+        /**
+         *
+         * @param evt
+         * @returns {AutocJS}
+         * @private
+         */
+        _onOverlayClick: function ( evt ) {
+            AutocJS.hide();
+
+            evt.stopPropagation();
+            evt.preventDefault();
+
+            return AutocJS;
+        },
+        /**
+         *
+         * @returns {AutocJS}
+         * @private
+         */
+        _onWindowResize: function () {
             AutocJS.updateLayout();
 
             return AutocJS;
@@ -574,13 +668,13 @@
                     prefix: prefix
                 };
 
-            AutocJS.init( config );
+            return AutocJS.init( config );
         }
     } );
 
     window.AutocJS = AutocJS;
-    window.autoc = function(config){
-       AutocJS.init(config);
+    window.autoc = function ( config ) {
+        return AutocJS.init( config );
     };
     
     return AutocJS;

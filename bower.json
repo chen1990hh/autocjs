@@ -10,7 +10,7 @@
     "jquery",
     "jquery-plugin"
   ],
-  "homepage": "https://github.com/yaohaixiao/AutocJS",
+  "homepage": "https://github.com/yaohaixiao/AutocJS#readme",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -19,6 +19,6 @@
     "tests"
   ],
   "dependencies": {
-    "AutocJS": "^0.1.2"
+    "jquery": "^1.12.0"
   }
 }
