@@ -1,7 +1,7 @@
 {
   "name": "autocjs",
   "description": "Simple & Fast to create a table of contents menu for your article.",
-  "main": "build/autoc.min.js",
+  "main": "src/autoc.js",
   "authors": [
     "yaohaixiao"
   ],
