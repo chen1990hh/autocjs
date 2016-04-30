@@ -6,7 +6,6 @@
         define( 'autocjs', [ 'jquery' ], factory( global, $ ) );
     }
     else {
-        
         if ( typeof define === 'function' && define.cmd ) {
             // CMD (Register as an anonymous module)
             define( 'autocjs', function ( require, exports, module ) {
@@ -14,7 +13,6 @@
             } );
         }
         else {
-            
             if ( typeof exports === 'object' ) {
                 // Node/CommonJS
                 module.exports = factory( global, require( 'jquery' ) );
@@ -27,7 +25,7 @@
     }
 }( typeof window !== "undefined" ? window : this, function ( window, $ ) {
     'use strict';
-    
+
     var CLS_SHOW = 'toc-show',
         CLS_HIDE = 'toc-hide',
         CLS_ANCHOR = 'autocjs-anchor',
@@ -58,24 +56,19 @@
         $list = null,
         $overlay = null,
         _uid = -1,
-        chapters = [];
-    
-    /**
-     * 生成唯一的 id
-     *
-     * @method guid
-     * @param {String} [prefix] - 可选，默认生成数字ID，设置了 prefix 则生成字符串ID
-     * @returns {Number|String}
-     */
-    function guid ( prefix ) {
-        var id;
-        
-        _uid += 1;
-        id = prefix ? prefix + '-' + _uid : _uid;
-        
-        return id;
-    }
+        chapters = [],
+        /**
+         * 生成唯一的 id
+         *
+         * @method guid
+         * @param {String} [prefix] - 可选，默认生成数字ID，设置了 prefix 则生成字符串ID
+         * @returns {Number|String}
+         */
+        guid = function ( prefix ) {
+            _uid += 1;
 
+            return prefix ? prefix + '-' + _uid : _uid;
+        };
 
     var AutocJS = {
         version: '0.1.3',
@@ -190,10 +183,10 @@
             $( document.body ).append( $wrap ).append( $overlay );
 
             // 给标题绘制 AnchorJS 类型的链接
-            this.renderAnchorLinks(chapters);
+            this.renderAnchorLinks( chapters );
 
             // 绘制具体的菜单项
-            this.renderChapters(chapters);
+            this.renderChapters( chapters );
 
             // 全部绘制完成，再显示完整的菜单
             $wrap.removeClass( CLS_HIDE );
@@ -210,7 +203,7 @@
          * @param {Array} chapters - 重页面中获取的h1~h6标题的章节数据
          * @returns {AutocJS}
          */
-        renderAnchorLinks: function(chapters) {
+        renderAnchorLinks: function ( chapters ) {
             var attrs = this.attributes,
                 Tmpl = attrs.Templates,
                 LINK = Tmpl.ANCHOR_LINK;
@@ -237,7 +230,7 @@
          *
          * @returns {AutocJS}
          */
-        renderChapters: function (chapters) {
+        renderChapters: function ( chapters ) {
             var attrs = this.attributes,
                 Tmpl = attrs.Templates,
                 ITEM = Tmpl.ITEM,
@@ -252,8 +245,7 @@
                     $chapter = $( CHAPTER ),
                     $sublist = $( '#toc-list-' + chapter.pid ),
                     chapterText = '',
-                    chapterCount = 0,
-                    id = chapter.value;
+                    chapterCount = 0;
 
                 // 创建菜单的链接
                 $link.attr( {
@@ -339,7 +331,7 @@
         toggle: function () {
 
             if ( $wrap.hasClass( CLS_SHOW ) ) {
-                this.hide()
+                this.hide();
             }
             else {
                 this.show();
@@ -366,9 +358,9 @@
          * @param {Array} data
          * @returns {AutocJS}
          */
-        reload: function(data){
-            this.setChapters(data)
-                .renderChapters(data);
+        reload: function ( data ) {
+            this.setChapters( data )
+                .renderChapters( data );
 
             return this;
         },
@@ -433,7 +425,7 @@
 
                             // 第一级的标题
                             if ( level === 1 ) {
-                                pid = -1
+                                pid = -1;
                             }
                             else {
                                 // 最大只有5系的差距
@@ -453,6 +445,9 @@
                                         break;
                                     case 5:
                                         pid = chapters[ chapters[ chapters[ chapters[ chapters[ chapters[ i - 1 ].pid ].pid ].pid ].pid ].pid ].pid;
+                                        break;
+                                    default:
+                                        pid = chapters[ chapters[ i - 1 ].pid ].pid;
                                         break;
                                 }
                             }
@@ -474,7 +469,7 @@
 
             return chapters;
         },
-        setChapters: function (data) {
+        setChapters: function ( data ) {
             chapters = data;
 
             return this;
