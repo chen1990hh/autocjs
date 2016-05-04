@@ -365,6 +365,40 @@
             return this;
         },
         /**
+         * 根据 prevNum, curNum的差值，获得父级的 id 值
+         *
+         * @param {number} differ
+         * @returns {number}
+         * @private
+         */
+        _getPidByDiffer: function(differ){
+            var pid = -1;
+
+            // 最大只有5系的差距
+            switch ( differ ) {
+                case 1:
+                    pid = chapters[ chapters[ i - 1 ].pid ].pid;
+                    break;
+                case 2:
+                    pid = chapters[ chapters[ chapters[ i - 1 ].pid ].pid ].pid;
+                    break;
+                case 3:
+                    pid = chapters[ chapters[ chapters[ chapters[ i - 1 ].pid ].pid ].pid ].pid;
+                    break;
+                case 4:
+                    pid = chapters[ chapters[ chapters[ chapters[ chapters[ i - 1 ].pid ].pid ].pid ].pid ].pid;
+                    break;
+                case 5:
+                    pid = chapters[ chapters[ chapters[ chapters[ chapters[ chapters[ i - 1 ].pid ].pid ].pid ].pid ].pid ].pid;
+                    break;
+                default:
+                    pid = chapters[ chapters[ i - 1 ].pid ].pid;
+                    break;
+            }
+
+            return pid;
+        },
+        /**
          * 获得文章完整的章节索引数据
          *
          * @returns {Array}
@@ -428,28 +462,8 @@
                                 pid = -1;
                             }
                             else {
-                                // 最大只有5系的差距
                                 // 虽然看上去差点，不过能工作啊
-                                switch ( prevNum - curNum ) {
-                                    case 1:
-                                        pid = chapters[ chapters[ i - 1 ].pid ].pid;
-                                        break;
-                                    case 2:
-                                        pid = chapters[ chapters[ chapters[ i - 1 ].pid ].pid ].pid;
-                                        break;
-                                    case 3:
-                                        pid = chapters[ chapters[ chapters[ chapters[ i - 1 ].pid ].pid ].pid ].pid;
-                                        break;
-                                    case 4:
-                                        pid = chapters[ chapters[ chapters[ chapters[ chapters[ i - 1 ].pid ].pid ].pid ].pid ].pid;
-                                        break;
-                                    case 5:
-                                        pid = chapters[ chapters[ chapters[ chapters[ chapters[ chapters[ i - 1 ].pid ].pid ].pid ].pid ].pid ].pid;
-                                        break;
-                                    default:
-                                        pid = chapters[ chapters[ i - 1 ].pid ].pid;
-                                        break;
-                                }
+                                pid = this._getPidByDiffer(prevNum - curNum);
                             }
                         }
                     }
