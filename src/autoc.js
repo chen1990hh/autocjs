@@ -463,7 +463,7 @@
                             }
                             else {
                                 // 虽然看上去差点，不过能工作啊
-                                pid = this._getPidByDiffer(prevNum - curNum);
+                                pid = AutocJS._getPidByDiffer(prevNum - curNum);
                             }
                         }
                     }
