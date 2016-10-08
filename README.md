@@ -24,9 +24,9 @@ AnchorJS 由于是国外的程序员开发的，所以对中文支持不好，�
 ## Install AutocJS
 
 ```
-npm install AutocJS
+npm install autocjs
 
-bower install AutocJS
+bower install autocjs
 ```
 
 ## API Documentation
