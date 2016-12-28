@@ -19,7 +19,7 @@ AnchorJS 由于是国外的程序员开发的，所以对中文支持不好，�
   * 可以作为 jQuery 插件使用
 
 ## DEMO
-演示地址：[http://www.yaohaixiao.com/github/autocjs/example/index.html](http://www.yaohaixiao.com/github/autocjs/example/index.html)
+演示地址：[http://yaohaixiao.github.io/AutocJS/](http://yaohaixiao.github.io/AutocJS/)
 
 ## Install AutocJS
 
