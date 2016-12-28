@@ -71,7 +71,7 @@
         };
 
     var AutocJS = {
-        version: '0.1.3',
+        version: '0.1.5',
         /**
          * Default Configration
          *
@@ -212,9 +212,9 @@
                 var $anchor = $( $anchors[ i ] ),
                     id = chapter.value,
                     $link = $( LINK ).attr( {
-                                         'href': '#' + id,
-                                         'aria-label': chapter.text
-                                     } )
+                        'href': '#' + id,
+                        'aria-label': chapter.text
+                    } )
                                      .addClass( CLS_ICON )
                                      .addClass( CLS_HIDE );
 
@@ -371,28 +371,28 @@
          * @returns {number}
          * @private
          */
-        _getPidByDiffer: function(differ){
+        _getPidByDiffer: function(differ, index){
             var pid = -1;
 
             // 最大只有5系的差距
             switch ( differ ) {
                 case 1:
-                    pid = chapters[ chapters[ i - 1 ].pid ].pid;
+                    pid = chapters[ chapters[ index - 1 ].pid ].pid;
                     break;
                 case 2:
-                    pid = chapters[ chapters[ chapters[ i - 1 ].pid ].pid ].pid;
+                    pid = chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid;
                     break;
                 case 3:
-                    pid = chapters[ chapters[ chapters[ chapters[ i - 1 ].pid ].pid ].pid ].pid;
+                    pid = chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid;
                     break;
                 case 4:
-                    pid = chapters[ chapters[ chapters[ chapters[ chapters[ i - 1 ].pid ].pid ].pid ].pid ].pid;
+                    pid = chapters[ chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid ].pid;
                     break;
                 case 5:
-                    pid = chapters[ chapters[ chapters[ chapters[ chapters[ chapters[ i - 1 ].pid ].pid ].pid ].pid ].pid ].pid;
+                    pid = chapters[ chapters[ chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid ].pid ].pid;
                     break;
                 default:
-                    pid = chapters[ chapters[ i - 1 ].pid ].pid;
+                    pid = chapters[ chapters[ index - 1 ].pid ].pid;
                     break;
             }
 
@@ -463,7 +463,7 @@
                             }
                             else {
                                 // 虽然看上去差点，不过能工作啊
-                                pid = AutocJS._getPidByDiffer(prevNum - curNum);
+                                pid = AutocJS._getPidByDiffer(prevNum - curNum, i);
                             }
                         }
                     }
@@ -685,6 +685,6 @@
     window.autoc = function ( config ) {
         return AutocJS.init( config );
     };
-    
+
     return AutocJS;
 } ));

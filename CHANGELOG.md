@@ -1,3 +1,13 @@
+## v0.1.5:
+
+date: 2016-12-28
+
+changes:
+
+- 修复 _getPidByDiffer() 方法中 缺少 index 参数导致程序出错的问题
+- 整理 API 文档
+- 调整目录结构，将 API 整理到 docs 文件夹下，以便生成 github pages 文档
+
 ## v0.1.4:
 
 date: 2016-5-21

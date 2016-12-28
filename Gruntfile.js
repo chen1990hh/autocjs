@@ -8,13 +8,13 @@
             },
             js: {
                 src: 'src/autoc.js',
-                dest: 'build/autoc.min.js'
+                dest: 'build/autoc.js'
             }
         },
         cssmin: {
             css: {
                 src: 'src/autoc.css',
-                dest: 'build/autoc.min.css'
+                dest: 'build/autoc.css'
             }
         }
     } );
