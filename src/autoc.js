@@ -589,7 +589,7 @@
          * @returns {AutocJS}
          */
         reload: function ( data ) {
-            this.setChapters( data ).renderChapters();
+            this.chapters( data ).renderChapters();
 
             return this;
         },
