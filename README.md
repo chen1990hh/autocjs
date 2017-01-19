@@ -1,13 +1,16 @@
-# AutocJS
-AutocJS - 为你的文章自动创建目录导航菜单。
+# AutocJS v0.2.0
 
-[AnchorJS](http://bryanbraun.github.io/anchorjs/) 是 AutocJS 的创作灵感。既然 AnchorJS 可创建标题的链接，为什么不直接给文章生成一个目录（Table of Contents）导航呢？
+## Idea
+[AnchorJS](http://bryanbraun.github.io/anchorjs/) 是 AutocJS 的创作灵感。既然 AnchorJS 可创建标题的链接，为什么不直接给文章生成一个目录（Table of Contents）导航呢？ 于是就有了AutocJS。
+
 
 ## What is AutocJS?
-AutocJS 是一个专门用来给文章生成目录（Table of Contents）导航菜单的工具。AutocJS 会查找文章中的所有h1~h6的标签，并自动生成文章的目录导航菜单。
+AutocJS 是一个专门用来给文章生成目录（Table of Contents）导航菜单的工具。AutocJS 会查找文章指定区域中的所有h1~h6的标签，并自动生成文章的目录导航菜单。
+
 
 ## Why AutocJS?
 AnchorJS 由于是国外的程序员开发的，所以对中文支持不好，无法给中文标题生成锚点。AutocJS 就是一个即支持英文也支持中文的解决方案。
+
 
 ### AutocJS 的特点
 
@@ -18,140 +21,143 @@ AnchorJS 由于是国外的程序员开发的，所以对中文支持不好，�
   * 支持 AMD 和 CMD 规范
   * 可以作为 jQuery 插件使用
 
-## DEMO
+
+## Examples
 演示地址：[http://yaohaixiao.github.io/AutocJS/](http://yaohaixiao.github.io/AutocJS/)
 
-## Install AutocJS
 
+## Install
+
+### npm install
 ```
 npm install AutocJS
+```
 
+### bower install
+```
 bower install AutocJS
 ```
 
-## API Documentation
-AutocJS 目前提供了一个方法 <code>autoc()</code> 和一个 AutocJS (AMD，CMD，Node模块) 对象，简单易用。具体的 API 说明如下：
 
-### 语法
+## Usage
+
+### Use as a CommonJS/AMD/CMD Module
 
 ```js
-autoc(config);
-```
-### 参数说明
+var AutocJS = require('autocjs');
 
- * config（必填）
-     * 数据类型：Object；
-     * 说明：程序的配置参数对象；
- * config.article（必填）
-     * 数据类型：String | HTMLElement；
-     * 说明：要生成文章索引的目标 DOM id 字符串或者 HTML DOM 元素；
- * config.anchors（可选）
-     * 数据类型：String；
-     * 说明：希望生成文章导航的标题（h1~h6）选择器；
-     * 默认值："h1,h2,h3,h4,h5,h6"；
- * config.prefix</strong>
-     * 数据类型：String；</li>
-     * 说明：config.anchors（h1~h6） 生成锚点的 ID 前缀；
-     * 默认值："anchor"；
+new AutocJS({
+    article: '#article'
+});
+```
+
+### Use as a jQuery plugin
+
+```js
+$('#article').autoc({
+    title: 'AutocJS v0.2.0'
+});
+```
+
+### Use as an independent Object
+
+```js
+new AutocJS({
+    article: '#article',
+    title: 'AutocJS v0.2.0'
+});
+```
+
+
+## API Documentation
+
+### Configuration Options
+
+```js
+new AutocJS({
+    // 页面正文容器的 DOM 节点或者检点的 ID 选择器
+    article: '#article',
+    // 页面正文中要收集的文章标点的选择器
+    selector: 'h1,h2,h3,h4,h5,h6',
+    // 文章标题自动添加链接的 id 的前缀
+    prefix: 'anchor',
+    // 正文要收集的每个标题自动生成的锚点链接 HTML 模板
+    ANCHOR_LINK: '<a aria-hidden="true" class="toc-anchor-link"></a>',
+    // AutocJS 菜单的标题文字
+    title: 'Table of Contents',
+    // AutocJS 菜单的根节点的 HTML 模板
+    WRAP: '<div id="toc" class="toc toc-hide" aria-hidden="true"></div>',
+    // AutocJS 菜单的标题栏的 HTML 模板
+    TITLE: '<h3 class="toc-title" id="toc-title" aria-hidden="true">{title}</h3>',
+    // AutocJS 菜单的伸缩按钮框的 HTML 模板
+    BAR: '<div class="toc-bar" aria-hidden="true"></div>',
+    // AutocJS 菜单的显示隐藏按钮的 HTML 模板
+    SWITCH: '<h2 class="toc-switch" class="toc-switch" title="Toggle Menu" aria-hidden="true">Ξ</h2>',
+    // AutocJS 菜单的返回顶部按钮的 HTML 模板
+    TOP: '<a class="toc-top" id="toc-top" href="#top" aria-hidden="true">TOP</a>',
+    // AutocJS 菜单的主内容节点的 HTML 模板
+    BODY: '<nav id="toc-bd" class="toc-bd" aria-hidden="true"></nav>',
+    // AutocJS 菜单的索引列表的 HTML 模板
+    LIST: '<ol id="toc-list" class="toc-list" aria-hidden="true"></ol>',
+    // AutocJS 菜单的子索引列表的 HTML 模板
+    SUB_LIST: '<ol class="toc-sub-list" aria-hidden="true"></ol>',
+    // AutocJS 菜单的子索引列表的 HTML 模板
+    ITEM: '<li class="toc-item" aria-hidden="true"></li>',
+    // AutocJS 菜单的引列表的标题链接 HTML 模板
+    LINK: '<a aria-hidden="true"></a>',
+    // AutocJS 菜单的引列表的标题文字的 HTML 模板
+    CHAPTER: '<em class="toc-chapter" aria-hidden="true"></em>',
+    // AutocJS 菜单展开时遮罩层的 HTML 模板
+    OVERLAY: '<div id="toc-overlay" class="toc-overlay toc-hide" aria-hidden="true"></div>'
+});
+```
+
+### Attributes
+
+* article
+* selector
+* prefix
+* ANCHOR_LINK
+* title
+* WRAP
+* TITLE
+* BAR
+* SWITCH
+* TOP
+* BODY
+* LIST
+* SUB_LIST
+* ITEM
+* LINK
+* CHAPTER
+* OVERLAY
      
-### 调用方法
-AutocJS 的调用很简单，只需要以下3步便可以轻松搞定。
+### Properties
+* attributes - AutocJS 对象设置的配置信息
+* elements - AutocJS 对象的所有 HTML 节点的集合
+* data - AutocJS 对象的数据，包括 anchors 和 chapters
+* defaults - （静态属性）AutocJS 对象默认的配置信息
 
-#### 第一步：引用 CSS 样式
+### Methods
 
-```html
-<link type="text/css" rel="stylesheet" href="autoc.css">
-```
+* [init( options )](http://yaohaixiao.github.io/AutocJS/methods.htm#init)
+* [set( config )](http://yaohaixiao.github.io/AutocJS/methods.htm#set)
+* [get( prop )](http://yaohaixiao.github.io/AutocJS/methods.htm#get)
+* [anchors( data )](http://yaohaixiao.github.io/AutocJS/methods.htm#anchors)
+* [chapters( data )](http://yaohaixiao.github.io/AutocJS/methods.htm#chapters)
+* [getArticleAnchors( )](http://yaohaixiao.github.io/AutocJS/methods.htm#getArticleAnchors)
+* [getArticleChapters( )](http://yaohaixiao.github.io/AutocJS/methods.htm#getArticleChapters)
+* [getPidByDiffer( )](http://yaohaixiao.github.io/AutocJS/methods.htm#getPidByDiffer)
+* [render( )](http://yaohaixiao.github.io/AutocJS/methods.htm#render)
+* [renderLinks( )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderLinks)
+* [renderElements( )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderElements)
+* [renderChapters( )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderChapters)
+* [show( )](http://yaohaixiao.github.io/AutocJS/methods.htm#show)
+* [hide( )](http://yaohaixiao.github.io/AutocJS/methods.htm#hide)
+* [toggle( )](http://yaohaixiao.github.io/AutocJS/methods.htm#toggle)
+* [updateLayout( )](http://yaohaixiao.github.io/AutocJS/methods.htm#updateLayout)
+* [reload( options )](http://yaohaixiao.github.io/AutocJS/methods.htm#reload)
 
-#### 第二步：引用 JS 脚本
-
-``` html
-// 使用 requirejs (作为 AMD 模块) 
-<script type="text/javascript" src="../lib/require.js"><script>
-// 使用 seajs　(作为 CMD 模块)
-<script type="text/javascript" src="../lib/sea.js"></script>
-// AutocJS 依赖 jQuery（稍后会开发没有任何依赖的版本）
-<script type="text/javascript" src="jquery.js"></script>
-// 调用 autoc.js
-<script type="text/javascript" src="autoc.js"></script>
-```
-
-#### 第三步：调用 autoc() 方法
-autoc() 方法接受 3 个参数，具体的调用方法如下：
-
-##### 指定文章内容的 DOM 节点
-
-``` js
-// 最基础的方法，只需要指定文章内容的 DOM 节点的　id
-autoc({
-    article: '#article'
-});
-
-AutocJS.init({
-    article: '#article'
-});
-```
-##### 指定要记录的标题
-
-``` js
-// 索引只会提取文章 h3 和 h4 的标题
-autoc({
-    article: '#article',
-    anchors: 'h3,h4'
-});
-
-AutocJS.init({
-    article: '#article',
-    anchors: 'h3,h4'
-});
-```
-
-##### 指定标题锚点的 id 的前缀
-``` js
-// h3,h4 的锚点会是 p-1, p-2
-autoc({
-    article: '#article',
-    anchors: 'h3,h4',
-    prefix: 'p'
-});
-
-
-AutocJS.init({
-    article: '#article',
-    anchors: 'h3,h4',
-    prefix: 'p'
-});
-```
-
-##### 作为 jQuery 插件调用
-
-```javascript
-$('#article').autoc ();
-```
-
-##### 作为 AMD 模块调用
-
-```javascript
-require(['jquery','autocjs'], function($,autocjs){
-    // jquery 插件
-    $('#article').autoc();
-
-    // 独立的模块
-    autocjs.init();
-});
-```
-
-##### 作为 CMD 模块调用
-
-```javascript
-seajs.use(['jquery','autocjs'], function($,autocjs){
-    // jquery 插件
-    $('#article').autoc();
-
-    // 独立的模块
-    autocjs.init();
-});
-```
 
 ## Release History
 
