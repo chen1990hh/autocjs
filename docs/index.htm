@@ -2,171 +2,97 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AutocJS - 为你的文章自动创建目录导航菜单</title>
-    <link href="asset/normalize/normalize.css" rel="stylesheet" type="text/css" media="all">
-    <link href="css/layout.css" rel="stylesheet" type="text/css" media="all">
-    <link href="css/autoc.min.css" rel="stylesheet" type="text/css" media="all">
+    <title>AutocJS v0.2.0 - 为你的文章自动创建目录导航菜单</title>
+    <link href="asset/normalize/normalize.css" type="text/css" rel="stylesheet" media="all">
+    <link href="css/layout.css" type="text/css" rel="stylesheet">
+    <link href="css/autoc.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-<div class="wrap">
-    <div class="header">
-        <h1>AutocJS - 为你的文章自动创建目录导航菜单</h1>
-    </div>
+<div class="header">
+    <h1 class="project">AutocJS<sup>v0.2.0</sup></h1>
+    <ul class="navigation">
+        <li class="active"><a href="index.htm">Introduction</a></li>
+        <li><a href="properties.htm">Properties</a></li>
+        <li><a href="methods.htm">Methods</a></li>
+    </ul>
+</div>
+<div class="download"></div>
+<div class="wrap" id="introduction">
+    <h1 class="subject">Introduction</h1>
     <div class="container" id="container">
-        <div class="content">
-            <h2>Introduction</h2>
-            <h3>创作的灵感</h3>
+        <div class="content introduction">
+            <h2>Idea</h2>
             <p><a href="http://bryanbraun.github.io/anchorjs/">AnchorJS</a> 是 AutocJS 的创作灵感。既然 AnchorJS
                 可创建标题的链接，为什么不直接给文章生成一个目录（Table of Contents）导航呢？于是就有了AutocJS.</p>
-
-            <h3>What is AutocJS?</h3>
+            <h2>What is AutocJS?</h2>
             <p>AutocJS 是一个专门用来给文章生成目录（Table of Contents）导航菜单的工具。AutocJS 会查找文章指定区域中的所有h1~h6的标签，并自动生成文章的目录导航菜单。</p>
             <p class="image"><img src="AutocJS.png" alt="AutocJS"></p>
-            <h3>Why AutocJS?</h3>
+            <h2>Why AutocJS?</h2>
             <p>AnchorJS 由于是国外的程序员开发的，所以对中文支持不好，无法给中文标题生成锚点。AutocJS 就是一个即支持英文也支持中文的解决方案。</p>
-            <h3>AutocJS 的特点</h3>
-            <ol>
+            <h2>Feature</h2>
+            <ul class="features">
                 <li>全面支持中文和英文</li>
                 <li>简洁大方的界面，采用绝对应为导航，不会破坏页面的美观</li>
                 <li>弹性的界面布局，可以根据不同的窗口高度，自动调节菜单布局</li>
                 <li>精确的章节统计，文章层次结构一目了然</li>
                 <li>支持 AMD 和 CMD 规范</li>
                 <li>可以作为 jQuery 插件使用</li>
-            </ol>
-        </div>
-        <div class="content">
-            <h2>Examples</h2>
-            <p>演示地址：<a href="http://yaohaixiao.github.io/AutocJS/">http://yaohaixiao.github.io/AutocJS/</a>
-            </p>
-        </div>
-        <div class="content">
-            <h2>Install</h2>
-<pre class="code"><code>// npm install
-npm install AutocJS
-
-// bower install
-bower install AutocJS
-</code></pre>
-        </div>
-        <div class="content">
-            <h2>Usage</h2>
-            <p>AutocJS 的调用很简单，只需要以下3步便可以轻松搞定。</p>
-            <h3>第一步：引用 CSS 样式</h3>
-<pre class="code"><code>&lt;link type="text/css" rel="stylesheet" href="autoc.css"&gt;</code></pre>
-            <h3>第二步：引用 JS 脚本</h3>
-<pre class="code"><code>// 使用 requirejs　(作为 AMD 模块)
-&lt;script type="text/javascript" src="../lib/require.js"&gt;&lt;/script&gt;
-
-// 使用 seajs　(作为 CMD 模块)
-&lt;script type="text/javascript" src="../lib/sea.js"&gt;&lt;/script&gt;
-
-// AutocJS 依赖 jQuery（稍后会开发没有任何依赖的版本）
-&lt;script type="text/javascript" src="jquery.js"&gt;&lt;/script&gt;
-// 调用 autoc.js
-&lt;script type="text/javascript" src="autoc.js"&gt;&lt;/script&gt;</code></pre>
-            <h3>第三步：调用 autoc() 方法</h3>
-            <p>autoc() 方法接受 3 个参数，具体的调用方法如下：</p>
-            <h4>指定文章内容的 DOM 节点</h4>
-<pre class="code"><code>// 最基础的方法，只需要指定文章内容的 DOM 节点的　id
-autoc({
-    article: '#article'
-});
-
-// 或者（AutocJS 是 autoc 的一个别名）
-AutocJS.init({
-    article: '#article'
-});</code></pre>
-            <h4>指定要记录的标题</h4>
-<pre class="code"><code>// 索引只会提取文章 h3 和 h4 的标题
-autoc({
-    article: '#article',
-    anchors: 'h3,h4'
-});</code></pre>
-            <h4>指定标题锚点的 id 的前缀</h4>
-<pre class="code"><code>// h3,h4 的锚点会是 p-1, p-2
-autoc({
-    article: '#article',
-    anchors: 'h3,h4',
-    prefix: 'p'
-});
-</code></pre>
-            <h4>作为 jQuery 插件调用</h4>
-<pre class="code"><code>$('#article').autoc();</code></pre>
-            <h4>作为 AMD 模块调用</h4>
-<pre class="code"><code>require(['jquery','autocjs'], function($, autocjs){
-    // jquery 插件
-    $('#article').autoc();
-
-    // 独立的模块
-    AutocJS.init();
-});</code></pre>
-            <h4>作为 CMD 模块调用</h4>
-<pre class="code"><code>seajs.use(['jquery','autocjs'], function($, autocjs){
-    // jquery 插件
-    $('#article').autoc();
-
-    // 独立的模块
-    AutocJS.init();
-});</code></pre>
-        </div>
-        <div class="content">
-            <h2>API Documentation</h2>
-            <p>AutocJS 目前提供了一个方法 <code>autoc()</code> 和一个 AutocJS (AMD，CMD，Node模块) 对象，简单易用。具体的 API 说明如下：</p>
-            <h3>Syntax</h3>
-            <pre class="code"><code>AutocJS.init(config);</code></pre>
-            <h3>Configuration Options</h3>
-            <ul>
-                <li>
-                    <strong>config（必填）</strong>
-                    <ul>
-                        <li>数据类型：Object；</li>
-                        <li>说明：程序的配置参数对象；</li>
-                    </ul>
-                </li>
-                <li>
-                    <strong>config.article（必填）</strong>
-                    <ul>
-                        <li>数据类型：String | HTMLElement；</li>
-                        <li>说明：要生成文章索引的目标 DOM id 字符串或者 HTML DOM 元素；</li>
-                    </ul>
-                </li>
-                <li>
-                    <strong>config.anchors（可选）</strong>
-                    <ul>
-                        <li>数据类型：String；</li>
-                        <li>说明：希望生成文章导航的标题（h1~h6）选择器；</li>
-                        <li>默认值："h1,h2,h3,h4,h5,h6"；</li>
-                    </ul>
-                </li>
-                <li>
-                    <strong>config.prefix</strong>
-                    <ul>
-                        <li>数据类型：String；</li>
-                        <li>说明：config.anchors（h1~h6） 生成锚点的 ID 前缀；</li>
-                        <li>默认值："anchor"；</li>
-                    </ul>
-                </li>
             </ul>
         </div>
-        <div class="content">
+        <div class="content install">
+            <h2>install</h2>
+            <h3>npm install</h3>
+            <pre class="code"><code>npm install AutocJS</code></pre>
+            <h3>bower install</h3>
+            <pre class="code"><code>bower install AutocJS</code></pre>
+        </div>
+        <div class="content usage">
+            <h2>Usage</h2>
+            <h3>Use as a CommonJS/AMD/CMD Module</h3>
+            <pre class="code"><code>var AutocJS = require('autocjs');
+
+new AutocJS({
+    article: '#article'
+});</code></pre>
+            <h3>Use as a jQuery plugin</h3>
+            <p>首先，引入 jQuery 和 AutocJS 的脚本文件。</p>
+            <pre class="code"><code>&lt;script type="text/javascript" src="jquery.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript" src="autoc.js"&gt;&lt;/script&gt;</code></pre>
+            <p>然后，作为 jQuery 的插件来调用 AutocJS。</p>
+            <pre class="code"><code>$('#article').autoc({
+    title: 'AutocJS v0.2.0'
+});</code></pre>
+            <h3>Use as an independent Object</h3>
+            <p>首先，引入 AutocJS 的脚本文件。</p>
+            <pre class="code"><code>&lt;script type="text/javascript" src="autoc.js"&gt;&lt;/script&gt;</code></pre>
+            <p>然后，调用 AutocJS 对象。</p>
+            <pre class="code"><code>new AutocJS({
+    article: '#article',
+    title: 'AutocJS v0.2.0'
+});</code></pre>
+        </div>
+        <div class="content license">
             <h2>License</h2>
-            <p>Code licensed under <a href="http://opensource.org/licenses/mit-license.html">MIT License</a> · API
-                Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p>
+            <p>Code licensed under <a href="http://opensource.org/licenses/mit-license.html">MIT License</a></p>
+            <p>Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p>
         </div>
-        <div class="content">
-            <h2>Release History</h2>
-            <p>See the <a href="https://www.github.com/yaohaixiao/AutocJS/CHANGELOG.md">CHANGELOG</a>.</p>
-        </div>
-    </div>
-    <div class="footer">
-        <p>Copyright &copy; 2016 <a href="http://www.yaohaixiao.com/">YAOHAIXIAO.COM</a>, All right reserved.</p>
     </div>
 </div>
-</body>
+<div class="footer">
+    <p class="author"><span class="version">AutocJS v0.2.0</span> · Created by <a href="http://www.yaohaixiao.com/">Robert
+        Yao</a></p>
+    <p class="license">Code licensed under <a href="http://opensource.org/licenses/mit-license.html">MIT License</a> ·
+        Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p>
+    <p class="issues"><a href="https://github.com/yaohaixiao/AutocJS">GitHub Project</a> · <a
+            href="https://github.com/yaohaixiao/AutocJS/issues">Issues</a></p>
+</div>
 <script type="text/javascript" src="asset/jquery/jquery.js"></script>
-<script type="text/javascript" src="js/autoc.min.js"></script>
+<script type="text/javascript" src="js/autoc.js"></script>
 <script type="text/javascript">
-    // jquery 插件
-    $( '#container' ).autoc();
+        $('#introduction').autoc({
+            title: 'AutocJS v0.2.0'
+        });
 </script>
+</body>
 </html>

@@ -16,11 +16,74 @@ a:hover {
     text-decoration: none;
 }
 
+.header {
+    position: relative;
+    z-index: 1;
+    margin: 0 2rem;
+    padding: 0 1rem;
+    overflow: hidden;
+}
+
+h1.project {
+    float: left;
+    font-size: 40px;
+    text-shadow: 4px 3px 0 #DDD, 2px 4px 0 rgba(0, 0, 0, 0.15);
+}
+
+.navigation {
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    right: 0;
+    margin: -25px 0 0;
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+}
+
+.navigation,
+.navigation li {
+    list-style-type: none;
+}
+
+.navigation li {
+    float: left;
+    margin: 0;
+    font-size: 20px;
+    height: 50px;
+    padding: 0 1rem;
+    font-weight: bold;
+    text-shadow: 4px 3px 0 #DDD, 2px 4px 0 rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+.navigation a:link,
+.navigation a:visited,
+.navigation a:hover {
+    text-decoration: none;
+}
+
+.navigation li.active a:link,
+.navigation li.active a:visited,
+.navigation li.active a:hover {
+    color: #008cff;
+}
+
 .wrap {
-    margin: 2rem;
+    margin: 0 2rem 2rem;
     padding: 2rem;
     background-color: #FFF;
     box-shadow: -1px 2px 12px #D3D3D3;
+    line-height: 1.5rem;
+}
+
+.wrap p {
+    text-indent: 2rem;
+}
+
+h1.subject {
+    text-align: center;
+    font-size: 30px;
 }
 
 .container {
@@ -33,12 +96,9 @@ a:hover {
     overflow: hidden;
 }
 
-.introduction {
-    line-height: 1.5rem;
-}
-
-.introduction p {
-    text-indent: 2rem;
+.wrap p.image {
+    text-align: center;
+    text-indent: 0;
 }
 
 .api-list,
@@ -53,7 +113,16 @@ a:hover {
     width: 20%;
     height: 32px;
     line-height: 32px;
+    cursor: pointer;
     overflow: hidden;
+}
+
+.api-list li:hover {
+    background-color: #F8F8F8;
+}
+
+.api-key {
+    padding: 0 10px;
 }
 
 .item {
@@ -106,4 +175,8 @@ a:hover {
 .header,
 .footer {
     text-align: center;
+}
+
+.footer {
+    padding-bottom: 1rem;
 }

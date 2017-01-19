@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Methods - AutocJS v0.2.0</title>
+    <link href="asset/normalize/normalize.css" type="text/css" rel="stylesheet" media="all">
+    <link href="css/layout.css" type="text/css" rel="stylesheet">
+    <link href="css/autoc.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<div class="header">
+    <h1 class="project">AutocJS<sup>v0.2.0</sup></h1>
+    <ul class="navigation">
+        <li><a href="index.htm">Introduction</a></li>
+        <li><a href="properties.htm">Properties</a></li>
+        <li class="active"><a href="methods.htm">Methods</a></li>
+    </ul>
+</div>
+<div class="wrap" id="methods">
+    <h1 class="subject">Methods</h1>
+    <div class="container" id="container">
+        <div class="content init" id="init">
+            <h2>init( options )</h2>
+            <p><strong>init( options )</strong> 是程序的初始化方法。</p>
+            <ol>
+                <li>初始化配置参数</li>
+                <li>绘制UI界面</li>
+                <li>绑定 DOM 节点的相应的事件处理器</li>
+            </ol>
+            <h3>参数说明</h3>
+            <dl class="params">
+                <dt>config</dt>
+                <dd>{Object} - （可选）初始化的配置参数，详见 <a href="properties.htm#configuration">Configuration Options</a>。</dd>
+            </dl>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS</dt>
+                <dd>{Object} - 返回 AutocJS 对象，以便可以使用链式方法调用。</dd>
+            </dl>
+            <h3>代码示例</h3>
+                <div class="item">
+                    <div class="demo">
+<pre class="code"><code>var ArticleOutline = new AutocJS();
+
+ArticleOutline.init({
+    article: '#article',
+    title: 'AutocJS v0.2.0'
+});</code></pre>
+                    </div>
+                </div>
+        </div>
+        <div class="content set" id="set">
+            <h2>set( config )</h2>
+            <p><strong>set( config )</strong> 方法用来设置attributes（配置）属性，以便存储程序初始化配置信息。</p>
+            <h3>参数说明</h3>
+            <dl class="params">
+                <dt>config</dt>
+                <dd>{Object} - （可选）初始化的配置参数，详见 <a href="properties.htm#configuration">Configuration Options</a>。</dd>
+            </dl>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS</dt>
+                <dd>{Object} - 返回 AutocJS 对象。</dd>
+            </dl>
+            <h3>代码示例</h3>
+            <div class="item">
+                <div class="demo">
+<pre class="code"><code>new AutocJS().set({
+     article: '#article'
+}).init({
+     title: 'AutocJS v0.2.0'
+});</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="content get" id="get">
+            <h2>get( prop )</h2>
+            <p><strong>get( prop )</strong> 方法用来获得 attributes 的属性。</p>
+            <h3>参数说明</h3>
+            <dl class="params">
+                <dt>prop</dt>
+                <dd>{String} - 想要过去的属性名称。</dd>
+            </dl>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>attributes 中对应的属性</dt>
+                <dd>{Any} - 返回对应的 attributes 属性值。</dd>
+            </dl>
+            <h3>代码示例</h3>
+            <div class="item">
+                <div class="demo">
+<pre class="code"><code>var autoc = new AutocJS({
+     article: '#article',
+     title: 'AutocJS v0.2.0'
+});
+
+autoc.get('title'); // -> AutocJS v0.2.0</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="content anchors" id="anchors">
+            <h2>anchors( data )</h2>
+            <p><strong>anchors( data )</strong> 方法用来获得或者设置 data.anchors 数据（即正文中的标题节点集合），没有 data 参数时是获取数据，有 data 参数则是获得数据。</p>
+            <h3>参数说明</h3>
+            <dl class="params">
+                <dt>data</dt>
+                <dd>{Array} - 标题节点集合。</dd>
+            </dl>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS | data.anchors</dt>
+                <dd>{Object|Array} - 设置了 data 参数，则更新 data.anchors 数据，没有则返回 data.anchors 数据。</dd>
+            </dl>
+            <h3>代码示例</h3>
+            <div class="item">
+                <div class="demo">
+<pre class="code"><code>var ArticleOutline = new AutocJS({
+     article: '#article',
+     title: 'AutocJS v0.2.0'
+});
+
+ArticleOutline.anchors() // -> [TitleNode,..,TitleNode]
+ArticleOutline.anchors([TitleNode,..,TitleNode])</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="content chapters" id="chapters">
+            <h2>chapters( data )</h2>
+            <p><strong>chapters( data )</strong> 方法用来设置或者获取 data.chapters （文章段落数据）属性，设置了 data
+                参数，则会更新现有的文章段落数据。如果没有，则返 data.chapters。</p>
+            <h3>参数说明</h3>
+            <dl class="params">
+                <dt>data</dt>
+                <dd>{Array} - 文章段落数据。</dd>
+            </dl>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS | data.chapters</dt>
+                <dd>{Object|Array} - AutocJS 对象或者 data.chapters。</dd>
+            </dl>
+            <h3>代码示例</h3>
+            <div class="item">
+                <div class="demo">
+<pre class="code"><code>var ArticleOutline = new AutocJS({
+     article: '#article',
+     title: 'AutocJS v0.2.0'
+});
+
+ArticleOutline.chapters() // ->
+ArticleOutline.chapters([{
+    id: 0,
+    level: 1,
+    pid : -1,
+    tag: "H1",
+    text : "Methods",
+    value : "anchor-0",
+},
+...,
+{
+    id: n,
+    level: 4,
+    pid : 0,
+    tag: "H4",
+    text : "A title",
+    value : "anchor-n",
+}])</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="content getArticleAnchors" id="getArticleAnchors">
+            <h2>getArticleAnchors( )</h2>
+            <p><strong>getArticleAnchors( )</strong> 方法用来获得文章中所有（选择器匹配）的标题节点。</p>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS</dt>
+                <dd>{Object} - 返回 AutocJS 对象。</dd>
+            </dl>
+            <h3>代码示例</h3>
+            <div class="item">
+                <div class="demo">
+<pre class="code"><code>var ArticleOutline = new AutocJS({
+     article: '#article',
+     title: 'AutocJS v0.2.0'
+});
+
+ArticleOutline.getArticleAnchors();</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="content getArticleChapters" id="getArticleChapters">
+            <h2>getArticleChapters( )</h2>
+            <p><strong>getArticleChapters( )</strong> 方法会根据文章中所有（选择器匹配）的标题节点返回相应的文章段落数据。</p>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS</dt>
+                <dd>{Object} - 返回 AutocJS 对象。</dd>
+            </dl>
+            <h3>代码示例</h3>
+            <div class="item">
+                <div class="demo" id="demo-6"></div>
+                <div class="demo">
+<pre class="code"><code>var ArticleOutline = new AutocJS({
+     article: '#article',
+     title: 'AutocJS v0.2.0'
+});
+
+ArticleOutline.getArticleChapters();</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="content getPidByDiffer" id="getPidByDiffer">
+            <h2>getPidByDiffer( )</h2>
+            <p><strong>destroy( )</strong> 方法会根据指定的标题索引和标题级别的差值，返回当前标题的父级标题（在 data.chapters 中的）id。</p>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>id</dt>
+                <dd>{Number} - 返回 前标题的父级标题（在 data.chapters 中的）id。</dd>
+            </dl>
+        </div>
+        <div class="content render" id="render">
+            <h2>render( )</h2>
+            <p><strong>render( )</strong> 方法用来绘制整个界面。</p>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS</dt>
+                <dd>{Object} - 返回 AutocJS 对象。</dd>
+            </dl>
+            <h3>代码示例</h3>
+            <div class="item">
+                <div class="demo">
+<pre class="code"><code>var ArticleOutline = new AutocJS({
+     article: '#article',
+     title: 'AutocJS v0.2.0'
+});
+
+ArticleOutline.render();</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="content renderLinks" id="renderLinks">
+            <h2>renderLinks( )</h2>
+            <p><strong>renderLinks( )</strong> 方法用来绘制文章中标题对应的锚点链接。</p>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS</dt>
+                <dd>{Object} - 返回 AutocJS 对象。</dd>
+            </dl>
+        </div>
+        <div class="content renderElements" id="renderElements">
+            <h2>renderElements( )</h2>
+            <p><strong>renderElements( )</strong> 方法用来绘制导航菜单界面的主体框架。</p>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS</dt>
+                <dd>{Object} - 返回 AutocJS 对象。</dd>
+            </dl>
+        </div>
+        <div class="content renderChapters" id="renderChapters">
+            <h2>renderChapters( )</h2>
+            <p><strong>renderChapters( )</strong> 方法用来绘制导航菜单的文章大纲索引菜单。</p>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS</dt>
+                <dd>{Object} - 返回 AutocJS 对象。</dd>
+            </dl>
+        </div>
+        <div class="content show" id="show">
+            <h2>show( )</h2>
+            <p><strong>show( )</strong> 方法用来展开 AutocJS 控件。</p>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS</dt>
+                <dd>{Object} - 返回 AutocJS 对象。</dd>
+            </dl>
+        </div>
+        <div class="content hide" id="hide">
+            <h2>hide( )</h2>
+            <p><strong>hide( )</strong> 方法用来收起 AutocJS 控件。</p>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS</dt>
+                <dd>{Object} - 返回 AutocJS 对象。</dd>
+            </dl>
+        </div>
+        <div class="content toggle" id="toggle">
+            <h2>toggle( )</h2>
+            <p><strong>toggle( )</strong> 方法更具菜单显示状态，展开或者收起菜单</p>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS</dt>
+                <dd>{AutocJS} - 返回 AutocJS 对象。</dd>
+            </dl>
+        </div>
+        <div class="content updateLayout" id="updateLayout">
+            <h2>updateLayout( )</h2>
+            <p><strong>updateLayout( )</strong> 方法会根据当前窗口高度更新导航菜单的高度。</p>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS</dt>
+                <dd>{Object} - 返回 AutocJS 对象。</dd>
+            </dl>
+        </div>
+        <div class="content reload" id="reload">
+            <h2>reload( )</h2>
+            <p><strong>reload( )</strong> 方法用于重绘导航菜单。</p>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>Pagination</dt>
+                <dd>{Object} - 返回 Pagination 对象。</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <p class="author"><span class="version">AutocJS v0.2.0</span> · Created by <a href="http://www.yaohaixiao.com/">Robert
+        Yao</a></p>
+    <p class="license">Code licensed under <a href="http://opensource.org/licenses/mit-license.html">MIT License</a> ·
+        Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p>
+    <p class="issues"><a href="https://github.com/yaohaixiao/AutocJS">GitHub Project</a> · <a
+            href="https://github.com/yaohaixiao/AutocJS/issues">Issues</a></p>
+</div>
+<script type="text/javascript" src="asset/jquery/jquery.js"></script>
+<script type="text/javascript" src="js/autoc.js"></script>
+<script type="text/javascript">
+    var articleOutline = $( '#methods' ).autoc( {
+        title: 'AutocJS v0.2.0'
+    } );
+</script>
+</body>
+</html>

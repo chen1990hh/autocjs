@@ -105,6 +105,13 @@
         ANCHORS = 'h1,h2,h3,h4,h5,h6',
         PREFIX = 'anchor';
 
+    /**
+     * AutocJS 构造函数
+     *
+     * @param options
+     * @returns {AutocJS}
+     * @constructor
+     */
     var AutocJS = function ( options ) {
         this.attributes = {};
 
@@ -134,6 +141,10 @@
         return this;
     };
 
+    /**
+     * @property
+     * @static
+     */
     AutocJS.defaults = {
         article: '#article',
         title: 'Table of Contents',
@@ -158,29 +169,181 @@
         version: '0.2.0',
         constructor: AutocJS,
         /**
-         * 设置部件属性
+         * 设置配置属性
          *
-         * @param config
+         * @param options
          * @returns {AutocJS}
          */
-        set: function ( config ) {
+        set: function ( options ) {
 
-            if ( $.isPlainObject( config ) ) {
-                $.extend( this.attributes, config );
+            if ( $.isPlainObject( options ) ) {
+                $.extend( this.attributes, options );
             }
 
             return this;
         },
+        /**
+         * 获得配置属性
+         *
+         * @param {String} prop
+         * @returns {any}
+         */
         get: function ( prop ) {
             return this.attributes[ prop ];
         },
+        anchors: function ( data ) {
+
+            if ( $.isArray( data ) ) {
+                this.data.anchors = data;
+            }
+            else {
+                return this.data.anchors;
+            }
+
+            return this;
+        },
+        chapters: function ( data ) {
+
+            if ( $.isPlainObject( data ) ) {
+                this.data.chapters = data;
+            }
+            else {
+                return this.data.chapters;
+            }
+
+            return this;
+        },
+        getArticleAnchors: function () {
+            return this.elements.article.find( this.get( 'selector' ) );
+        },
+        /**
+         * 获得文章完整的章节索引数据
+         *
+         * @returns {Array}
+         */
+        getArticleChapters: function () {
+            var self = this,
+                chapters = [],
+                previous = 1,
+                level = 0,
+                prefix = this.get( 'prefix' );
+
+            // 获得目录索引信息
+            $(this.getArticleAnchors()).each(function ( i, anchor ) {
+                var id = guid( prefix ),
+                    $anchor = $( anchor ),
+                    text = $anchor.html(),
+                    current = parseInt( $anchor[ 0 ].tagName.toUpperCase().replace( /[H]/ig, '' ), 10 ),
+                    pid = -1;
+
+                // 1.（父标题，子标题）：当前标题的序号 > 前一个标题的序号
+                if ( current > previous ) {
+                    level += 1;
+
+                    // 第一层级的 pid 是 -1
+                    if ( level === 1 ) {
+                        pid = -1;
+                    }
+                    else {
+                        pid = i - 1;
+                    }
+                }
+                else {
+                    // 2.（同级标题，同级标题）
+                    // A. 当前标题的序号 === 前一个标题的序号
+                    // B. 当前标题的序号 < 前一个标题的序号 && 当前标题的序号 > 等级
+                    if ( current === previous || (current < previous && current > level) ) {
+
+                        // H1 的层级肯定是 1
+                        if ( current === 1 ) {
+                            level = 1;
+
+                            pid = -1;
+                        }
+                        else {
+                            pid = chapters[ i - 1 ].pid;
+                        }
+                    }
+                    else {
+                        // 3.（子标题，父级标题）：当前标题的序号 < 前一个标题的序号
+                        if ( current <= level ) {
+
+                            // H1 的层级肯定是 1
+                            if ( current === 1 ) {
+                                level = 1;
+                            }
+                            else {
+                                level = level - (previous - current);
+                            }
+
+                            // 第一级的标题
+                            if ( level === 1 ) {
+                                pid = -1;
+                            }
+                            else {
+                                // 虽然看上去差点，不过能工作啊
+                                pid = self.getPidByDiffer( chapters, previous - current, i );
+                            }
+                        }
+                    }
+                }
+
+                previous = current;
+
+                chapters.push( {
+                    id: i,
+                    level: level,
+                    text: text,
+                    value: id,
+                    tag: anchor.tagName,
+                    pid: pid
+                } );
+            } );
+
+            return chapters;
+        },
+
+        /**
+         * 根据 prevNum, curNum的差值，获得父级的 id 值
+         *
+         * @param {number} differ
+         * @returns {number}
+         */
+        getPidByDiffer: function ( chapters, differ, index ) {
+            var pid = -1;
+
+            // 最大只有5系的差距
+            switch ( differ ) {
+                case 1:
+                    pid = chapters[ chapters[ index - 1 ].pid ].pid;
+                    break;
+                case 2:
+                    pid = chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid;
+                    break;
+                case 3:
+                    pid = chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid;
+                    break;
+                case 4:
+                    pid = chapters[ chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid ].pid;
+                    break;
+                case 5:
+                    pid = chapters[ chapters[ chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid ].pid ].pid;
+                    break;
+                default:
+                    pid = chapters[ chapters[ index - 1 ].pid ].pid;
+                    break;
+            }
+
+            return pid;
+        },
         /**
          * 初始化程序
+         * 1. 初始化配置参数
+         * 2. 绘制UI界面
+         * 3. 绑定 DOM 节点的相应的事件处理器
          *
          * @param {Object} options - 配置信息
-         * @param {String|HTMLElement} options.article
-         * @param {String} [options.selector]
-         * @param {String} [options.prefix]
+         * @returns {AutocJS}
          */
         init: function ( options ) {
 
@@ -193,7 +356,7 @@
             return this;
         },
         /**
-         * 初始化 DOM 部件
+         * 初始化 AutocJS 的各个属性
          *
          * @returns {AutocJS}
          * @private
@@ -227,16 +390,16 @@
             return this;
         },
         /**
-         * 绘制界面框架
+         * 绘制 UI 界面
+         * 1. 给标题绘制 AnchorJS 类型的链接
+         * 2. 绘制 AutoJS 菜单的主框架
+         * 3. 绘制具体的菜单项
          *
          * @returns {AutocJS}
          */
         render: function () {
 
-            // 1. 绘制 AutoJS 菜单的主框架
-            // 2. 给标题绘制 AnchorJS 类型的链接
-            // 3. 绘制具体的菜单项
-            this.renderElements().renderLinks().renderChapters();
+            this.renderLinks().renderElements().renderChapters();
 
             // 全部绘制完成，再显示完整的菜单
             this.elements.wrap.removeClass( CLS_HIDE );
@@ -429,165 +592,6 @@
             this.setChapters( data ).renderChapters();
 
             return this;
-        },
-        /**
-         * 根据 prevNum, curNum的差值，获得父级的 id 值
-         *
-         * @param {number} differ
-         * @returns {number}
-         */
-        getPidByDiffer: function ( chapters, differ, index ) {
-            var pid = -1;
-
-            // 最大只有5系的差距
-            switch ( differ ) {
-                case 1:
-                    pid = chapters[ chapters[ index - 1 ].pid ].pid;
-                    break;
-                case 2:
-                    pid = chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid;
-                    break;
-                case 3:
-                    pid = chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid;
-                    break;
-                case 4:
-                    pid = chapters[ chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid ].pid;
-                    break;
-                case 5:
-                    pid = chapters[ chapters[ chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid ].pid ].pid;
-                    break;
-                default:
-                    pid = chapters[ chapters[ index - 1 ].pid ].pid;
-                    break;
-            }
-
-            return pid;
-        },
-        anchors: function ( data ) {
-
-            if ( $.isArray( data ) ) {
-                this.setAnchors( data );
-            }
-            else {
-                return this.getAnchors();
-            }
-
-            return this;
-        },
-        getAnchors: function () {
-            return this.data.anchors;
-        },
-        setAnchors: function ( data ) {
-            this.data.anchors = data;
-        },
-        getArticleAnchors: function () {
-            return this.elements.article.find( this.get( 'selector' ) );
-        },
-        chapters: function ( data ) {
-            if ( $.isPlainObject( data ) ) {
-                this.setChapters( data );
-            }
-            else {
-                return this.getChapters();
-            }
-
-            return this;
-        },
-        getChapters: function () {
-            return this.data.chapters;
-        },
-        setChapters: function ( data ) {
-            if ( $.isArray( data ) ) {
-                this.data.chapters = data;
-            }
-
-            return this;
-        },
-        /**
-         * 获得文章完整的章节索引数据
-         *
-         * @returns {Array}
-         */
-        getArticleChapters: function () {
-            var self = this,
-                chapters = [],
-                previous = 1,
-                level = 0,
-                prefix = this.get( 'prefix' );
-
-            // 获得目录索引信息
-            $(this.getArticleAnchors()).each(function ( i, anchor ) {
-                var id = guid( prefix ),
-                    $anchor = $( anchor ),
-                    text = $anchor.html(),
-                    current = parseInt( $anchor[ 0 ].tagName.toUpperCase().replace( /[H]/ig, '' ), 10 ),
-                    pid = -1;
-
-                // 1.（父标题，子标题）：当前标题的序号 > 前一个标题的序号
-                if ( current > previous ) {
-                    level += 1;
-
-                    // 第一层级的 pid 是 -1
-                    if ( level === 1 ) {
-                        pid = -1;
-                    }
-                    else {
-                        pid = i - 1;
-                    }
-                }
-                else {
-                    // 2.（同级标题，同级标题）
-                    // A. 当前标题的序号 === 前一个标题的序号
-                    // B. 当前标题的序号 < 前一个标题的序号 && 当前标题的序号 > 等级
-                    if ( current === previous || (current < previous && current > level) ) {
-
-                        // H1 的层级肯定是 1
-                        if ( current === 1 ) {
-                            level = 1;
-
-                            pid = -1;
-                        }
-                        else {
-                            pid = chapters[ i - 1 ].pid;
-                        }
-                    }
-                    else {
-                        // 3.（子标题，父级标题）：当前标题的序号 < 前一个标题的序号
-                        if ( current <= level ) {
-
-                            // H1 的层级肯定是 1
-                            if ( current === 1 ) {
-                                level = 1;
-                            }
-                            else {
-                                level = level - (previous - current);
-                            }
-
-                            // 第一级的标题
-                            if ( level === 1 ) {
-                                pid = -1;
-                            }
-                            else {
-                                // 虽然看上去差点，不过能工作啊
-                                pid = self.getPidByDiffer( chapters, previous - current, i );
-                            }
-                        }
-                    }
-                }
-
-                previous = current;
-
-                chapters.push( {
-                    id: i,
-                    level: level,
-                    text: text,
-                    value: id,
-                    tag: anchor.tagName,
-                    pid: pid
-                } );
-            } );
-
-            return chapters;
         },
         /**
          * 给导航菜单的各个 DOM 部件绑定事件处理器
