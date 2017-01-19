@@ -351,7 +351,7 @@
                 this.set( options );
             }
 
-            this._init().render().attachEvents();
+            this._init().render()._attachEvents();
 
             return this;
         },
@@ -598,7 +598,7 @@
          *
          * @returns {AutocJS}
          */
-        attachEvents: function () {
+        _attachEvents: function () {
             var self = this,
                 $elements = this.elements,
                 $article = $elements.article,
