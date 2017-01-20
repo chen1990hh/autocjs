@@ -92,8 +92,10 @@ h1.subject {
 }
 
 .content {
-    margin: 1rem;
+    margin: 0;
+    padding: 1.2rem;
     overflow: hidden;
+    clear: both;
 }
 
 .wrap p.image {

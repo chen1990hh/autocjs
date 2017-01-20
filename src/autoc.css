@@ -6,13 +6,13 @@
     src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAALAIAAAwAwT1MvMg8SBTUAAAC8AAAAYGNtYXAWi9QdAAABHAAAAFRnYXNwAAAAEAAAAXAAAAAIZ2x5Zgq29TcAAAF4AAABNGhlYWQEZM3pAAACrAAAADZoaGVhBhUDxgAAAuQAAAAkaG10eASAADEAAAMIAAAAFGxvY2EAKACuAAADHAAAAAxtYXhwAAgAVwAAAygAAAAgbmFtZQ5yJ3cAAANIAAAB2nBvc3QAAwAAAAAFJAAAACAAAwJAAZAABQAAApkCzAAAAI8CmQLMAAAB6wAzAQkAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAAABAAADpywPA/8AAQAPAAEAAAAABAAAAAAAAAAAAAAAgAAAAAAADAAAAAwAAABwAAQADAAAAHAADAAEAAAAcAAQAOAAAAAoACAACAAIAAQAg6cv//f//AAAAAAAg6cv//f//AAH/4xY5AAMAAQAAAAAAAAAAAAAAAQAB//8ADwABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAQAAAAAAAAAAAAIAADc5AQAAAAACADEARAJTAsAAKwBUAAABIiYnJjQ/AT4BMzIWFxYUDwEGIicmND8BNjQnLgEjIgYPAQYUFxYUBw4BIwciJicmND8BNjIXFhQPAQYUFx4BMzI2PwE2NCcmNDc2MhcWFA8BDgEjARQGDAUtLXoWOR8fORYtLTgKGwoKCjgaGg0gEhIgDXoaGgkJBQwHdR85Fi0tOAobCgoKOBoaDSASEiANehoaCQkKGwotLXoWOR8BMwUFLYEuehYXFxYugC44CQkKGwo4GkoaDQ0NDXoaShoKGwoFBe8XFi6ALjgJCQobCjgaShoNDQ0NehpKGgobCgoKLYEuehYXAAEAAAABAACiToc1Xw889QALBAAAAAAA0XnFFgAAAADRecUWAAAAAAJTAsAAAAAIAAIAAAAAAAAAAQAAA8D/wAAABAAAAAAAAlMAAQAAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAACAAAAAoAAMQAAAAAACgAUAB4AmgABAAAABQBVAAIAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAADgCuAAEAAAAAAAEADgAAAAEAAAAAAAIABwCfAAEAAAAAAAMADgBLAAEAAAAAAAQADgC0AAEAAAAAAAUACwAqAAEAAAAAAAYADgB1AAEAAAAAAAoAGgDeAAMAAQQJAAEAHAAOAAMAAQQJAAIADgCmAAMAAQQJAAMAHABZAAMAAQQJAAQAHADCAAMAAQQJAAUAFgA1AAMAAQQJAAYAHACDAAMAAQQJAAoANAD4YW5jaG9yanMtaWNvbnMAYQBuAGMAaABvAHIAagBzAC0AaQBjAG8AbgBzVmVyc2lvbiAxLjAAVgBlAHIAcwBpAG8AbgAgADEALgAwYW5jaG9yanMtaWNvbnMAYQBuAGMAaABvAHIAagBzAC0AaQBjAG8AbgBzYW5jaG9yanMtaWNvbnMAYQBuAGMAaABvAHIAagBzAC0AaQBjAG8AbgBzUmVndWxhcgBSAGUAZwB1AGwAYQByYW5jaG9yanMtaWNvbnMAYQBuAGMAaABvAHIAagBzAC0AaQBjAG8AbgBzRm9udCBnZW5lcmF0ZWQgYnkgSWNvTW9vbi4ARgBvAG4AdAAgAGcAZQBuAGUAcgBhAHQAZQBkACAAYgB5ACAASQBjAG8ATQBvAG8AbgAuAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==) format("truetype");
 }
 
-.autocjs-anchor {
+.autocjs-title {
     position: relative;
     z-index: 1;
     overflow: visible;
 }
 
-.toc {
+.autocjs {
     position: fixed;
     z-index: 10;
     top: 0;
@@ -29,7 +29,7 @@
     overflow: visible;
 }
 
-.toc-title {
+.autocjs-hd {
     height: 40px;
     margin: 0 auto;
     border-bottom: 1px solid #ddd;
@@ -40,7 +40,7 @@
     overflow: hidden;
 }
 
-.toc-bar {
+.autocjs-bar {
     position: absolute;
     z-index: 1;
     top: 50%;
@@ -57,7 +57,7 @@
     overflow: hidden;
 }
 
-.toc-switch {
+.autocjs-switch {
     margin: 0 auto;
     height: 40px;
     line-height: 40px;
@@ -67,9 +67,9 @@
     overflow: hidden;
 }
 
-.toc-top:link,
-.toc-top:visited,
-.toc-top:hover {
+.autocjs-top:link,
+.autocjs-top:visited,
+.autocjs-top:hover {
     display: block;
     margin: 0 auto;
     height: 40px;
@@ -81,12 +81,11 @@
     overflow: hidden;
 }
 
-.toc-title:hover,
-.toc-top:hover {
+.autocjs-top:hover {
     background-color: #f4f5f9;
 }
 
-.toc-bd {
+.autocjs-bd {
     position: relative;
     z-index: 2;
     margin: 0 auto;
@@ -96,19 +95,19 @@
     overflow: auto;
 }
 
-.toc-list {
+.autocjs-chapters {
     margin: 0 auto;
     padding: 10px 0;
     overflow: hidden;
 }
 
-.toc-sub-list {
+.autocjs-subjects {
     margin: 0;
     padding: 0 0 0 1em;
     overflow: hidden;
 }
 
-.toc-item {
+.autocjs-chapter {
     line-height: 30px;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -116,29 +115,22 @@
     overflow: hidden;
 }
 
-.toc-item a:link,
-.toc-item a:visited,
-.toc-item a:hover {
+.autocjs-text:link,
+.autocjs-text:visited,
+.autocjs-text:hover {
     color: #333;
     text-decoration: none;
 }
 
-.toc-item a:hover {
+.autocjs-text:hover {
     color: #008cff;
 }
 
-.toc-list li.divider {
-    background-color: #e5e5e5;
-    height: 1px;
-    margin: 9px 0;
-    overflow: hidden;
-}
-
-.toc-chapter {
+.autocjs-index {
     padding-right: 5px;
 }
 
-.toc-icon {
+.autocjs-anchor {
     position: absolute;
     z-index: 2;
     top: 50%;
@@ -164,18 +156,18 @@
     overflow: hidden;
 }
 
-.toc-icon:before {
+.autocjs-anchor:before {
     content: '\e9cb';
 }
 
-.toc-icon:link,
-.toc-icon:visited,
-.toc-icon:hover {
+.autocjs-anchor:link,
+.autocjs-anchor:visited,
+.autocjs-anchor:hover {
     color: inherit;
     text-decoration: none;
 }
 
-.toc-overlay {
+.autocjs-overlay {
     position: fixed;
     z-index: 9;
     top: 0;
@@ -188,6 +180,6 @@
     overflow: hidden;
 }
 
-.toc-hide {
+.autocjs-hide {
     display: none;
 }

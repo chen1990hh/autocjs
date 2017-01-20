@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Methods - AutocJS v0.2.0</title>
+    <title>Methods - AutocJS v0.2.1</title>
     <link href="asset/normalize/normalize.css" type="text/css" rel="stylesheet" media="all">
     <link href="css/layout.css" type="text/css" rel="stylesheet">
     <link href="css/autoc.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 <div class="header">
-    <h1 class="project">AutocJS<sup>v0.2.0</sup></h1>
+    <h1 class="project">AutocJS<sup>v0.2.1</sup></h1>
     <ul class="navigation">
         <li><a href="index.htm">Introduction</a></li>
         <li><a href="properties.htm">Properties</a></li>
@@ -237,9 +237,9 @@ ArticleOutline.render();</code></pre>
                 </div>
             </div>
         </div>
-        <div class="content renderLinks" id="renderLinks">
-            <h2>renderLinks( )</h2>
-            <p><strong>renderLinks( )</strong> 方法用来绘制文章中标题对应的锚点链接。</p>
+        <div class="content renderAnchors" id="renderAnchors">
+            <h2>renderAnchors( )</h2>
+            <p><strong>renderAnchors( )</strong> 方法用来绘制文章中标题对应的锚点链接。</p>
             <h3>返回值</h3>
             <dl class="params">
                 <dt>AutocJS</dt>
@@ -305,14 +305,28 @@ ArticleOutline.render();</code></pre>
             <p><strong>reload( )</strong> 方法用于重绘导航菜单。</p>
             <h3>返回值</h3>
             <dl class="params">
-                <dt>Pagination</dt>
-                <dd>{Object} - 返回 Pagination 对象。</dd>
+                <dt>AutocJS</dt>
+                <dd>{Object} - 返回 AutocJS 对象。</dd>
+            </dl>
+        </div>
+        <div class="content scrollTo" id="scrollTo">
+            <h2>scrollTo( top )</h2>
+            <p><strong>scrollTo( top )</strong> 方法用于实现页面动画滚动定位。</p>
+            <h3>参数说明</h3>
+            <dl class="params">
+                <dt>top</dt>
+                <dd>{Number} - 页面要滚动的 top 数值。</dd>
+            </dl>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS</dt>
+                <dd>{Object} - 返回 AutocJS 对象。</dd>
             </dl>
         </div>
     </div>
 </div>
 <div class="footer">
-    <p class="author"><span class="version">AutocJS v0.2.0</span> · Created by <a href="http://www.yaohaixiao.com/">Robert
+    <p class="author"><span class="version">AutocJS v0.2.1</span> · Created by <a href="http://www.yaohaixiao.com/">Robert
         Yao</a></p>
     <p class="license">Code licensed under <a href="http://opensource.org/licenses/mit-license.html">MIT License</a> ·
         Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p>
@@ -323,7 +337,7 @@ ArticleOutline.render();</code></pre>
 <script type="text/javascript" src="js/autoc.js"></script>
 <script type="text/javascript">
     var articleOutline = $( '#methods' ).autoc( {
-        title: 'AutocJS v0.2.0'
+        title: 'AutocJS v0.2.1'
     } );
 </script>
 </body>

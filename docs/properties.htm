@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Properties - AutocJS v0.2.0</title>
+    <title>Properties - AutocJS v0.2.1</title>
     <link href="asset/normalize/normalize.css" type="text/css" rel="stylesheet" media="all">
     <link href="css/layout.css" type="text/css" rel="stylesheet">
     <link href="css/autoc.css" type="text/css" rel="stylesheet">
@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="header">
-    <h1 class="project">AutocJS<sup>v0.2.0</sup></h1>
+    <h1 class="project">AutocJS<sup>v0.2.1</sup></h1>
     <ul class="navigation">
         <li><a href="index.htm">Introduction</a></li>
         <li class="active"><a href="properties.htm">Properties</a></li>
@@ -30,6 +30,10 @@
     selector: 'h1,h2,h3,h4,h5,h6',
     // 文章标题自动添加链接的 id 的前缀
     prefix: 'anchor',
+    // 段落定位，是否为动画滚动定位。
+    // true - 动画滚动定位
+    // false - 链接锚点定位
+    isAnimateScroll: true,
     // 正文要收集的每个标题自动生成的锚点链接 HTML 模板
     ANCHOR_LINK: '&lt;a aria-hidden="true" class="toc-anchor-link"&gt;&lt;/a&gt;',
     // AutocJS 菜单的标题文字
@@ -66,6 +70,8 @@
                 <li class="tip" data-position="top-left" data-tip="页面正文容器的 DOM 节点或者检点的 ID 选择器"><span class="api-key">article</span></li>
                 <li class="tip" data-position="top-left" data-tip="页面正文中要收集的文章标点的选择器"><span class="api-key">selector</span></li>
                 <li class="tip" data-position="top-left" data-tip="文章标题自动添加链接的 id 的前缀"><span class="api-key">prefix</span></li>
+                <li class="tip" data-position="top-left" data-tip="段落定位，是否为动画滚动定位"><span class="api-key">isAnimateScroll</span></li>
+                <li class="tip" data-position="top-right" data-tip="onlyAnchors 为 ture，则 AutocJS 的行为和 AnchorJS 一样；为 false， 则会出现导航菜单；"><span class="api-key">onlyAnchors</span></li>
                 <li class="tip" data-position="top-left" data-tip="正文要收集的每个标题自动生成的锚点链接 HTML 模板"><span class="api-key">ANCHOR_LINK</span></li>
                 <li class="tip" data-position="top-left" data-tip="AutocJS 菜单的标题文字"><span class="api-key">title</span></li>
                 <li class="tip" data-position="top-left" data-tip="AutocJS 菜单的根节点的 HTML 模板"><span class="api-key">WRAP</span></li>
@@ -94,7 +100,7 @@
     </div>
 </div>
 <div class="footer">
-    <p class="author"><span class="version">AutocJS v0.2.0</span> · Created by <a href="http://www.yaohaixiao.com/">Robert
+    <p class="author"><span class="version">AutocJS v0.2.1</span> · Created by <a href="http://www.yaohaixiao.com/">Robert
         Yao</a></p>
     <p class="license">Code licensed under <a href="http://opensource.org/licenses/mit-license.html">MIT License</a> ·
         Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p>
@@ -106,7 +112,7 @@
 <script type="text/javascript" src="js/tip.js"></script>
 <script type="text/javascript">
     $('#properties').autoc({
-        title:'AutocJS v0.2.0'
+        title:'AutocJS v0.2.1'
     });
 
     $(".tip").tip();

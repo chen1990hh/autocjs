@@ -81,6 +81,13 @@ new AutocJS({
     selector: 'h1,h2,h3,h4,h5,h6',
     // 文章标题自动添加链接的 id 的前缀
     prefix: 'anchor',
+    // 段落定位，是否为动画滚动定位。
+    // true - 动画滚动定位 （默认值）
+    // false - 链接锚点定位
+    isAnimateScroll: true,
+    // ture - 行为和 AnchorJS 一样
+    // false - 则会出现导航菜单
+    onlyAnchors: false, 
     // 正文要收集的每个标题自动生成的锚点链接 HTML 模板
     ANCHOR_LINK: '<a aria-hidden="true" class="toc-anchor-link"></a>',
     // AutocJS 菜单的标题文字
@@ -117,6 +124,8 @@ new AutocJS({
 * article
 * selector
 * prefix
+* isAnimateScroll
+* onlyAnchors
 * ANCHOR_LINK
 * title
 * WRAP
@@ -149,7 +158,7 @@ new AutocJS({
 * [getArticleChapters( )](http://yaohaixiao.github.io/AutocJS/methods.htm#getArticleChapters)
 * [getPidByDiffer( )](http://yaohaixiao.github.io/AutocJS/methods.htm#getPidByDiffer)
 * [render( )](http://yaohaixiao.github.io/AutocJS/methods.htm#render)
-* [renderLinks( )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderLinks)
+* [renderAnchors( )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderAnchors)
 * [renderElements( )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderElements)
 * [renderChapters( )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderChapters)
 * [show( )](http://yaohaixiao.github.io/AutocJS/methods.htm#show)
@@ -157,6 +166,7 @@ new AutocJS({
 * [toggle( )](http://yaohaixiao.github.io/AutocJS/methods.htm#toggle)
 * [updateLayout( )](http://yaohaixiao.github.io/AutocJS/methods.htm#updateLayout)
 * [reload( options )](http://yaohaixiao.github.io/AutocJS/methods.htm#reload)
+* [scrollTo( top )](http://yaohaixiao.github.io/AutocJS/methods.htm#scrollTo)
 
 
 ## Release History
@@ -166,6 +176,8 @@ See the [CHANGELOG](https://www.github.com/yaohaixiao/AutocJS/CHANGELOG.md)</a>.
 
 ## License
 
-Copyright (c) 2016 [Yaohaixiao](http://www.yaohaixiao.com/)
+Copyright (c) 2016-2017 [Yaohaixiao](http://www.yaohaixiao.com/)
 
-Licensed under the MIT License
+Code licensed under [MIT License](http://opensource.org/licenses/mit-license.html)
+
+API Documentation licensed under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/)
