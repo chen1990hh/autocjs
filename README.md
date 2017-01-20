@@ -171,7 +171,7 @@ new AutocJS({
 
 ## Release History
 
-See the [CHANGELOG](https://www.github.com/yaohaixiao/AutocJS/CHANGELOG.md)</a>.
+See the [CHANGELOG](https://github.com/yaohaixiao/AutocJS/blob/master/CHANGELOG.md).
 
 
 ## License
