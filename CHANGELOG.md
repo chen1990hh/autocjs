@@ -1,3 +1,20 @@
+## v0.2.2:
+
+date: 2017-01-23
+
+changes:
+
+- 修复 scrollTo 方法的 Firefox　兼容问题；
+- 修复 jQuery 插件调用方式配置 article 参数 BUG 的修复；
+- 更新 API 文档；
+- 更新 render 方法，更新了绘制需要处理的逻辑；
+- 更新 reload 方法，更具新的渲染界面逻辑做对应调整；
+- 更新 renderChapters 方法，使其可以生成菜单的索引导航和文章内容的索引导航；
+- 新增 showTocInArticle 配置，是否在文章中显示段落索引数据；
+- 新增 showIndexAtAnchors 配置，是否在文章标题中显示段落索引；
+- 新增 data.list　数据，格式化后 chapters 数据，以便生成树结构数据；
+- 新增 renderTocInArticle、renderToc、renderAnchorIndex、renderToc;
+
 ## v0.2.1:
 
 date: 2017-01-20

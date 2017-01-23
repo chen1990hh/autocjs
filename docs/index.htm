@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AutocJS v0.2.1 - 为你的文章自动创建目录导航菜单</title>
+    <title>AutocJS v0.2.2 - 为你的文章自动创建目录导航菜单</title>
     <link href="asset/normalize/normalize.css" type="text/css" rel="stylesheet" media="all">
     <link href="css/layout.css" type="text/css" rel="stylesheet">
     <link href="css/autoc.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 <div class="header">
-    <h1 class="project">AutocJS<sup>v0.2.1</sup></h1>
+    <h1 class="project">AutocJS<sup>v0.2.2</sup></h1>
     <ul class="navigation">
         <li class="active"><a href="index.htm">Introduction</a></li>
         <li><a href="properties.htm">Properties</a></li>
         <li><a href="methods.htm">Methods</a></li>
+        <li><a href="examples.htm">Examples</a></li>
     </ul>
 </div>
 <div class="download"></div>
@@ -80,7 +81,7 @@ new AutocJS({
     </div>
 </div>
 <div class="footer">
-    <p class="author"><span class="version">AutocJS v0.2.1</span> · Created by <a href="http://www.yaohaixiao.com/">Robert
+    <p class="author"><span class="version">AutocJS v0.2.2</span> · Created by <a href="http://www.yaohaixiao.com/">Robert
         Yao</a></p>
     <p class="license">Code licensed under <a href="http://opensource.org/licenses/mit-license.html">MIT License</a> ·
         Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p>
@@ -90,9 +91,9 @@ new AutocJS({
 <script type="text/javascript" src="asset/jquery/jquery.js"></script>
 <script type="text/javascript" src="js/autoc.js"></script>
 <script type="text/javascript">
-        $('#introduction').autoc({
-            title: 'AutocJS v0.2.1',
-            onlyAnchors: true
+        $('#container').autoc({
+            title: 'Introduction',
+            showTocInArticle: true
         });
 </script>
 </body>

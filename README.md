@@ -1,4 +1,4 @@
-# AutocJS v0.2.1
+# AutocJS v0.2.2
 
 ## Idea
 [AnchorJS](http://bryanbraun.github.io/anchorjs/) 是 AutocJS 的创作灵感。既然 AnchorJS 可创建标题的链接，为什么不直接给文章生成一个目录（Table of Contents）导航呢？ 于是就有了AutocJS。
@@ -81,13 +81,24 @@ new AutocJS({
     selector: 'h1,h2,h3,h4,h5,h6',
     // 文章标题自动添加链接的 id 的前缀
     prefix: 'anchor',
+    // 导航菜单的标题文本
+    title: 'Table of Contents',
     // 段落定位，是否为动画滚动定位。
     // true - 动画滚动定位 （默认值）
     // false - 链接锚点定位
     isAnimateScroll: true,
-    // ture - 行为和 AnchorJS 一样
-    // false - 则会出现导航菜单
-    onlyAnchors: false, 
+    // 是否在文章中显示段落索引导航
+    // true - 显示段落索引
+    // false - 不显示段落索引（默认值）
+    showTocInArticle: false,
+    // 是否只显示段落标题链接，不生成段落导航菜单
+    // true - 行为和 AnchorJS 一样
+    // false - 则会出现导航菜单（默认值）
+    onlyAnchors: false,
+    // 是否在文章标题中显示段落索引
+    // true - 显示段落索引
+    // false - 不显示段落索引（默认值）
+    showIndexAtAnchors: false,
     // 正文要收集的每个标题自动生成的锚点链接 HTML 模板
     ANCHOR_LINK: '<a aria-hidden="true" class="toc-anchor-link"></a>',
     // AutocJS 菜单的标题文字
@@ -124,10 +135,12 @@ new AutocJS({
 * article
 * selector
 * prefix
-* isAnimateScroll
-* onlyAnchors
+* [title](http://yaohaixiao.github.io/AutocJS/examples.htm#title)
+* [isAnimateScroll](http://yaohaixiao.github.io/AutocJS/examples.htm#isAnimateScroll)
+* [showTocInArticle](http://yaohaixiao.github.io/AutocJS/examples.htm#showTocInArticle)
+* [onlyAnchors](http://yaohaixiao.github.io/AutocJS/examples.htm#onlyAnchors)
+* [showIndexAtAnchors](http://yaohaixiao.github.io/AutocJS/examples.htm#showIndexAtAnchors)
 * ANCHOR_LINK
-* title
 * WRAP
 * TITLE
 * BAR
@@ -144,28 +157,33 @@ new AutocJS({
 ### Properties
 * attributes - AutocJS 对象设置的配置信息
 * elements - AutocJS 对象的所有 HTML 节点的集合
-* data - AutocJS 对象的数据，包括 anchors 和 chapters
+* data - AutocJS 对象的数据，包括 anchors、chapters、list
 * defaults - （静态属性）AutocJS 对象默认的配置信息
 
 ### Methods
 
 * [init( options )](http://yaohaixiao.github.io/AutocJS/methods.htm#init)
+* [reload( options )](http://yaohaixiao.github.io/AutocJS/methods.htm#reload)
 * [set( config )](http://yaohaixiao.github.io/AutocJS/methods.htm#set)
 * [get( prop )](http://yaohaixiao.github.io/AutocJS/methods.htm#get)
 * [anchors( data )](http://yaohaixiao.github.io/AutocJS/methods.htm#anchors)
 * [chapters( data )](http://yaohaixiao.github.io/AutocJS/methods.htm#chapters)
 * [getArticleAnchors( )](http://yaohaixiao.github.io/AutocJS/methods.htm#getArticleAnchors)
 * [getArticleChapters( )](http://yaohaixiao.github.io/AutocJS/methods.htm#getArticleChapters)
+* [getChaptersDataList( )](http://yaohaixiao.github.io/AutocJS/methods.htm#getChaptersDataList)
+* [getChapterIndex( )](http://yaohaixiao.github.io/AutocJS/methods.htm#getChapterIndex)
 * [getPidByDiffer( )](http://yaohaixiao.github.io/AutocJS/methods.htm#getPidByDiffer)
 * [render( )](http://yaohaixiao.github.io/AutocJS/methods.htm#render)
+* [renderTocInArticle( )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderTocInArticle)
 * [renderAnchors( )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderAnchors)
+* [renderAnchorIndex( )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderAnchorIndex)
+* [renderToc( )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderToc)
 * [renderElements( )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderElements)
-* [renderChapters( )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderChapters)
+* [renderChapters( list )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderChapters)
 * [show( )](http://yaohaixiao.github.io/AutocJS/methods.htm#show)
 * [hide( )](http://yaohaixiao.github.io/AutocJS/methods.htm#hide)
 * [toggle( )](http://yaohaixiao.github.io/AutocJS/methods.htm#toggle)
 * [updateLayout( )](http://yaohaixiao.github.io/AutocJS/methods.htm#updateLayout)
-* [reload( options )](http://yaohaixiao.github.io/AutocJS/methods.htm#reload)
 * [scrollTo( top )](http://yaohaixiao.github.io/AutocJS/methods.htm#scrollTo)
 
 
@@ -176,8 +194,8 @@ See the [CHANGELOG](https://github.com/yaohaixiao/AutocJS/blob/master/CHANGELOG.
 
 ## License
 
-Copyright (c) 2016-2017 [Yaohaixiao](http://www.yaohaixiao.com/)
+Copyright (c) 2016-2017 [Yaohaixiao](http://www.yaohaixiao.com/), all right reserved.
 
-Code licensed under [MIT License](http://opensource.org/licenses/mit-license.html)
+Code licensed under [MIT License](http://opensource.org/licenses/mit-license.html).
 
-API Documentation licensed under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+API Documentation licensed under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/).

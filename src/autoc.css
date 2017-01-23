@@ -130,6 +130,10 @@
     padding-right: 5px;
 }
 
+.autocjs-title .autocjs-index{
+    padding-right: 0.6rem;
+}
+
 .autocjs-anchor {
     position: absolute;
     z-index: 2;

@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Methods - AutocJS v0.2.1</title>
+    <title>Methods - AutocJS v0.2.2</title>
     <link href="asset/normalize/normalize.css" type="text/css" rel="stylesheet" media="all">
     <link href="css/layout.css" type="text/css" rel="stylesheet">
     <link href="css/autoc.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 <div class="header">
-    <h1 class="project">AutocJS<sup>v0.2.1</sup></h1>
+    <h1 class="project">AutocJS<sup>v0.2.2</sup></h1>
     <ul class="navigation">
         <li><a href="index.htm">Introduction</a></li>
         <li><a href="properties.htm">Properties</a></li>
         <li class="active"><a href="methods.htm">Methods</a></li>
+        <li><a href="examples.htm">Examples</a></li>
     </ul>
 </div>
 <div class="wrap" id="methods">
@@ -48,6 +49,15 @@ ArticleOutline.init({
 });</code></pre>
                     </div>
                 </div>
+        </div>
+        <div class="content reload" id="reload">
+            <h2>reload( )</h2>
+            <p><strong>reload( )</strong> 方法用于重绘界面。</p>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS</dt>
+                <dd>{Object} - 返回 AutocJS 对象。</dd>
+            </dl>
         </div>
         <div class="content set" id="set">
             <h2>set( config )</h2>
@@ -208,6 +218,29 @@ ArticleOutline.getArticleChapters();</code></pre>
                 </div>
             </div>
         </div>
+        <div class="content getChaptersDataList" id="getChaptersDataList">
+            <h2>getChaptersDataList( )</h2>
+            <p><strong>getChaptersDataList( )</strong> 方法会返回将 data.chapters 按 pid 分组的二维数组。</p>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>data.list</dt>
+                <dd>{Array} - 将 data.chapters 按 pid 分组的二维数组。</dd>
+            </dl>
+        </div>
+        <div class="content getChapterIndex" id="getChapterIndex">
+            <h2>getChapterIndex( chapter )</h2>
+            <p><strong>getChapterIndex( chapter )</strong> 方法会根据 chapter 数据在 data.chapters 中对应的索引值。</p>
+            <h3>参数说明</h3>
+            <dl class="params">
+                <dt>chapter</dt>
+                <dd>{Object} - 某个标题对应的 chapter 数据。</dd>
+            </dl>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>index</dt>
+                <dd>{Number} - chapter 数据在 data.chapters 中对应的索引值。</dd>
+            </dl>
+        </div>
         <div class="content getPidByDiffer" id="getPidByDiffer">
             <h2>getPidByDiffer( )</h2>
             <p><strong>destroy( )</strong> 方法会根据指定的标题索引和标题级别的差值，返回当前标题的父级标题（在 data.chapters 中的）id。</p>
@@ -225,21 +258,42 @@ ArticleOutline.getArticleChapters();</code></pre>
                 <dt>AutocJS</dt>
                 <dd>{Object} - 返回 AutocJS 对象。</dd>
             </dl>
-            <h3>代码示例</h3>
-            <div class="item">
-                <div class="demo">
-<pre class="code"><code>var ArticleOutline = new AutocJS({
-     article: '#article',
-     title: 'AutocJS v0.2.0'
-});
-
-ArticleOutline.render();</code></pre>
-                </div>
-            </div>
+        </div>
+        <div class="content renderTocInArticle" id="renderTocInArticle">
+            <h2>renderTocInArticle( )</h2>
+            <p><strong>renderTocInArticle( )</strong> 方法用来在文章中显示段落索引导航。</p>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS</dt>
+                <dd>{Object} - 返回 AutocJS 对象。</dd>
+            </dl>
         </div>
         <div class="content renderAnchors" id="renderAnchors">
             <h2>renderAnchors( )</h2>
             <p><strong>renderAnchors( )</strong> 方法用来绘制文章中标题对应的锚点链接。</p>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS</dt>
+                <dd>{Object} - 返回 AutocJS 对象。</dd>
+            </dl>
+        </div>
+        <div class="content renderAnchorIndex" id="renderAnchorIndex">
+            <h2>renderAnchorIndex( chapter )</h2>
+            <p><strong>renderAnchorIndex( chapter )</strong> 方法用来绘制文章中标题对应的章节索引数字。</p>
+            <h3>参数说明</h3>
+            <dl class="params">
+                <dt>chapter</dt>
+                <dd>{Object} - 某个标题对应的 chapter 数据。</dd>
+            </dl>
+            <h3>返回值</h3>
+            <dl class="params">
+                <dt>AutocJS</dt>
+                <dd>{Object} - 返回 AutocJS 对象。</dd>
+            </dl>
+        </div>
+        <div class="content renderToc" id="renderToc">
+            <h2>renderToc( )</h2>
+            <p><strong>renderToc( )</strong> 方法用来绘制完整的导航菜单。</p>
             <h3>返回值</h3>
             <dl class="params">
                 <dt>AutocJS</dt>
@@ -256,8 +310,13 @@ ArticleOutline.render();</code></pre>
             </dl>
         </div>
         <div class="content renderChapters" id="renderChapters">
-            <h2>renderChapters( )</h2>
-            <p><strong>renderChapters( )</strong> 方法用来绘制导航菜单的文章大纲索引菜单。</p>
+            <h2>renderChapters( list )</h2>
+            <p><strong>renderChapters( list )</strong> 方法用来绘制导航菜单的文章大纲索引菜单。</p>
+            <h3>参数说明</h3>
+            <dl class="params">
+                <dt>list</dt>
+                <dd>{HTMLElement} - 绘制索引导航的目标 DOM 节点。</dd>
+            </dl>
             <h3>返回值</h3>
             <dl class="params">
                 <dt>AutocJS</dt>
@@ -300,15 +359,6 @@ ArticleOutline.render();</code></pre>
                 <dd>{Object} - 返回 AutocJS 对象。</dd>
             </dl>
         </div>
-        <div class="content reload" id="reload">
-            <h2>reload( )</h2>
-            <p><strong>reload( )</strong> 方法用于重绘导航菜单。</p>
-            <h3>返回值</h3>
-            <dl class="params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - 返回 AutocJS 对象。</dd>
-            </dl>
-        </div>
         <div class="content scrollTo" id="scrollTo">
             <h2>scrollTo( top )</h2>
             <p><strong>scrollTo( top )</strong> 方法用于实现页面动画滚动定位。</p>
@@ -326,7 +376,7 @@ ArticleOutline.render();</code></pre>
     </div>
 </div>
 <div class="footer">
-    <p class="author"><span class="version">AutocJS v0.2.1</span> · Created by <a href="http://www.yaohaixiao.com/">Robert
+    <p class="author"><span class="version">AutocJS v0.2.2</span> · Created by <a href="http://www.yaohaixiao.com/">Robert
         Yao</a></p>
     <p class="license">Code licensed under <a href="http://opensource.org/licenses/mit-license.html">MIT License</a> ·
         Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p>
@@ -336,8 +386,8 @@ ArticleOutline.render();</code></pre>
 <script type="text/javascript" src="asset/jquery/jquery.js"></script>
 <script type="text/javascript" src="js/autoc.js"></script>
 <script type="text/javascript">
-    var articleOutline = $( '#methods' ).autoc( {
-        title: 'AutocJS v0.2.1'
+    $( '#container' ).autoc( {
+        title: 'Methods'
     } );
 </script>
 </body>

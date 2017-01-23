@@ -133,7 +133,8 @@
 
         this.data = {
             anchors: [],
-            chapters: []
+            chapters: [],
+            list: []
         };
 
         this.set( AutocJS.defaults );
@@ -151,11 +152,13 @@
      */
     AutocJS.defaults = {
         article: '#article',
-        title: 'Table of Contents',
         selector: ANCHORS,
         prefix: PREFIX,
+        title: 'Table of Contents',
         isAnimateScroll: true,
         onlyAnchors: false,
+        showTocInArticle: false,
+        showIndexAtAnchors: false,
         ANCHOR_LINK: ANCHOR_LINK,
         WRAP: WRAP,
         TITLE: TITLE,
@@ -172,7 +175,7 @@
     };
 
     AutocJS.prototype = {
-        version: '0.2.1',
+        version: '0.2.2',
         constructor: AutocJS,
         /**
          * 设置配置属性
@@ -197,6 +200,11 @@
         get: function ( prop ) {
             return this.attributes[ prop ];
         },
+        /**
+         *
+         * @param data
+         * @returns {*}
+         */
         anchors: function ( data ) {
 
             if ( $.isArray( data ) ) {
@@ -208,6 +216,11 @@
 
             return this;
         },
+        /**
+         *
+         * @param data
+         * @returns {*}
+         */
         chapters: function ( data ) {
 
             if ( $.isPlainObject( data ) ) {
@@ -219,6 +232,10 @@
 
             return this;
         },
+        /**
+         *
+         * @returns {*|{}}
+         */
         getArticleAnchors: function () {
             return this.elements.article.find( this.get( 'selector' ) );
         },
@@ -308,7 +325,56 @@
 
             return chapters;
         },
+        /**
+         *
+         * @returns {Array}
+         */
+        getChaptersDataList: function () {
+            var chapters = this.chapters(),
+                temp = {},
+                list = [];
 
+            $( chapters ).each( function ( i, chapter ) {
+                var key = chapter.pid === -1 ? 'H1' : chapter.pid.toString();
+
+                if ( !temp[ key ] ) {
+                    temp[ key ] = [];
+                }
+            } );
+
+            $.each( temp, function ( key ) {
+                $( chapters ).each( function ( i, chapter ) {
+                    var pid = chapter.pid === -1 ? 'H1' : chapter.pid.toString();
+
+                    if ( key === pid ) {
+                        temp[ key ].push( chapter );
+                    }
+                } );
+
+                list.push( temp[ key ] );
+            } );
+
+            return list;
+        },
+        /**
+         *
+         * @param chapter
+         * @returns {number}
+         */
+        getChapterIndex: function ( chapter ) {
+            var index = -1;
+
+            $( this.getChaptersDataList() ).each( function ( i, list ) {
+                $( list ).each( function ( j, data ) {
+                    if ( data === chapter ) {
+                        index = j;
+                        return false;
+                    }
+                } );
+            } );
+
+            return index;
+        },
         /**
          * 根据 prevNum, curNum的差值，获得父级的 id 值
          *
@@ -389,11 +455,26 @@
             $elements.list = $( this.get( 'LIST' ) );
             $elements.overlay = $( this.get( 'OVERLAY' ) );
 
-            // 获得所有标题元素
+            // 获得所有数据
             this.data.anchors = this.getArticleAnchors();
             this.data.chapters = this.getArticleChapters();
+            this.data.list = this.getChaptersDataList();
 
-            console.log( this.data );
+            return this;
+        },
+        /**
+         * 重新绘制界面
+         *
+         * @param {Object} options
+         * @returns {AutocJS}
+         */
+        reload: function ( options ) {
+
+            if ( $.isPlainObject( options ) ) {
+                this.set( options );
+            }
+
+            this._init().render();
 
             return this;
         },
@@ -406,21 +487,22 @@
          * @returns {AutocJS}
          */
         render: function () {
-            var onlyAnchors = this.get( 'onlyAnchors' );
 
-            this.renderAnchors();
+            this.renderTocInArticle().renderAnchors().renderToc();
 
-            if ( !onlyAnchors ) {
+            return this;
+        },
+        renderTocInArticle: function () {
+            var showTocInArticle = this.get( 'showTocInArticle' ),
+                $first = $( this.elements.article[ 0 ].firstChild ),
+                $list = $( this.get( 'LIST' ) );
 
-                // 绘制导航菜单框架
-                // 绘制导航链接
-                this.renderElements().renderChapters();
+            if ( showTocInArticle ) {
 
-                // 全部绘制完成，再显示完整的菜单
-                this.elements.wrap.removeClass( CLS_HIDE );
+                $list.insertBefore( $first );
 
-                // 最后更新菜单的高度
-                this.updateLayout();
+                this.renderChapters( $list );
+
             }
 
             return this;
@@ -438,17 +520,83 @@
 
             $( chapters ).each( function ( i, chapter ) {
                 var $anchor = $( anchors[ i ] ),
-                    id = chapter.value,
                     $link = $( self.get( 'ANCHOR_LINK' ) ).attr( {
-                        'href': '#' + id,
+                        'href': '#autocjs-title-' + chapter.id,
                         'aria-label': chapter.text
-                    } ).addClass( CLS_ANCHOR ).addClass( CLS_HIDE );
+                    } ).addClass( CLS_ANCHOR ).addClass( CLS_HIDE ),
+                    id = chapter.value;
 
                 $anchor.attr( 'id', id ).addClass( CLS_TITLE ).append( $link );
+
+                self.renderAnchorIndex( chapter );
             } );
 
             return this;
         },
+        /**
+         *
+         * @param chapter
+         * @returns {AutocJS}
+         */
+        renderAnchorIndex: function ( chapter ) {
+            var pid = chapter.pid,
+                id = chapter.id,
+                tag = chapter.tag,
+                showIndexAtAnchors = this.get( 'showIndexAtAnchors' ),
+                $anchor = $( '#' + CLS_TITLE + '-' + id ),
+                PREFIX = 'article-',
+                $index,
+                chapterText,
+                chapterCount;
+
+            if ( showIndexAtAnchors && tag !== 'H1' ) {
+
+                $index = $( this.get( 'CHAPTER' ) ).attr( 'id', PREFIX + CLS_INDEX + '-' + id );
+
+                // 绘制章节索引
+                chapterCount = this.getChapterIndex( chapter ) + 1;
+
+                if ( pid === -1 && tag === 'H2' ) {
+                    chapterText = chapterCount;
+                }
+                else {
+                    chapterText = $( '#' + PREFIX + CLS_INDEX + '-' + pid ).html() + '.' + chapterCount;
+                }
+
+                // 绘制段落章节编码
+                $index.html( chapterText );
+                $index.insertBefore( $anchor[ 0 ].firstChild );
+
+            }
+
+            return this;
+        },
+        /**
+         *
+         * @returns {AutocJS}
+         */
+        renderToc: function () {
+            var onlyAnchors = this.get( 'onlyAnchors' );
+
+            if ( !onlyAnchors ) {
+
+                // 绘制导航菜单框架
+                // 绘制导航链接
+                this.renderElements().renderChapters();
+
+                // 全部绘制完成，再显示完整的菜单
+                this.elements.wrap.removeClass( CLS_HIDE );
+
+                // 最后更新菜单的高度
+                this.updateLayout();
+            }
+
+            return this;
+        },
+        /**
+         *
+         * @returns {AutocJS}
+         */
         renderElements: function () {
             var $elements = this.elements,
                 $body = $( document.body ),
@@ -477,32 +625,52 @@
          *
          * @returns {AutocJS}
          */
-        renderChapters: function () {
+        renderChapters: function ( list ) {
             var self = this,
-                $list = this.elements.list,
+                $list = list ? $( list ) : this.elements.list,
                 chapters = this.chapters();
 
             $list.empty();
 
             $( chapters ).each( function ( i, chapter ) {
-                var $parent = null,
+                var pid = chapter.pid,
+                    id = chapter.id,
+                    $parent = null,
                     $chapter = $( self.get( 'ITEM' ) ),
-                    $link = $( self.get( 'LINK' ) ),
                     $index = $( self.get( 'CHAPTER' ) ),
-                    $subjects = $( '#' + CLS_SUBJECTS + '-' + chapter.pid ),
+                    $link = $( self.get( 'LINK' ) ),
+                    $subjects = $( '#' + CLS_SUBJECTS + '-' + pid ),
                     chapterText = '',
-                    chapterCount = 0;
+                    chapterCount = 0,
+                    PREFIX = 'article-',
+                    linkId,
+                    chapterId,
+                    subjectId,
+                    parentId;
+
+                if ( list ) {
+                    linkId = PREFIX + CLS_TEXT + '-' + id;
+                    chapterId = PREFIX + CLS_CHAPTER + '-' + id;
+                    subjectId = PREFIX + CLS_SUBJECTS + '-' + pid;
+                    parentId = PREFIX + CLS_CHAPTER + '-' + pid;
+                }
+                else {
+                    linkId = CLS_TEXT + '-' + id;
+                    chapterId = CLS_CHAPTER + '-' + id;
+                    subjectId = CLS_SUBJECTS + '-' + pid;
+                    parentId = CLS_CHAPTER + '-' + pid;
+                }
 
                 // 创建菜单的链接
                 $link.attr( {
-                    id: CLS_TEXT + '-' + chapter.id,
+                    id: linkId,
                     href: '#' + chapter.value,
                     rel: chapter.value
                 } ).html( chapter.text );
 
                 // 创建菜单项
                 $chapter.attr( {
-                    'id': CLS_CHAPTER + '-' + chapter.id,
+                    'id': chapterId,
                     'title': chapter.text
                 } ).append( $link );
 
@@ -515,11 +683,11 @@
                 else {
 
                     // 子级的标题，需要找到上级章节
-                    $parent = $( '#' + CLS_CHAPTER + '-' + chapter.pid );
+                    $parent = $( '#' + parentId );
 
                     // 没有绘制子菜单，则绘制它
                     if ( !$subjects[ 0 ] ) {
-                        $subjects = $( self.get( 'SUB_LIST' ) ).attr( 'id', CLS_SUBJECTS + '-' + chapter.pid );
+                        $subjects = $( self.get( 'SUB_LIST' ) ).attr( 'id', subjectId );
 
                         $parent.append( $subjects );
                     }
@@ -531,7 +699,7 @@
                     chapterText = $parent.find( '.' + CLS_INDEX ).html() + '.' + chapterCount;
                 }
 
-                // 绘制链接
+                // 绘制段落章节编码
                 $index.attr( 'data-chapter', chapterCount ).html( chapterText );
                 $index.insertBefore( $link );
             } );
@@ -606,20 +774,14 @@
             return this;
         },
         /**
-         * 重新绘制界面
          *
-         * @param {Array} data
+         * @param top
          * @returns {AutocJS}
          */
-        reload: function ( data ) {
-            this.chapters( data ).renderChapters();
-
-            return this;
-        },
         scrollTo: function ( top ) {
             var self = this;
 
-            $( document.body ).animate( {
+            $( "html,body" ).animate( {
                 scrollTop: top
             }, 500, 'linear', function () {
                 self.hide();
@@ -665,6 +827,12 @@
 
             return this;
         },
+        /**
+         *
+         * @param evt
+         * @returns {AutocJS|boolean|*}
+         * @private
+         */
         _onAutocJSAnchorMouseEnter: function ( evt ) {
             var context = evt.data.context,
                 $anchor = $( this ).find( '.' + CLS_ANCHOR );
@@ -673,6 +841,12 @@
 
             return context;
         },
+        /**
+         *
+         * @param evt
+         * @returns {AutocJS|boolean|*}
+         * @private
+         */
         _onAutocJSAnchorMouseLeave: function ( evt ) {
             var context = evt.data.context,
                 $anchor = $( this ).find( '.' + CLS_ANCHOR );
@@ -774,13 +948,11 @@
     // 将 autoc 扩展为一个 jquery 插件
     $.extend( $.fn, {
         autoc: function ( options ) {
-            var config = {};
+            var $article = $( this );
 
-            options.article = $( this );
-
-            $.extend( config, options );
-
-            return new AutocJS( config );
+            return new AutocJS( $.extend( {}, options, {
+                article: $article
+            } ) );
         }
     } );
 

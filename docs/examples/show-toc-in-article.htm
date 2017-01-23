@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>在文章中显示段落索引导航，同时显示导航菜单 - 设置是否在文章中显示段落索引导航 - Examples - AutocJS v0.2.2</title>
+    <link href="../asset/normalize/normalize.css" type="text/css" rel="stylesheet" media="all">
+    <link href="../css/layout.css" type="text/css" rel="stylesheet">
+    <link href="../css/autoc.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<div class="header">
+    <h1 class="project">AutocJS<sup>v0.2.2</sup></h1>
+    <ul class="navigation">
+        <li><a href="../index.htm">Introduction</a></li>
+        <li><a href="../properties.htm">Properties</a></li>
+        <li><a href="../methods.htm">Methods</a></li>
+        <li class="active"><a href="../examples.htm">Examples</a></li>
+    </ul>
+</div>
+<div class="download"></div>
+<div class="wrap" id="examples">
+    <h1 class="subject">Examples</h1>
+    <div class="container" id="container">
+        <div class="content title" id="title">
+            <h2>设置导航菜单的标题文本</h2>
+            <p>AutocJS 可以使用 title 配置项设置导航菜单的标题文本，默认值：'Table of Contents'。</p>
+            <h3>默认标题</h3>
+            <div class="item">
+<pre class="code"><code>new AutocJS({
+    article: '#container'
+});</code></pre>
+            </div>
+            <p>演示地址：<a href="default-title.htm">默认标题</a></p>
+            <h3>自定义标题</h3>
+            <div class="item">
+<pre class="code"><code>new AutocJS({
+    article: '#container',
+    title: 'Examples'
+});</code></pre>
+            </div>
+            <p>演示地址：<a href="customize-title.htm">自定义标题</a></p>
+        </div>
+        <div class="content isAnimateScroll" id="isAnimateScroll">
+            <h2>设置滚动模式</h2>
+            <p>AutocJS 可以使用 isAnimateScroll 配置项设置段落定位滚动模式，true - 动画滚动定位 （默认值），false - 链接锚点定位。</p>
+            <h3>锚点链接</h3>
+            <div class="item">
+<pre class="code"><code>new AutocJS({
+    article: '#container',
+    isAnimateScroll: false
+});</code></pre>
+            </div>
+            <p>演示地址：<a href="anchor-link.htm">锚点链接</a></p>
+        </div>
+        <div class="content showTocInArticle" id="showTocInArticle">
+            <h2>设置是否在文章中显示段落索引导航</h2>
+            <p>AutocJS 可以使用 showTocInArticle 配置项是否在文章中显示段落索引导航，true - 索引导航 ，false - 不显示索引导航（默认值）。</p>
+            <h3>在文章中显示段落索引导航，同时显示导航菜单</h3>
+            <div class="item">
+<pre class="code"><code>new AutocJS({
+    article: '#container',
+    showTocInArticle: true
+});</code></pre>
+            </div>
+            <p>演示地址：<a href="show-toc-in-article.htm">在文章中显示段落索引导航，同时显示导航菜单</a></p>
+            <h3>在文章中显示段落索引导航，但不显示导航菜单</h3>
+            <div class="item">
+<pre class="code"><code>new AutocJS({
+    article: '#container',
+    showTocInArticle: true,
+    onlyAnchors: true
+});</code></pre>
+            </div>
+            <p>演示地址：<a href="show-toc-in-article-without-toc-menu.htm">在文章中显示段落索引导航，但不显示导航菜单</a></p>
+        </div>
+        <div class="content onlyAnchors" id="onlyAnchors">
+            <h2>设置是否显示导航菜单</h2>
+            <p>AutocJS 可以使用 onlyAnchors 配置项是否显示导航菜单，true - 不显示菜单，false - 显示菜单 （默认值）。</p>
+            <h3>显示导航菜单</h3>
+            <div class="item">
+<pre class="code"><code>new AutocJS({
+    article: '#container',
+    onlyAnchors: false
+});</code></pre>
+            </div>
+            <p>演示地址：<a href="has-autoc-menu.htm">显示导航菜单</a></p>
+            <h3>只生成标题锚点</h3>
+            <div class="item">
+<pre class="code"><code>new AutocJS({
+    article: '#container',
+    onlyAnchors: true
+});</code></pre>
+            </div>
+            <p>演示地址：<a href="only-anchors.htm">只生成标题锚点</a></p>
+        </div>
+        <div class="content showIndexAtAnchors" id="showIndexAtAnchors">
+            <h2>设置是否在文章标题中显示段落索引信息</h2>
+            <p>AutocJS 可以使用 showIndexAtAnchors 配置项是否在文章标题中显示段落索引信息，true - 显示，false - 不显示 （默认值）。</p>
+            <h3>显示段落索引信息</h3>
+            <div class="item">
+<pre class="code"><code>new AutocJS({
+    article: '#container',
+    showIndexAtAnchors: true
+});</code></pre>
+            </div>
+            <p>演示地址：<a href="show-index-at-anchors.htm">显示段落索引信息</a></p>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <p class="author"><span class="version">AutocJS v0.2.2</span> · Created by <a href="http://www.yaohaixiao.com/">Robert
+        Yao</a></p>
+    <p class="license">Code licensed under <a href="http://opensource.org/licenses/mit-license.html">MIT License</a> ·
+        Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p>
+    <p class="issues"><a href="https://github.com/yaohaixiao/AutocJS">GitHub Project</a> · <a
+            href="https://github.com/yaohaixiao/AutocJS/issues">Issues</a></p>
+</div>
+<script type="text/javascript" src="../asset/jquery/jquery.js"></script>
+<script type="text/javascript" src="../js/autoc.js"></script>
+<script type="text/javascript">
+    $('#container').autoc({
+        showTocInArticle: true
+    });
+</script>
+</body>
+</html>
