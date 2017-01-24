@@ -11,6 +11,7 @@
     "src"
   ],
   "keywords": [
+    "autocjs",
     "jquery",
     "jquery-plugin"
   ],
@@ -20,11 +21,14 @@
   },
   "devDependencies": {
     "grunt": "^1.0.1",
+    "grunt-contrib-csslint": "^2.0.0",
+    "grunt-contrib-cssmin": "^0.4.2",
+    "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-uglify": "^0.5.1",
-    "grunt-contrib-cssmin": "^0.4.0"
+    "jshint-stylish": "^2.2.1"
   },
   "scripts": {
-    "test": "npm run lint && npm run cover"
+    "grunt": "grunt"
   },
   "repository": {
     "type": "git",
