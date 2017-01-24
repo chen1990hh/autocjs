@@ -1,3 +1,12 @@
+## v0.2.3:
+
+date: 2017-01-23
+
+changes:
+
+- 更新 css 样式；
+- 新增 csslint 检测和 jslint 检测
+
 ## v0.2.2:
 
 date: 2017-01-23

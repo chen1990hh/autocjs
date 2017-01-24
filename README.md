@@ -1,4 +1,4 @@
-# AutocJS v0.2.2
+# AutocJS v0.2.3
 
 ## Idea
 [AnchorJS](http://bryanbraun.github.io/anchorjs/) 是 AutocJS 的创作灵感。既然 AnchorJS 可创建标题的链接，为什么不直接给文章生成一个目录（Table of Contents）导航呢？ 于是就有了AutocJS。
