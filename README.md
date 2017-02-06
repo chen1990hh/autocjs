@@ -1,4 +1,4 @@
-# AutocJS v1.0.0
+# AutocJS v1.0.0 pre-release
 
 
 ## Idea
