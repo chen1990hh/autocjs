@@ -210,7 +210,7 @@
      * @param {Boolean} [options.isOnlyAnchors] - 是否只创建标题链接，默认值：false
      * @param {Boolean} [options.isAnimateScroll] - 是否使用动画滚动定位，默认值：true
      * @param {Boolean} [options.hasDirectoryInArticle] - 是否在文章中创建目录导航，默认值：false
-     * @param {Boolean} [options.hasCodeAtHeadings] - 是否在文章标题中显示该标题的段落索引编号，默认值：false
+     * @param {Boolean} [options.hasChapterCodeAtHeadings] - 是否在文章标题中显示该标题的段落索引编号，默认值：false
      * @param {String} [options.ANCHOR] - 标题标签中创建的标题链接的 HTML 模板代码
      * @param {String} [options.WRAP] - AutocJS 菜单根节点的 HTML 模板代码
      * @param {String} [options.HEADER] - AutocJS 菜单标题栏的 HTML 模板代码
@@ -294,7 +294,7 @@
      *
      * @property
      * @type {{article: string, selector: string, headingPrefix: string, title: string, isOnlyAnchors: boolean,
-     *     isAnimateScroll: boolean, hasDirectoryInArticle: boolean, hasCodeAtHeadings: boolean, ANCHOR: string, WRAP:
+     *     isAnimateScroll: boolean, hasDirectoryInArticle: boolean, hasChapterCodeAtHeadings: boolean, ANCHOR: string, WRAP:
      *     string, HEADER: string, BODY: string, FOOTER: string, SWITCHER: string, TOP: string, CHAPTERS: string,
      *     SUBJECTS: string, CHAPTER: string, TEXT: string, CODE: string, OVERLAY: string}}
      * @static
@@ -313,7 +313,7 @@
         // 是否在文章中创建目录导航，默认值：false
         hasDirectoryInArticle: false,
         // 是否在文章标题中显示该标题的段落索引编号，默认值：false
-        hasCodeAtHeadings: false,
+        hasChapterCodeAtHeadings: false,
         // 标题标签中创建的标题链接的 HTML 模板代码
         ANCHOR: ANCHOR,
         // AutocJS 菜单根节点的 HTML 模板代码
@@ -765,7 +765,7 @@
                 $existingIndex.remove();
             }
 
-            if ( this.get( 'hasCodeAtHeadings' ) && tag !== 'H1' ) {
+            if ( this.get( 'hasChapterCodeAtHeadings' ) && tag !== 'H1' ) {
 
                 $code = $( this.get( 'CODE' ) ).attr( 'id', INDEX + '-' + id );
 
