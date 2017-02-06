@@ -2,90 +2,108 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AutocJS - 为你的文章自动创建目录导航菜单</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
+    <meta name="author" content="Robert Yao - yaohaixiao.com">
+    <meta name="keyword" content="AutocJS,jQuery,jQuery Plugin">
+    <meta name="description" content="AutocJS: Automatically create directory navigation for your article.">
+    <!-- Mobile Specific Meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>AutocJS - 为你的文章自动创建目录导航</title>
     <link href="asset/normalize/normalize.css" type="text/css" rel="stylesheet" media="all">
-    <link href="css/layout.css" type="text/css" rel="stylesheet">
+    <link href="css/api.css" type="text/css" rel="stylesheet">
     <link href="css/autoc.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-<div class="header">
-    <h1 class="project">AutocJS</h1>
-    <ul class="navigation">
-        <li class="active"><a href="index.htm">Introduction</a></li>
-        <li><a href="properties.htm">Properties</a></li>
-        <li><a href="methods.htm">Methods</a></li>
-        <li><a href="examples.htm">Examples</a></li>
+<div class="api-header">
+    <h1 class="api-project">AutocJS</h1>
+    <ul class="api-navigation">
+        <li class="api-active"><a href="index.htm">Home</a></li>
+        <li><a href="api/index.htm">API Documentation</a></li>
+        <li><a href="examples/index.htm">Examples</a></li>
+        <li><a href="https://github.com/yaohaixiao/AutocJS/archive/master.zip">Download</a></li>
     </ul>
 </div>
-<div class="download"></div>
-<div class="wrap" id="introduction">
-    <h1 class="subject">Introduction</h1>
-    <div class="container" id="container">
-        <div class="content introduction">
+<div class="api-wrap" id="introduction">
+    <h1 class="api-subject">Introduction</h1>
+    <div class="api-container" id="container">
+        <div class="api-content idea">
             <h2>Idea</h2>
             <p><a href="http://bryanbraun.github.io/anchorjs/">AnchorJS</a> 是 AutocJS 的创作灵感。既然 AnchorJS
-                可创建标题的链接，为什么不直接给文章生成一个目录（Table of Contents）导航呢？于是就有了AutocJS.</p>
+                可创建标题的链接，为什么不直接给文章生成一个目录（Table of Contents）导航呢？于是就有了 AutocJS。</p>
+        </div>
+        <div class="api-content what">
             <h2>What is AutocJS?</h2>
-            <p>AutocJS 是一个专门用来给文章生成目录（Table of Contents）导航菜单的工具。AutocJS 会查找文章指定区域中的所有h1~h6的标签，并自动生成文章的目录导航菜单。</p>
+            <p>AutocJS 是一个专门用来生成文章目录（Table of Contents）导航的工具。AutocJS 会查找文章指定区域中的所有 h1~h6 的标签，并自动分析文章的层次结构，生成文章的目录导航（独立的侧边栏菜单，或者在文章的开始处生成文章目录）。</p>
             <p class="image"><img src="AutocJS.png" alt="AutocJS"></p>
+        </div>
+        <div class="api-content why">
             <h2>Why AutocJS?</h2>
-            <p>AnchorJS 由于是国外的程序员开发的，所以对中文支持不好，无法给中文标题生成锚点。AutocJS 就是一个即支持英文也支持中文的解决方案。</p>
-            <h2>Feature</h2>
-            <ul class="features">
-                <li>全面支持中文和英文</li>
-                <li>简洁大方的界面，采用绝对应为导航，不会破坏页面的美观</li>
-                <li>弹性的界面布局，可以根据不同的窗口高度，自动调节菜单布局</li>
-                <li>精确的章节统计，文章层次结构一目了然</li>
-                <li>支持 AMD 和 CMD 规范</li>
-                <li>可以作为 jQuery 插件使用</li>
+            <p>AnchorJS 由于是国外的程序员开发的，所以对中文支持不好，无法给中文标题生成锚点。而 AutocJS 即支持英文也支持中文。AutocJS 在拥有 AnchorJS 的基础功能同时，还可以自动分析文章的层次结构，生成文章的目录导航。</p>
+        </div>
+        <div class="api-content feature">
+            <h2>Features</h2>
+            <ul class="api-features">
+                <li>支持 AMD 和 CMD 规范；</li>
+                <li>可以作为独立模块使用，也可以作为 jQuery 插件使用；</li>
+                <li>支持中文和英文（标题文字）；</li>
+                <li>界面简洁大方；</li>
+                <li>拥有 AnchorJS 的基础功能；</li>
+                <li>可直接在段落标题上显示段落层级索引值；</li>
+                <li>即支持生成独立文章目录导航菜单，又可以直接在文章中生成目录导航；</li>
+                <li>配置灵活，丰富，让你随心所欲掌控 AutocJS；</li>
             </ul>
         </div>
-        <div class="content install">
-            <h2>install</h2>
+        <div class="api-content install">
+            <h2>Install</h2>
             <h3>npm install</h3>
-            <pre class="code"><code>npm install autocjs</code></pre>
+            <pre class="api-code"><code>npm install autocjs</code></pre>
             <h3>bower install</h3>
-            <pre class="code"><code>bower install autocjs</code></pre>
+            <pre class="api-code"><code>bower install autocjs</code></pre>
         </div>
-        <div class="content usage">
+        <div class="api-content usage">
             <h2>Usage</h2>
             <h3>Use as a CommonJS/AMD/CMD Module</h3>
-            <pre class="code"><code>var AutocJS = require('autocjs');
+            <pre class="api-code"><code>var AutocJS = require('autocjs');
 
 new AutocJS({
     article: '#article'
 });</code></pre>
             <h3>Use as a jQuery plugin</h3>
             <p>首先，引入 jQuery 和 AutocJS 的脚本文件。</p>
-            <pre class="code"><code>&lt;script type="text/javascript" src="jquery.js"&gt;&lt;/script&gt;
+            <pre class="api-code"><code>&lt;script type="text/javascript" src="jquery.js"&gt;&lt;/script&gt;
 
 &lt;script type="text/javascript" src="autoc.js"&gt;&lt;/script&gt;</code></pre>
             <p>然后，作为 jQuery 的插件来调用 AutocJS。</p>
-            <pre class="code"><code>$('#article').autoc({
+            <pre class="api-code"><code>$('#article').autoc({
     title: 'AutocJS v0.2.0'
 });</code></pre>
-            <h3>Use as an independent Object</h3>
+            <h3>Use as an independent Module</h3>
             <p>首先，引入 AutocJS 的脚本文件。</p>
-            <pre class="code"><code>&lt;script type="text/javascript" src="autoc.js"&gt;&lt;/script&gt;</code></pre>
+            <pre class="api-code"><code>&lt;script type="text/javascript" src="autoc.js"&gt;&lt;/script&gt;</code></pre>
             <p>然后，调用 AutocJS 对象。</p>
-            <pre class="code"><code>new AutocJS({
+            <pre class="api-code"><code>new AutocJS({
     article: '#article',
     title: 'AutocJS v0.2.0'
 });</code></pre>
         </div>
-        <div class="content license">
+        <div class="api-content history">
+            <h2>Release History</h2>
+            <p>See the <a href="https://github.com/yaohaixiao/AutocJS/blob/master/CHANGELOG.md">CHANGELOG</a>.</p>
+        </div>
+        <div class="api-content license">
             <h2>License</h2>
-            <p>Code licensed under <a href="http://opensource.org/licenses/mit-license.html">MIT License</a></p>
-            <p>Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p>
+            <p>Code licensed under <a href="http://opensource.org/licenses/mit-license.html">MIT License</a> - Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p>
         </div>
     </div>
 </div>
-<div class="footer">
-    <p class="author"><span class="version">AutocJS</span> · Created by <a href="http://www.yaohaixiao.com/">Robert
+<div class="api-footer">
+    <p class="api-author"><span class="api-version">AutocJS</span> · Created by <a href="http://www.yaohaixiao.com/">Robert
         Yao</a></p>
-    <p class="license">Code licensed under <a href="http://opensource.org/licenses/mit-license.html">MIT License</a> ·
+    <p class="api-license">Code licensed under <a href="http://opensource.org/licenses/mit-license.html">MIT License</a> ·
         Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p>
-    <p class="issues"><a href="https://github.com/yaohaixiao/AutocJS">GitHub Project</a> · <a
+    <p class="api-issues"><a href="https://github.com/yaohaixiao/AutocJS">GitHub Project</a> · <a
             href="https://github.com/yaohaixiao/AutocJS/issues">Issues</a></p>
 </div>
 <script type="text/javascript" src="asset/jquery/jquery.js"></script>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
+    <meta name="author" content="Robert Yao - yaohaixiao.com">
+    <meta name="keyword" content="AutocJS,jQuery,jQuery Plugin">
+    <meta name="description" content="AutocJS: Automatically create directory navigation for your article.">
+    <!-- Mobile Specific Meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Options - API Documentation - AutocJS</title>
+    <link href="../asset/normalize/normalize.css" type="text/css" rel="stylesheet" media="all">
+    <link href="../css/api.css" type="text/css" rel="stylesheet">
+    <link href="../css/autoc.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<div class="api-header">
+    <h1 class="api-project">AutocJS</h1>
+    <ul class="api-navigation">
+        <li><a href="../index.htm">Home</a></li>
+        <li class="api-active"><a href="index.htm">API Documentation</a></li>
+        <li><a href="../examples/index.htm">Examples</a></li>
+        <li><a href="https://github.com/yaohaixiao/AutocJS/archive/master.zip">Download</a></li>
+    </ul>
+</div>
+<div class="api-wrap" id="configuration">
+    <h1 class="api-subject">Options</h1>
+    <div class="api-container" id="container">
+        <div class="api-content article" id="article">
+            <h2>article</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>String | HTMLElement</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>''</dd>
+            </dl>
+            <p>必选，用来指定页面中显示文章正文的 DOM 节点或者 ID 选择器。如果没有指定它，则程序将不会执行。</p>
+            <h3>Usage</h3>
+            <h4>As a id selector</h4>
+            <pre class="api-code"><code>new AutocJS({
+    article: '#article'
+    ...
+});</code></pre>
+            <h4>As a DOM element</h4>
+<pre class="api-code"><code>new AutocJS({
+    article: $('#article')
+    ...
+});</code></pre>
+        </div>
+        <div class="api-content selector" id="selector">
+            <h2>selector</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>String</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>'h1,h2,h3,h4,h5,h6'</dd>
+            </dl>
+            <p>可选，用来指定 <a href="options.htm#article">article</a> 节点下，要生成导航的标题标签的选择器。</p>
+            <h3>Usage</h3>
+            <h4>Default selector</h4>
+            <pre class="api-code"><code>new AutocJS({
+    article: '#article'
+    // 不配置 selector 属性，即使用默认选择器
+});</code></pre>
+            <h4>Customize selector</h4>
+            <pre class="api-code"><code>new AutocJS({
+    article: $('#article'),
+    selector: 'h3'
+    ...
+});</code></pre>
+            <p>演示：<a href="../examples/customize-selector.htm">Customize selector</a></p>
+        </div>
+        <div class="api-content title" id="title">
+            <h2>title</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>String</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>'Table of Contents'</dd>
+            </dl>
+            <p>可选，用来指定 AutocJS 自动创建的文章导读索引导航菜单的标题文字。</p>
+            <h3>Usage</h3>
+            <h4>Default title</h4>
+            <pre class="api-code"><code>new AutocJS({
+    article: '#article',
+    // 不配置 title 属性，即使用默认标题文字
+});</code></pre>
+            <h4>Customize title</h4>
+            <pre class="api-code"><code>new AutocJS({
+    article: $('#article'),
+    title: 'Customize title'
+    ...
+});</code></pre>
+            <p>演示：<a href="../examples/customize-title.htm">Customize title</a></p>
+        </div>
+        <div class="api-content isAnchorsOnly" id="isAnchorsOnly">
+            <h2>isAnchorsOnly</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Boolean</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>false</dd>
+            </dl>
+            <p>可选，用来指定是否只创建标题链接。</p>
+            <h3>Usage</h3>
+            <h4>Create directory navigation and anchors</h4>
+            <pre class="api-code"><code>new AutocJS({
+    article: '#article'
+    // 不配置 isAnchorsOnly 属性，即会同时生成导航菜单和创建标题锚点链接
+});</code></pre>
+            <h4>Create anchors only</h4>
+            <pre class="api-code"><code>new AutocJS({
+    article: $('#article'),
+    isOnlyAnchors: false
+    ...
+});</code></pre>
+            <p>演示：<a href="../examples/create-anchors-only.htm">Create anchors only</a></p>
+        </div>
+        <div class="api-content isAnimateScroll" id="isAnimateScroll">
+            <h2>isAnimateScroll</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Boolean</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>true</dd>
+            </dl>
+            <p>可选，用来指定在点击段落索引导航链接时，是使用动画滚动定位，还是使用默认的锚点链接行为。</p>
+            <h3>Usage</h3>
+            <h4>Scroll with animate effect</h4>
+            <pre class="api-code"><code>new AutocJS({
+    article: '#article'
+    // 不配置 isAnimateScroll 属性，即使用动画滚动定位
+});</code></pre>
+            <h4>Act with anchor default behavior</h4>
+            <pre class="api-code"><code>new AutocJS({
+    article: $('#article'),
+    isAnimateScroll: false
+    ...
+});</code></pre>
+            <p>演示：<a href="../examples/positioning-behavior.htm">Positioning behavior</a></p>
+        </div>
+        <div class="api-content hasDirectoryInArticle" id="hasDirectoryInArticle">
+            <h2>hasDirectoryInArticle</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Boolean</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>false</dd>
+            </dl>
+            <p>可选，用来指定是否在文章（开始位置）中创建目录导航。</p>
+            <h3>Usage</h3>
+            <h4>No directory navigation in the article</h4>
+            <pre class="api-code"><code>new AutocJS({
+    article: '#article'
+    // 不配置 hasDirectoryInArticle 属性，就不会创建索引导航
+});</code></pre>
+            <h4>has directory navigation in the article</h4>
+            <pre class="api-code"><code>new AutocJS({
+    article: $('#article'),
+    hasDirectoryInArticle: true
+    ...
+});</code></pre>
+            <p>演示：<a href="../examples/create-directory-navigation-in-the-article.htm">Has directory navigation in the article</a></p>
+        </div>
+        <div class="api-content hasChapterCodeAtHeadings" id="hasChapterCodeAtHeadings">
+            <h2>hasChapterCodeAtHeadings</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Boolean</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>false</dd>
+            </dl>
+            <p>可选，用来指定是否在文章标题中显示该标题的段落索引编号。</p>
+            <h3>Usage</h3>
+            <h4>No index code at the headings</h4>
+            <pre class="api-code"><code>new AutocJS({
+    article: '#article'
+    // 不配置 hasTocInArticle 属性，就不会创建索引导航
+});</code></pre>
+            <h4>Has index code at the headings</h4>
+            <pre class="api-code"><code>new AutocJS({
+    article: $('#article'),
+    hasCodeAtHeadings: true
+    ...
+});</code></pre>
+            <p>演示：<a href="../examples/has-chapter-code-at-the-headings.htm">Has chapter code at the headings</a></p>
+        </div>
+        <div class="api-content anchor" id="anchor">
+            <h2>ANCHOR</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>String</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>'&lt;a class="autocjs-anchor" aria-hidden="true"&gt;&lt;/a&gt;'</dd>
+            </dl>
+            <p>可选，用来指定标题标签中创建的标题链接的 HTML 模板代码。</p>
+        </div>
+        <div class="api-content wrap" id="wrap">
+            <h2>WRAP</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>String</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>'&lt;div id="toc" class="autocjs autocjs-hide" aria-hidden="true"&gt;&lt;/div&gt;'</dd>
+            </dl>
+            <p>可选，用来指定 AutocJS 菜单根节点的 HTML 模板代码。</p>
+        </div>
+        <div class="api-content header" id="header">
+            <h2>HEADER</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Boolean</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>'&lt;h3 class="autocjs-hd" aria-hidden="true"&gt;{title}&lt;/h3&gt;'</dd>
+            </dl>
+            <p>可选，用来指定 AutocJS 菜单内容节点的 HTML 模板代码。</p>
+        </div>
+        <div class="api-content body" id="body">
+            <h2>BODY</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Boolean</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>'&lt;nav class="autocjs-bd" aria-hidden="true"&gt;&lt;/nav&gt;'</dd>
+            </dl>
+            <p>可选，用来指定 AutocJS 菜单内容节点的 HTML 模板代码。</p>
+        </div>
+        <div class="api-content footer" id="footer">
+            <h2>FOOTER</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Boolean</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>'&lt;div class="autocjs-ft" aria-hidden="true"&gt;&lt;/div&gt;'</dd>
+            </dl>
+            <p>可选，用来指定 AutocJS 菜单页脚节点的 HTML 模板代码。</p>
+        </div>
+        <div class="api-content switcher" id="switcher">
+            <h2>SWITCHER</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Boolean</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>'&lt;h2 class="autocjs-switcher" title="Toggle Menu" aria-hidden="true"&gt;&#926;&lt;/h2&gt;'</dd>
+            </dl>
+            <p>可选，用来指定 AutocJS 菜单展开显示开关的 HTML 模板代码。</p>
+        </div>
+        <div class="api-content top" id="top">
+            <h2>TOP</h2>
+            <h3>Description</h3>
+            <p>可选，用来指定 AutocJS 菜单返回顶部按钮的 HTML 模板代码。</p>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Boolean</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>'&lt;a class="autocjs-top" href="#top" aria-hidden="true"&gt;TOP&lt;/a&gt;'</dd>
+            </dl>
+        </div>
+        <div class="api-content chapters" id="chapters">
+            <h2>CHAPTERS</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Boolean</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>'&lt;ol class="autocjs-chapters" aria-hidden="true"&gt;&lt;/ol&gt;'</dd>
+            </dl>
+            <p>可选，用来指定 AutocJS 导航目录列表的 HTML 模板代码。</p>
+        </div>
+        <div class="api-content subjects" id="subjects">
+            <h2>SUBJECTS</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Boolean</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>'&lt;ol class="autocjs-subjects" aria-hidden="true"&gt;&lt;/ol&gt;'</dd>
+            </dl>
+            <p>可选，用来指定 AutocJS 导航子目录列表的 HTML 模板代码。</p>
+        </div>
+        <div class="api-content chapter" id="chapter">
+            <h2>CHAPTER</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Boolean</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>'&lt;li class="autocjs-chapter" aria-hidden="true"&gt;&lt;/li&gt;'</dd>
+            </dl>
+            <p>可选，用来指定 AutocJS 导航段落章节的 HTML 模板代码。</p>
+        </div>
+        <div class="api-content text" id="text">
+            <h2>TEXT</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Boolean</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>'&lt;a class="autocjs-text" aria-hidden="true"&gt;&lt;/a&gt;'</dd>
+            </dl>
+            <p>可选，用来指定 AutocJS 导航段落章节链接的 HTML 模板代码。</p>
+        </div>
+        <div class="api-content code" id="code">
+            <h2>CODE</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Boolean</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>'&lt;em class="autocjs-code" aria-hidden="true"&gt;&lt;/em&gt;'</dd>
+            </dl>
+            <p>可选，用来指定 AutocJS 段落章节索引编码的 HTML 模板代码。</p>
+        </div>
+        <div class="api-content overlay" id="overlay">
+            <h2>OVERLAY</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Boolean</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>'&lt;div class="autocjs-overlay autocjs-hide" aria-hidden="true"&gt;&lt;/div&gt;'</dd>
+            </dl>
+            <p>可选，用来指定 AutocJS 菜单展开时遮罩层的 HTML 模板代码。</p>
+        </div>
+    </div>
+</div>
+<div class="api-footer">
+    <p class="api-author"><span class="api-version">AutocJS</span> · Created by <a href="http://www.yaohaixiao.com/">Robert
+        Yao</a></p>
+    <p class="api-license">Code licensed under <a href="http://opensource.org/licenses/mit-license.html">MIT License</a> ·
+        Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p>
+    <p class="api-issues"><a href="https://github.com/yaohaixiao/AutocJS">GitHub Project</a> · <a
+            href="https://github.com/yaohaixiao/AutocJS/issues">Issues</a></p>
+</div>
+<script type="text/javascript" src="../asset/jquery/jquery.js"></script>
+<script type="text/javascript" src="../js/autoc.js"></script>
+<script type="text/javascript">
+    $('#container').autoc({
+        title:'Configuration Options'
+    });
+</script>
+</body>
+</html>

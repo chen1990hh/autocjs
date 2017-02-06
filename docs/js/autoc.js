@@ -36,27 +36,75 @@
             '`': '&#x60;'
         },
         SCRIPT_FRAGMENT = '<script[^>]*>([\\S\\s]*?)<\/script\\s*>',
-        _uid = -1;
+        uid = -1;
 
-    function stripScripts ( html ) {
+    /**
+     * 返回移除 JavaScript 代码后的字符串
+     *
+     * @method stripScripts
+     * @param {String} html
+     * @returns {String}
+     */
+    function stripScripts( html ) {
         return html.replace( new RegExp( SCRIPT_FRAGMENT, 'img' ), '' );
     }
 
-    function encodeHTML ( html ) {
+    /**
+     * 返回将 HTML 标签代码转义成对应的实体字符串
+     *
+     * @method encodeHTML
+     * @param {String} html
+     * @returns {String}
+     */
+    function encodeHTML( html ) {
         return html.replace( /[\r\t\n]/g, ' ' ).replace( /[&<>"'\/`]/g, function ( match ) {
             return HTML_CHARS[ match ];
         } );
     }
 
-    function decodeHTML ( html ) {
-        return html.replace( /&lt;/g, '<' ).replace( /&gt;/g, '>' ).replace( /&amp;/g, '&' ).replace( /&quot;/g, '"' ).replace( /&#x27;/g, '\'' ).replace( /&#x2F;/g, '\/' ).replace( /&#x60;/g, '`' );
+    /**
+     * 返回将 HTML 实体字符串转义成对应的 HTML 标签代码
+     *
+     * @method decodeHTML
+     * @param {String} html
+     * @returns {String}
+     */
+    function decodeHTML( html ) {
+        return html.replace( /&lt;/g, '<' )
+                   .replace( /&gt;/g, '>' )
+                   .replace( /&amp;/g, '&' )
+                   .replace( /&quot;/g, '"' )
+                   .replace( /&#x27;/g, '\'' )
+                   .replace( /&#x2F;/g, '\/' )
+                   .replace( /&#x60;/g, '`' );
     }
 
-    function safetyHTML ( html ) {
+    /**
+     * 返回安全的 HTML 代码：
+     * 1. 移除 JS 代码；
+     * 2. 转义 HTML 标签字符串
+     * 3. 转义 HTML 实体字符串
+     *
+     * @method safetyHTML
+     * @param {String} html
+     * @returns {String}
+     */
+    function safetyHTML( html ) {
         return decodeHTML( encodeHTML( stripScripts( html ) ) );
     }
 
-    function template ( options ) {
+    /**
+     * 一个简单的 HTML 模板工具，返回用 JSON 数据中的值替换特殊字符后 HTML 模板字符串。
+     *
+     * @method template
+     * @param {Object} options - 配置参数
+     * @param {Object} options.data - 模板的 JSON 对象格式数据
+     * @param {String} options.html - 模板的 HTML 代码片段
+     * @param {String} [options.startTag] - HTML 代码片段中特殊字符的开始标签
+     * @param {String} [options.endTag] - HTML 代码片段中特殊字符的结束标签
+     * @returns {String}
+     */
+    function template( options ) {
         var json = options.data,
             html = options.html,
             startTag = options.startTag || '{',
@@ -73,67 +121,162 @@
     }
 
     /**
-     * 生成唯一的 id
+     * 返回唯一的 id
      *
      * @method guid
      * @param {String} [prefix] - 可选，默认生成数字ID，设置了 prefix 则生成字符串ID
      * @returns {Number|String}
      */
-    function guid ( prefix ) {
-        _uid += 1;
+    function guid( prefix ) {
+        uid += 1;
 
-        return prefix ? prefix + '-' + _uid : _uid;
+        return prefix ? prefix + '-' + uid : uid;
     }
 
-    var CLS_SHOW = 'autocjs-show',
-        CLS_HIDE = 'autocjs-hide',
-        CLS_TITLE = 'autocjs-title',
+    /**
+     * 根据两个相邻的标题标签的数字的差值，获得父级的 id 值
+     *
+     * @method getPidByDiffer
+     * @param {Array} chapters -
+     * @param {Number} differ -
+     * @param {Number} index -
+     * @returns {Number}
+     */
+    function getPidByDiffer( chapters, differ, index ) {
+        var pid = -1;
+
+        // 最大只有5系的差距
+        switch ( differ ) {
+            case 1:
+                pid = chapters[ chapters[ index - 1 ].pid ].pid;
+                break;
+            case 2:
+                pid = chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid;
+                break;
+            case 3:
+                pid = chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid;
+                break;
+            case 4:
+                pid = chapters[ chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid ].pid;
+                break;
+            case 5:
+                pid = chapters[ chapters[ chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid ].pid ].pid;
+                break;
+            default:
+                pid = chapters[ chapters[ index - 1 ].pid ].pid;
+                break;
+        }
+
+        return pid;
+    }
+
+    var ARTICLE_PREFIX = 'article-',
+        CLS_HEADING = 'autocjs-heading',
         CLS_ANCHOR = 'autocjs-anchor',
+        CLS_WRAP = 'autocjs',
+        CLS_CHAPTERS = 'autocjs-chapters',
+        CLS_ARTICLE_CHAPTERS = ARTICLE_PREFIX + CLS_CHAPTERS,
         CLS_SUBJECTS = 'autocjs-subjects',
         CLS_CHAPTER = 'autocjs-chapter',
         CLS_TEXT = 'autocjs-text',
-        CLS_INDEX = 'autocjs-index',
-        ANCHOR_LINK = '<a class="' + CLS_ANCHOR + '" aria-hidden="true"></a>',
-        WRAP = '<div class="autocjs ' + CLS_HIDE + '" aria-hidden="true"></div>',
-        TITLE = '<h3 class="autocjs-hd" aria-hidden="true">{title}</h3>',
-        BAR = '<div class="autocjs-bar" aria-hidden="true"></div>',
-        SWITCH = '<h2 class="autocjs-switch" title="Toggle Menu" aria-hidden="true">&#926;</h2>',
-        TOP = '<a class="autocjs-top" href="#top" aria-hidden="true">TOP</a>',
+        CLS_CODE = 'autocjs-code',
+        CLS_SHOW = 'autocjs-show',
+        CLS_HIDE = 'autocjs-hide',
+        ANCHOR = '<a class="' + CLS_ANCHOR + '" aria-hidden="true"></a>',
+        WRAP = '<div id="{id}" class="' + CLS_WRAP + ' ' + CLS_HIDE + '" aria-hidden="true"></div>',
+        HEADER = '<h2 class="autocjs-hd" aria-hidden="true">{title}</h2>',
         BODY = '<nav class="autocjs-bd" aria-hidden="true"></nav>',
-        CHAPTERS = '<ol class="autocjs-chapters" aria-hidden="true"></ol>',
+        CHAPTERS = '<ol class="' + CLS_CHAPTERS + '" aria-hidden="true"></ol>',
         SUBJECTS = '<ol class="' + CLS_SUBJECTS + '" aria-hidden="true"></ol>',
         CHAPTER = '<li class="' + CLS_CHAPTER + '" aria-hidden="true"></li>',
-        CHAPTER_LINK = '<a class="' + CLS_TEXT + '" aria-hidden="true"></a>',
-        CHAPTER_INDEX = '<em class="' + CLS_INDEX + '" aria-hidden="true"></em>',
+        TEXT = '<a class="' + CLS_TEXT + '" aria-hidden="true"></a>',
+        CODE = '<em class="' + CLS_CODE + '" aria-hidden="true"></em>',
+        FOOTER = '<div class="autocjs-ft" aria-hidden="true"></div>',
+        SWITCHER = '<h2 class="autocjs-switcher" title="Toggle Menu" aria-hidden="true">&#926;</h2>',
+        TOP = '<a class="autocjs-top" href="#top" aria-hidden="true">TOP</a>',
         OVERLAY = '<div class="autocjs-overlay ' + CLS_HIDE + '" aria-hidden="true"></div>',
-        ANCHORS = 'h1,h2,h3,h4,h5,h6',
-        PREFIX = CLS_TITLE;
+        SELECTOR = 'h1,h2,h3,h4,h5,h6';
 
     /**
      * AutocJS 构造函数
      *
-     * @param options
-     * @returns {AutocJS}
      * @constructor
+     * @class AutocJS
+     * @param {Object} options - 初始化的配置信息
+     * @param {String|HTMLElement} options.article - 页面中显示文章正文的 DOM 节点或者 ID 选择器
+     * @param {String} [options.selector] - 标题标签的选择器，例如：'h1,h2,h3,h4,h5,h6'
+     * @param {String} [options.headingPrefix] - 标题标签节点自动添的 id 属性的前缀，默认值：'autocjs-heading'
+     * @param {String} [options.title] - 导航菜单的标题文字，默认值：'Table of Contents'
+     * @param {Boolean} [options.isOnlyAnchors] - 是否只创建标题链接，默认值：false
+     * @param {Boolean} [options.isAnimateScroll] - 是否使用动画滚动定位，默认值：true
+     * @param {Boolean} [options.hasDirectoryInArticle] - 是否在文章中创建目录导航，默认值：false
+     * @param {Boolean} [options.hasChapterCodeAtHeadings] - 是否在文章标题中显示该标题的段落索引编号，默认值：false
+     * @param {String} [options.ANCHOR] - 标题标签中创建的标题链接的 HTML 模板代码
+     * @param {String} [options.WRAP] - AutocJS 菜单根节点的 HTML 模板代码
+     * @param {String} [options.HEADER] - AutocJS 菜单标题栏的 HTML 模板代码
+     * @param {String} [options.BODY] - AutocJS 菜单内容节点的 HTML 模板代码
+     * @param {String} [options.FOOTER] - AutocJS 菜单页脚节点的 HTML 模板代码
+     * @param {String} [options.SWITCHER] - AutocJS 菜单展开显示开关的 HTML 模板代码
+     * @param {String} [options.TOP] - AutocJS 菜单返回顶部按钮的 HTML 模板代码
+     * @param {String} [options.CHAPTERS] - AutocJS 导航目录列表的 HTML 模板代码
+     * @param {String} [options.SUBJECTS] - AutocJS 导航子目录列表的 HTML 模板代码
+     * @param {String} [options.CHAPTER] - AutocJS 导航段落章节的 HTML 模板代码
+     * @param {String} [options.TEXT] - AutocJS 导航段落章节链接的 HTML 模板代码
+     * @param {String} [options.CODE] - AutocJS 段落章节索引编码的 HTML 模板代码
+     * @param {String} [options.OVERLAY] - AutocJS 菜单展开时遮罩层的 HTML 模板代码
+     * @returns {AutocJS}
      */
     var AutocJS = function ( options ) {
+
+        /**
+         * attributes 存储的是 AutocJS 对象当前的所有配置信息
+         *
+         * @property
+         * @type {{}}
+         * @see AutocJS.defaults
+         */
         this.attributes = {};
 
+        /**
+         * @property
+         * @type {{article: null, chapters: null, wrap: null, header: null, body: null, list: null, footer: null,
+         *     switcher: null, top: null, overlay: null}}
+         */
         this.elements = {
+            // AutocJS 对象要收集的文章正文显示区域的 DOM 节点
             article: null,
+            // 将 hasDirectoryInArticle 参数设置为 true 时，在文章正文开始处创建的目录导航列表 DOM 节点
+            chapters: null,
+            // AutocJS 对象创建的目录导航菜单的根节点
             wrap: null,
-            title: null,
-            bar: null,
-            switch: null,
-            top: null,
+            // AutocJS 对象创建的目录导航菜单的标题栏 DOM 节点
+            header: null,
+            // AutocJS 对象创建的目录导航菜单的正文内容 DOM 节点
             body: null,
+            // AutocJS 对象创建的目录导航菜单的列表 DOM 节点
             list: null,
+            // AutocJS 对象创建的目录导航菜单的页脚 DOM 节点
+            footer: null,
+            // AutocJS 对象创建的目录导航菜单的隐藏显示开关 DOM 节点
+            switcher: null,
+            // AutocJS 对象创建的目录导航菜单中的返回顶部 DOM 节点
+            top: null,
+            // AutocJS 对象创建的目录导航菜单的遮罩层 DOM 节点
             overlay: null
         };
 
+        /**
+         * @property
+         * @type {{headings: Array, chapters: Array, anchors: Array, list: Array}}
+         */
         this.data = {
-            anchors: [],
+            // AutocJS 对象收集的所有文章标题节点
+            headings: [],
+            // AutocJS 对象根据 data.headings 收集的（一一对应）的文章章节信息
             chapters: [],
+            // AutocJS 对象根据 data.headings 一一对应的创建的标题锚点链接 DOM 节点（NodeList）
+            anchors: [],
+            // AutocJS 对象根据 data.chapters 将它的值按照 pid 分组后的（二维数组）数据
             list: []
         };
 
@@ -147,40 +290,156 @@
     };
 
     /**
+     * AutocJS 对象默认配置选项
+     *
      * @property
+     * @type {{article: string, selector: string, headingPrefix: string, title: string, isOnlyAnchors: boolean,
+     *     isAnimateScroll: boolean, hasDirectoryInArticle: boolean, hasChapterCodeAtHeadings: boolean, ANCHOR: string, WRAP:
+     *     string, HEADER: string, BODY: string, FOOTER: string, SWITCHER: string, TOP: string, CHAPTERS: string,
+     *     SUBJECTS: string, CHAPTER: string, TEXT: string, CODE: string, OVERLAY: string}}
      * @static
      */
     AutocJS.defaults = {
-        article: '#article',
-        selector: ANCHORS,
-        prefix: PREFIX,
+        // 页面中显示文章正文的 DOM 节点或者 ID 选择器
+        article: '',
+        // 标题标签的选择器，默认值：'h1,h2,h3,h4,h5,h6'
+        selector: SELECTOR,
+        // AutocJS 自动创建的导航菜单标题文字，默认值：'Table of Contents'
         title: 'Table of Contents',
+        // 是否只创建标题链接，默认值：false
+        isAnchorsOnly: false,
+        // 是否使用动画滚动定位，默认值：true
         isAnimateScroll: true,
-        onlyAnchors: false,
-        showTocInArticle: false,
-        showIndexAtAnchors: false,
-        ANCHOR_LINK: ANCHOR_LINK,
+        // 是否在文章中创建目录导航，默认值：false
+        hasDirectoryInArticle: false,
+        // 是否在文章标题中显示该标题的段落索引编号，默认值：false
+        hasChapterCodeAtHeadings: false,
+        // 标题标签中创建的标题链接的 HTML 模板代码
+        ANCHOR: ANCHOR,
+        // AutocJS 菜单根节点的 HTML 模板代码
         WRAP: WRAP,
-        TITLE: TITLE,
-        BAR: BAR,
-        SWITCH: SWITCH,
-        TOP: TOP,
+        // AutocJS 菜单标题栏的 HTML 模板代码
+        HEADER: HEADER,
+        // AutocJS 菜单内容节点的 HTML 模板代码
         BODY: BODY,
-        LIST: CHAPTERS,
-        SUB_LIST: SUBJECTS,
-        ITEM: CHAPTER,
-        LINK: CHAPTER_LINK,
-        CHAPTER: CHAPTER_INDEX,
+        // AutocJS 菜单页脚节点的 HTML 模板代码
+        FOOTER: FOOTER,
+        // AutocJS 菜单展开显示开关的 HTML 模板代码
+        SWITCHER: SWITCHER,
+        // AutocJS 菜单返回顶部按钮的 HTML 模板代码
+        TOP: TOP,
+        // AutocJS 导航目录列表的 HTML 模板代码
+        CHAPTERS: CHAPTERS,
+        // AutocJS 导航子目录列表的 HTML 模板代码
+        SUBJECTS: SUBJECTS,
+        // AutocJS 导航段落章节的 HTML 模板代码
+        CHAPTER: CHAPTER,
+        // AutocJS 导航段落章节链接的 HTML 模板代码
+        TEXT: TEXT,
+        // AutocJS 段落章节索引编码的 HTML 模板代码
+        CODE: CODE,
+        // AutocJS 菜单展开时遮罩层的 HTML 模板代码
         OVERLAY: OVERLAY
     };
 
+    AutocJS.stripScripts = stripScripts;
+    AutocJS.encodeHTML = encodeHTML;
+    AutocJS.decodeHTML = decodeHTML;
+    AutocJS.safetyHTML = safetyHTML;
+    AutocJS.template = template;
+    AutocJS.guid = guid;
+
     AutocJS.prototype = {
-        version: '0.2.2',
+        version: '1.0.0',
         constructor: AutocJS,
         /**
-         * 设置配置属性
+         * 初始化方法：
+         * 1. set() 初始化配置参数
+         * 2. initProps() 初始化 DOM 节点和数据信息
+         * 3. render() 绘制 UI 界面
+         * 4. attachEvents 给 AutocJS 相关的 DOM 节点绑定事件处理器
          *
-         * @param options
+         * @param {Object} options - 配置信息
+         * @see AutocJS.defaults
+         * @returns {AutocJS}
+         */
+        init: function ( options ) {
+
+            if ( $.isPlainObject( options ) ) {
+                this.set( options );
+            }
+
+            this.initProps()
+                .render()
+                .attachEvents();
+
+            return this;
+        },
+        /**
+         * 初始化 AutocJS 的各个属性
+         *
+         * @returns {AutocJS}
+         * @private
+         */
+        initProps: function () {
+            var self = this,
+                $elements = this.elements;
+
+            // 获得文章内容的 DOM 节点
+            $elements.article = $( this.get( 'article' ) );
+
+            $elements.chapters = $( this.get( 'CHAPTERS' ) ).addClass( CLS_ARTICLE_CHAPTERS );
+
+            // 初始化 DOM 部件
+            $elements.wrap = $( template( {
+                data: {
+                    id: guid( CLS_WRAP )
+                },
+                html: self.get( 'WRAP' )
+            } ) );
+            $elements.header = $( template( {
+                data: {
+                    title: self.get( 'title' )
+                },
+                html: self.get( 'HEADER' )
+            } ) );
+            $elements.body = $( this.get( 'BODY' ) );
+            $elements.list = $( this.get( 'CHAPTERS' ) );
+            $elements.footer = $( this.get( 'FOOTER' ) );
+            $elements.switcher = $( this.get( 'SWITCHER' ) );
+            $elements.top = $( this.get( 'TOP' ) );
+            $elements.overlay = $( this.get( 'OVERLAY' ) );
+
+            // 获得所有数据
+            $.extend( this.data, {
+                headings: self.getArticleHeadings(),
+                chapters: self.getArticleChapters(),
+                anchors: self.getArticleAnchors(),
+                list: self.getFormattedChapters()
+            } );
+
+            return this;
+        },
+        /**
+         * （根据新的配置信息）重启程序：
+         * 1. destroy() 先移除所有绘制的 DOM 结合和绑定的事件处理器
+         * 2. init() 重新初始化程序
+         *
+         * @param {Object} [options] - 配置信息
+         * @see AutocJS.defaults
+         * @returns {AutocJS}
+         */
+        reload: function ( options ) {
+
+            this.destroy().init( options );
+
+            return this;
+        },
+        /**
+         * 设置 attributes 属性
+         *
+         * @param {Object} options
+         * @see AutocJS.defaults
          * @returns {AutocJS}
          */
         set: function ( options ) {
@@ -192,18 +451,53 @@
             return this;
         },
         /**
-         * 获得配置属性
+         * 返回某个 attributes 属性
          *
-         * @param {String} prop
+         * @param {String} prop - attributes 属性名称
          * @returns {any}
          */
         get: function ( prop ) {
             return this.attributes[ prop ];
         },
         /**
+         * 传入 data 参数，用来设置 data.headings 数据，没有传入参数，则返回 data.headings 数据
          *
-         * @param data
-         * @returns {*}
+         * @param {Array} [data] - 标题 DOM 节点集合
+         * @returns {AutocJS|Array}
+         */
+        headings: function ( data ) {
+
+            if ( $.isArray( data ) ) {
+                this.data.headings = data;
+            }
+            else {
+                return this.data.headings;
+            }
+
+            return this;
+        },
+        /**
+         * 传入 data 参数，用来设置 data.chapters 数据，没有传入参数，则返回 data.chapters 数据
+         *
+         * @param {Array} [data] - 文章段落章节数据集合
+         * @returns {AutocJS|Array}
+         */
+        chapters: function ( data ) {
+
+            if ( $.isArray( data ) ) {
+                this.data.chapters = data;
+            }
+            else {
+                return this.data.chapters;
+            }
+
+            return this;
+        },
+        /**
+         * 传入 data 参数，用来设置 data.anchors 数据，没有传入参数，则返回 data.anchors 数据
+         *
+         * @param {Object} [data] - 标题锚点链接节点集合
+         * @returns {AutocJS|Array}
          */
         anchors: function ( data ) {
 
@@ -216,31 +510,18 @@
 
             return this;
         },
-        /**
-         *
-         * @param data
-         * @returns {*}
-         */
-        chapters: function ( data ) {
-
-            if ( $.isPlainObject( data ) ) {
-                this.data.chapters = data;
-            }
-            else {
-                return this.data.chapters;
-            }
-
-            return this;
+        list: function () {
         },
         /**
+         * 返回文章中所有（选择器匹配）的标题节点
          *
-         * @returns {*|{}}
+         * @returns {Array}
          */
-        getArticleAnchors: function () {
+        getArticleHeadings: function () {
             return this.elements.article.find( this.get( 'selector' ) );
         },
         /**
-         * 获得文章完整的章节索引数据
+         * 返回 getArticleHeadings() 方法对应的文章段落信息数据
          *
          * @returns {Array}
          */
@@ -248,15 +529,13 @@
             var self = this,
                 chapters = [],
                 previous = 1,
-                level = 0,
-                prefix = this.get( 'prefix' );
+                level = 0;
 
             // 获得目录索引信息
-            $( this.getArticleAnchors() ).each( function ( i, anchor ) {
-                var id = guid( prefix ),
-                    $anchor = $( anchor ),
-                    text = $anchor.html(),
-                    current = parseInt( $anchor[ 0 ].tagName.toUpperCase().replace( /[H]/ig, '' ), 10 ),
+            $( this.getArticleHeadings() ).each( function ( i, heading ) {
+                var $heading = $( heading ),
+                    text = $heading.html(),
+                    current = parseInt( $heading[ 0 ].tagName.toUpperCase().replace( /[H]/ig, '' ), 10 ),
                     pid = -1;
 
                 // 1.（父标题，子标题）：当前标题的序号 > 前一个标题的序号
@@ -305,7 +584,7 @@
                             }
                             else {
                                 // 虽然看上去差点，不过能工作啊
-                                pid = self.getPidByDiffer( chapters, previous - current, i );
+                                pid = getPidByDiffer( chapters, previous - current, i );
                             }
                         }
                     }
@@ -317,8 +596,7 @@
                     id: i,
                     level: level,
                     text: text,
-                    value: id,
-                    tag: anchor.tagName,
+                    tag: heading.tagName,
                     pid: pid
                 } );
             } );
@@ -326,10 +604,33 @@
             return chapters;
         },
         /**
+         * 返回 getArticleChapters() 方法对应动态创建的标题锚点链接节点
          *
          * @returns {Array}
          */
-        getChaptersDataList: function () {
+        getArticleAnchors: function () {
+            var self = this,
+                anchors = [];
+
+            $( this.getArticleChapters() ).each( function ( i, chapter ) {
+                var id = chapter.id,
+                    $anchor = $( self.get( 'ANCHOR' ) ).attr( {
+                        id: CLS_ANCHOR + '-' + id,
+                        'href': '#' + CLS_HEADING + '-' + id,
+                        'aria-label': chapter.text
+                    } ).addClass( CLS_ANCHOR ).addClass( CLS_HIDE );
+
+                anchors.push( $anchor );
+            } );
+
+            return anchors;
+        },
+        /**
+         * 返回 data.chapters 根据 pid 分组的文章段落数据
+         *
+         * @returns {Array}
+         */
+        getFormattedChapters: function () {
             var chapters = this.chapters(),
                 temp = {},
                 list = [];
@@ -357,14 +658,15 @@
             return list;
         },
         /**
+         * 返回根某个文章标题对应的段落章节信息在 data.list 中对应段落层次位置索引值
          *
-         * @param chapter
-         * @returns {number}
+         * @param {Object} chapter - 某个文章标题对应的段落章节信息
+         * @returns {Number}
          */
         getChapterIndex: function ( chapter ) {
             var index = -1;
 
-            $( this.getChaptersDataList() ).each( function ( i, list ) {
+            $( this.data.list ).each( function ( i, list ) {
                 $( list ).each( function ( j, data ) {
                     if ( data === chapter ) {
                         index = j;
@@ -376,216 +678,132 @@
             return index;
         },
         /**
-         * 根据 prevNum, curNum的差值，获得父级的 id 值
-         *
-         * @param {number} differ
-         * @returns {number}
-         */
-        getPidByDiffer: function ( chapters, differ, index ) {
-            var pid = -1;
-
-            // 最大只有5系的差距
-            switch ( differ ) {
-                case 1:
-                    pid = chapters[ chapters[ index - 1 ].pid ].pid;
-                    break;
-                case 2:
-                    pid = chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid;
-                    break;
-                case 3:
-                    pid = chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid;
-                    break;
-                case 4:
-                    pid = chapters[ chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid ].pid;
-                    break;
-                case 5:
-                    pid = chapters[ chapters[ chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid ].pid ].pid;
-                    break;
-                default:
-                    pid = chapters[ chapters[ index - 1 ].pid ].pid;
-                    break;
-            }
-
-            return pid;
-        },
-        /**
-         * 初始化程序
-         * 1. 初始化配置参数
-         * 2. 绘制UI界面
-         * 3. 绑定 DOM 节点的相应的事件处理器
-         *
-         * @param {Object} options - 配置信息
-         * @returns {AutocJS}
-         */
-        init: function ( options ) {
-
-            if ( $.isPlainObject( options ) ) {
-                this.set( options );
-            }
-
-            this._init().render()._attachEvents();
-
-            return this;
-        },
-        /**
-         * 初始化 AutocJS 的各个属性
-         *
-         * @returns {AutocJS}
-         * @private
-         */
-        _init: function () {
-            var self = this,
-                $elements = this.elements;
-
-            // 获得文章内容的 DOM 节点
-            $elements.article = $( this.get( 'article' ) );
-
-            // 初始化 DOM 部件
-            $elements.wrap = $( this.get( 'WRAP' ) );
-            $elements.title = $( template( {
-                data: {
-                    title: self.get( 'title' )
-                },
-                html: self.get( 'TITLE' )
-            } ) );
-            $elements.bar = $( this.get( 'BAR' ) );
-            $elements.switch = $( this.get( 'SWITCH' ) );
-            $elements.top = $( this.get( 'TOP' ) );
-            $elements.body = $( this.get( 'BODY' ) );
-            $elements.list = $( this.get( 'LIST' ) );
-            $elements.overlay = $( this.get( 'OVERLAY' ) );
-
-            // 获得所有数据
-            this.data.anchors = this.getArticleAnchors();
-            this.data.chapters = this.getArticleChapters();
-            this.data.list = this.getChaptersDataList();
-
-            return this;
-        },
-        /**
-         * 重新绘制界面
-         *
-         * @param {Object} options
-         * @returns {AutocJS}
-         */
-        reload: function ( options ) {
-
-            if ( $.isPlainObject( options ) ) {
-                this.set( options );
-            }
-
-            this._init().render();
-
-            return this;
-        },
-        /**
          * 绘制 UI 界面
-         * 1. 给标题绘制 AnchorJS 类型的链接
-         * 2. 绘制 AutoJS 菜单的主框架
-         * 3. 绘制具体的菜单项
+         * 1. renderArticleDirectory() 绘制文章开始出的目录导航
+         * 2. renderAnchors() 绘制标题栏的锚点链接和标题段落索引编码
+         * 3. renderSidebarDirectory() 绘制侧边栏的目录导航菜单
          *
          * @returns {AutocJS}
          */
         render: function () {
 
-            this.renderTocInArticle().renderAnchors().renderToc();
+            this.renderArticleDirectory()
+                .renderAnchors()
+                .renderSidebarDirectory();
 
             return this;
         },
-        renderTocInArticle: function () {
-            var showTocInArticle = this.get( 'showTocInArticle' ),
-                $first = $( this.elements.article[ 0 ].firstChild ),
-                $list = $( this.get( 'LIST' ) );
+        /**
+         * 当设置了 hasDirectoryInArticle 为 true 时，则在文章开始处绘制目录导航
+         *
+         * @returns {AutocJS}
+         */
+        renderArticleDirectory: function () {
+            var $elements = this.elements,
+                $first = $( $elements.article[ 0 ].firstChild ),
+                $chapters = $elements.chapters;
 
-            if ( showTocInArticle ) {
+            if ( this.get( 'hasDirectoryInArticle' ) ) {
 
-                $list.insertBefore( $first );
+                $chapters.insertBefore( $first );
 
-                this.renderChapters( $list );
+                this.renderChapters( $chapters );
 
             }
 
             return this;
         },
         /**
-         * 绘制类似 AnchorJS 的标题链接，此方法是借鉴 AnchorJS 的解决方案
+         * 绘制标题锚点链接（这个是借鉴的 AnchorsJS 的思路）和标题段落章节索引代码
          *
          * @see AnchorJS: http://bryanbraun.github.io/anchorjs/
          * @returns {AutocJS}
          */
         renderAnchors: function () {
             var self = this,
-                anchors = this.anchors(),
-                chapters = this.chapters();
+                headings = this.headings(),
+                chapters = this.chapters(),
+                anchors = this.anchors();
 
             $( chapters ).each( function ( i, chapter ) {
-                var $anchor = $( anchors[ i ] ),
-                    $link = $( self.get( 'ANCHOR_LINK' ) ).attr( {
-                        'href': '#autocjs-title-' + chapter.id,
-                        'aria-label': chapter.text
-                    } ).addClass( CLS_ANCHOR ).addClass( CLS_HIDE ),
-                    id = chapter.value;
+                var id = CLS_HEADING + '-' + chapter.id,
+                    $heading = $( headings[ i ] ),
+                    $existingAnchor = $heading.find( '#' + id ),
+                    $anchor = $( anchors[ i ] );
 
-                $anchor.attr( 'id', id ).addClass( CLS_TITLE ).append( $link );
+                if ( $existingAnchor[ 0 ] ) {
+                    $existingAnchor.remove();
+                }
 
-                self.renderAnchorIndex( chapter );
+                $heading.attr( 'id', id )
+                        .addClass( CLS_HEADING )
+                        .append( $anchor );
+
+                self.renderHeadingChapterCode( chapter );
             } );
 
             return this;
         },
         /**
+         * 在文章标题中绘制其对应的段落章节索引编码
          *
-         * @param chapter
+         * @param {Object} chapter - 某个文章标题对应的段落章节信息
          * @returns {AutocJS}
          */
-        renderAnchorIndex: function ( chapter ) {
-            var pid = chapter.pid,
+        renderHeadingChapterCode: function ( chapter ) {
+            var INDEX = ARTICLE_PREFIX + CLS_CODE,
+                pid = chapter.pid,
                 id = chapter.id,
                 tag = chapter.tag,
-                showIndexAtAnchors = this.get( 'showIndexAtAnchors' ),
-                $anchor = $( '#' + CLS_TITLE + '-' + id ),
-                PREFIX = 'article-',
-                $index,
-                chapterText,
-                chapterCount;
+                $anchor = $( '#' + CLS_HEADING + '-' + id ),
+                $existingIndex = $anchor.find( '#' + INDEX + '-' + id ),
+                $code,
+                chapterCode,
+                chapterIndex;
 
-            if ( showIndexAtAnchors && tag !== 'H1' ) {
+            if ( $existingIndex[ 0 ] ) {
+                $existingIndex.remove();
+            }
 
-                $index = $( this.get( 'CHAPTER' ) ).attr( 'id', PREFIX + CLS_INDEX + '-' + id );
+            if ( this.get( 'hasChapterCodeAtHeadings' ) && tag !== 'H1' ) {
+
+                $code = $( this.get( 'CODE' ) ).attr( 'id', INDEX + '-' + id );
 
                 // 绘制章节索引
-                chapterCount = this.getChapterIndex( chapter ) + 1;
+                chapterIndex = this.getChapterIndex( chapter ) + 1;
 
                 if ( pid === -1 && tag === 'H2' ) {
-                    chapterText = chapterCount;
+                    chapterCode = chapterIndex;
                 }
                 else {
-                    chapterText = $( '#' + PREFIX + CLS_INDEX + '-' + pid ).html() + '.' + chapterCount;
+                    chapterCode = $( '#' + INDEX + '-' + pid ).html() + '.' + chapterIndex;
                 }
 
                 // 绘制段落章节编码
-                $index.html( chapterText );
-                $index.insertBefore( $anchor[ 0 ].firstChild );
+                $code.html( chapterCode );
+                $code.insertBefore( $anchor[ 0 ].firstChild );
 
             }
 
             return this;
         },
         /**
+         * 绘制侧边栏的目录导航菜单
          *
          * @returns {AutocJS}
          */
-        renderToc: function () {
-            var onlyAnchors = this.get( 'onlyAnchors' );
+        renderSidebarDirectory: function () {
+            var $elements = this.elements;
 
-            if ( !onlyAnchors ) {
+            if ( !this.get( 'isAnchorsOnly' ) ) {
 
                 // 绘制导航菜单框架
                 // 绘制导航链接
-                this.renderElements().renderChapters();
+                this.renderElements()
+                    .renderChapters( $elements.list );
 
                 // 全部绘制完成，再显示完整的菜单
-                this.elements.wrap.removeClass( CLS_HIDE );
+                $elements.wrap.removeClass( CLS_HIDE );
 
                 // 最后更新菜单的高度
                 this.updateLayout();
@@ -594,40 +812,42 @@
             return this;
         },
         /**
+         * 绘制侧边栏菜单的框架
          *
          * @returns {AutocJS}
          */
         renderElements: function () {
             var $elements = this.elements,
-                $body = $( document.body ),
-                isAnimateScroll = this.get( 'isAnimateScroll' );
+                $wrap = $elements.wrap,
+                $footer = $elements.footer,
+                $body = $( document.body );
 
             // 绘制head
-            $elements.bar.append( $elements.switch ).append( $elements.top );
+            $footer.append( $elements.switcher ).append( $elements.top );
 
             // 绘制body
             $elements.body.append( $elements.list );
 
             // 绘制完整的导航
-            $elements.wrap.append( $elements.title ).append( $elements.body ).append( $elements.bar );
+            $wrap.empty().append( $elements.header ).append( $elements.body ).append( $footer );
 
             // 将导航和遮罩层添加到页面
-            $body.append( $elements.wrap ).append( $elements.overlay );
+            $body.append( $wrap ).append( $elements.overlay );
 
-            if ( !isAnimateScroll ) {
+            if ( !this.get( 'isAnimateScroll' ) ) {
                 $body.attr( 'id', 'top' );
             }
 
             return this;
         },
         /**
-         * 绘制章节内容
+         * 绘制文章章节索引
          *
          * @returns {AutocJS}
          */
         renderChapters: function ( list ) {
             var self = this,
-                $list = list ? $( list ) : this.elements.list,
+                $list = $( list ),
                 chapters = this.chapters();
 
             $list.empty();
@@ -635,24 +855,24 @@
             $( chapters ).each( function ( i, chapter ) {
                 var pid = chapter.pid,
                     id = chapter.id,
+                    headingId = CLS_HEADING + '-' + id,
                     $parent = null,
-                    $chapter = $( self.get( 'ITEM' ) ),
-                    $index = $( self.get( 'CHAPTER' ) ),
-                    $link = $( self.get( 'LINK' ) ),
-                    $subjects = $( '#' + CLS_SUBJECTS + '-' + pid ),
+                    $chapter = $( self.get( 'CHAPTER' ) ),
+                    $code = $( self.get( 'CODE' ) ),
+                    $text = $( self.get( 'TEXT' ) ),
                     chapterText = '',
                     chapterCount = 0,
-                    PREFIX = 'article-',
+                    $subjects,
                     linkId,
                     chapterId,
                     subjectId,
                     parentId;
 
-                if ( list ) {
-                    linkId = PREFIX + CLS_TEXT + '-' + id;
-                    chapterId = PREFIX + CLS_CHAPTER + '-' + id;
-                    subjectId = PREFIX + CLS_SUBJECTS + '-' + pid;
-                    parentId = PREFIX + CLS_CHAPTER + '-' + pid;
+                if ( $list.hasClass( CLS_ARTICLE_CHAPTERS ) ) {
+                    linkId = ARTICLE_PREFIX + CLS_TEXT + '-' + id;
+                    chapterId = ARTICLE_PREFIX + CLS_CHAPTER + '-' + id;
+                    subjectId = ARTICLE_PREFIX + CLS_SUBJECTS + '-' + pid;
+                    parentId = ARTICLE_PREFIX + CLS_CHAPTER + '-' + pid;
                 }
                 else {
                     linkId = CLS_TEXT + '-' + id;
@@ -661,24 +881,28 @@
                     parentId = CLS_CHAPTER + '-' + pid;
                 }
 
+                $subjects = $( '#' + subjectId );
+
                 // 创建菜单的链接
-                $link.attr( {
+                $text.attr( {
                     id: linkId,
-                    href: '#' + chapter.value,
-                    rel: chapter.value
+                    href: '#' + headingId,
+                    rel: headingId
                 } ).html( chapter.text );
 
                 // 创建菜单项
                 $chapter.attr( {
                     'id': chapterId,
                     'title': chapter.text
-                } ).append( $link );
+                } ).append( $text );
 
                 // 一级标题直接创建标题链接即可
                 if ( chapter.pid === -1 ) {
+
                     $list.append( $chapter );
                     chapterCount = $chapter.index() + 1;
                     chapterText = chapterCount;
+
                 }
                 else {
 
@@ -687,7 +911,7 @@
 
                     // 没有绘制子菜单，则绘制它
                     if ( !$subjects[ 0 ] ) {
-                        $subjects = $( self.get( 'SUB_LIST' ) ).attr( 'id', subjectId );
+                        $subjects = $( self.get( 'SUBJECTS' ) ).attr( 'id', subjectId );
 
                         $parent.append( $subjects );
                     }
@@ -696,18 +920,18 @@
 
                     // 绘制章节索引
                     chapterCount = $chapter.index() + 1;
-                    chapterText = $parent.find( '.' + CLS_INDEX ).html() + '.' + chapterCount;
+                    chapterText = $parent.find( '.' + CLS_CODE ).html() + '.' + chapterCount;
                 }
 
                 // 绘制段落章节编码
-                $index.attr( 'data-chapter', chapterCount ).html( chapterText );
-                $index.insertBefore( $link );
+                $code.attr( 'data-chapter', chapterCount ).html( chapterText );
+                $code.insertBefore( $text );
             } );
 
             return this;
         },
         /**
-         * 显示菜单
+         * 展开侧边栏菜单
          *
          * @returns {AutocJS}
          */
@@ -726,7 +950,7 @@
             return this;
         },
         /**
-         * 隐藏菜单
+         * 收起侧边栏菜单
          *
          * @returns {AutocJS}
          */
@@ -744,7 +968,7 @@
             return this;
         },
         /**
-         * 隐藏/显示导航
+         * 收起/展开侧边栏菜单
          *
          * @returns {AutocJS}
          */
@@ -760,80 +984,122 @@
             return this;
         },
         /**
-         * 更新菜单界面高度
+         * 更新侧边栏菜单界面高度
          *
          * @returns {AutocJS}
          */
         updateLayout: function () {
             var $elements = this.elements,
                 wrapHeight = $elements.wrap[ 0 ].offsetHeight,
-                titleHeight = $elements.title[ 0 ].offsetHeight;
+                headerHeight = $elements.header[ 0 ].offsetHeight;
 
-            $elements.body.height( wrapHeight - titleHeight );
+            $elements.body.height( wrapHeight - headerHeight );
 
             return this;
         },
         /**
+         * 将窗口的滚动条滚动到指定 top 值的位置
          *
-         * @param top
+         * @param {Number} top
          * @returns {AutocJS}
          */
         scrollTo: function ( top ) {
             var self = this;
 
-            $( "html,body" ).animate( {
-                scrollTop: top
-            }, 500, 'linear', function () {
-                self.hide();
-            } );
+            $( "html,body" )
+                .animate( {
+                    scrollTop: top
+                }, 500, 'linear', function () {
+                    self.hide();
+                } );
 
             return this;
         },
         /**
-         * 给导航菜单的各个 DOM 部件绑定事件处理器
+         * 移除所有绘制的 DOM 节点，并移除绑定的事件处理器
          *
          * @returns {AutocJS}
          */
-        _attachEvents: function () {
+        destroy: function () {
+            var $anchors = this.anchors(),
+                $headings = this.headings(),
+                $elements = this.elements,
+                $article = $elements.article,
+                $chapters = $elements.chapters,
+                $wrap = $elements.wrap,
+                $overlay = $elements.overlay;
+
+            $article.off();
+
+            $chapters.remove();
+
+            $( $headings ).each( function ( i, heading ) {
+                var $heading = $( heading ),
+                    $code = $heading.find( '.' + CLS_CODE );
+
+                $heading.removeClass( CLS_HEADING ).removeAttr( 'id' );
+                $code.remove();
+
+                $anchors[ i ].remove();
+            } );
+
+            $wrap.off().remove();
+
+            $overlay.off().remove();
+
+            $( window ).off( 'resize', this._onWindowResize );
+
+            return this;
+        },
+        /**
+         * 给 AutocJS 相关的所有 DOM 节点绑定事件处理器
+         *
+         * @returns {AutocJS}
+         */
+        attachEvents: function () {
             var self = this,
                 $elements = this.elements,
                 $article = $elements.article,
                 data = {
                     context: self
-                },
-                onlyAnchors = this.get( 'onlyAnchors' );
+                };
 
             // 鼠标滑过标题，显示标题的 AutocJS 链接
-            $article.delegate( '.' + CLS_TITLE, 'mouseenter', data, this._onAutocJSAnchorMouseEnter );
+            $article.delegate( '.' + CLS_HEADING, 'mouseenter', data, this.onHeadingMouseEnter );
 
             // 鼠标离开标题，隐藏标题的 AutocJS 链接
-            $article.delegate( '.' + CLS_TITLE, 'mouseleave', data, this._onAutocJSAnchorMouseLeave );
+            $article.delegate( '.' + CLS_HEADING, 'mouseleave', data, this.onHeadingMouseLeave );
 
-            if ( !onlyAnchors ) {
+            if ( this.get( 'hasDirectoryInArticle' ) ) {
+                $article.delegate( '.' + CLS_TEXT, 'click', data, this.onArticleChapterClick );
+            }
+
+            if ( !this.get( 'isAnchorsOnly' ) ) {
+
                 // 点击目录标题，隐藏/显示目录导航
-                $elements.switch.on( 'click', data, this._onSwitchClick );
+                $elements.switcher.on( 'click', data, this.onSwitcherClick );
 
                 // 点击TOP链接，返回页面顶部
-                $elements.top.on( 'click', data, this._onTopClick );
+                $elements.top.on( 'click', data, this.onTopClick );
 
                 // 点击导航，定位文章，收起导航
-                $elements.list.delegate( '.' + CLS_TEXT, 'click', data, this._onChapterClick );
+                $elements.list.delegate( '.' + CLS_TEXT, 'click', data, this.onSidebarChapterClick );
 
                 // 点击遮罩层，收起导航
-                $elements.overlay.on( 'click', data, this._onOverlayClick );
+                $elements.overlay.on( 'click', data, this.onOverlayClick );
 
-                $( window ).on( 'resize', data, this._onWindowResize );
+                $( window ).on( 'resize', data, this.onWindowResize );
             }
 
             return this;
         },
         /**
+         * 文章标题节点 mouseenter 事件处理器。在鼠标滑过文章标题，显示自动创建的锚点链接。
          *
-         * @param evt
-         * @returns {AutocJS|boolean|*}
-         * @private
+         * @param {Event} evt - Event 对象
+         * @returns {AutocJS}
          */
-        _onAutocJSAnchorMouseEnter: function ( evt ) {
+        onHeadingMouseEnter: function ( evt ) {
             var context = evt.data.context,
                 $anchor = $( this ).find( '.' + CLS_ANCHOR );
 
@@ -842,12 +1108,12 @@
             return context;
         },
         /**
+         * 文章标题节点 mouseleave 事件处理器。在鼠标离开文章标题，隐藏自动创建的锚点链接。
          *
-         * @param evt
-         * @returns {AutocJS|boolean|*}
-         * @private
+         * @param {Event} evt - Event 对象
+         * @returns {AutocJS}
          */
-        _onAutocJSAnchorMouseLeave: function ( evt ) {
+        onHeadingMouseLeave: function ( evt ) {
             var context = evt.data.context,
                 $anchor = $( this ).find( '.' + CLS_ANCHOR );
 
@@ -856,12 +1122,32 @@
             return context;
         },
         /**
+         * 文章开始处文章导航链接的 click 事件处理器。点击链接时，滚动定位到相应的段落开始位置。
          *
-         * @param evt
+         * @param {Event} evt - Event 对象
          * @returns {AutocJS}
-         * @private
          */
-        _onSwitchClick: function ( evt ) {
+        onArticleChapterClick: function ( evt ) {
+            var context = evt.data.context,
+                isAnimateScroll = context.get( 'isAnimateScroll' ),
+                $chapter = $( '#' + $( this ).attr( 'rel' ) );
+
+            if ( isAnimateScroll ) {
+                context.scrollTo( $chapter[ 0 ].offsetTop );
+
+                evt.stopPropagation();
+                evt.preventDefault();
+            }
+
+            return context;
+        },
+        /**
+         * 侧边栏菜单的展开/收起按钮的 click 事件处理器。点击后会根据菜单展开状态，展开或收起，并且隐藏遮罩层。
+         *
+         * @param {Event} evt - Event 对象
+         * @returns {AutocJS}
+         */
+        onSwitcherClick: function ( evt ) {
             var context = evt.data.context;
 
             context.toggle();
@@ -872,12 +1158,12 @@
             return context;
         },
         /**
+         * 侧边栏菜单的返回顶部按钮菜单的 click 事件处理器。点击后会滚动到页面顶部，并且隐藏遮罩层，收起菜单。
          *
-         * @param evt
+         * @param {Event} evt - Event 对象
          * @returns {AutocJS}
-         * @private
          */
-        _onTopClick: function ( evt ) {
+        onTopClick: function ( evt ) {
             var context = evt.data.context,
                 isAnimateScroll = context.get( 'isAnimateScroll' );
 
@@ -894,11 +1180,12 @@
             return context;
         },
         /**
+         * 侧边栏菜单的文章索引链接的 click 事件处理器。点击后会会滚动定位到文章相关章节标题的位置，并且隐藏遮罩层，收起菜单。
          *
+         * @param {Event} evt - Event 对象
          * @returns {AutocJS}
-         * @private
          */
-        _onChapterClick: function ( evt ) {
+        onSidebarChapterClick: function ( evt ) {
             var context = evt.data.context,
                 isAnimateScroll = context.get( 'isAnimateScroll' ),
                 $chapter = $( '#' + $( this ).attr( 'rel' ) );
@@ -916,12 +1203,12 @@
             return context;
         },
         /**
+         * 遮罩层的 click 事件处理器。点击后隐藏遮罩层，收起菜单。
          *
-         * @param evt
+         * @param {Event} evt - Event 对象
          * @returns {AutocJS}
-         * @private
          */
-        _onOverlayClick: function ( evt ) {
+        onOverlayClick: function ( evt ) {
             var context = evt.data.context;
 
             context.hide();
@@ -932,11 +1219,12 @@
             return context;
         },
         /**
+         * 窗口的 resize 事件处理器。窗口大小变更后，将立即更新侧边栏高度。
          *
+         * @param {Event} evt - Event 对象
          * @returns {AutocJS}
-         * @private
          */
-        _onWindowResize: function ( evt ) {
+        onWindowResize: function ( evt ) {
             var context = evt.data.context;
 
             context.updateLayout();
@@ -948,11 +1236,14 @@
     // 将 autoc 扩展为一个 jquery 插件
     $.extend( $.fn, {
         autoc: function ( options ) {
-            var $article = $( this );
+            var $article = $( this ),
+                config = {};
 
-            return new AutocJS( $.extend( {}, options, {
+            $.extend( config, options, {
                 article: $article
-            } ) );
+            } );
+
+            return new AutocJS( config );
         }
     } );
 

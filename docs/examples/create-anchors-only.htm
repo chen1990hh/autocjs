@@ -10,7 +10,7 @@
     <!-- Mobile Specific Meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>Customize title - Examples - AutocJS</title>
+    <title>Create anchors only - Examples - AutocJS</title>
     <link href="../asset/normalize/normalize.css" type="text/css" rel="stylesheet" media="all">
     <link href="../css/api.css" type="text/css" rel="stylesheet">
     <link href="../css/autoc.css" type="text/css" rel="stylesheet">
@@ -26,24 +26,22 @@
     </ul>
 </div>
 <div class="api-wrap" id="examples">
-    <h1 class="api-subject">Customize title</h1>
+    <h1 class="api-subject">Create anchors only</h1>
     <div class="api-container" id="container">
         <div class="api-content">
             <div class="api-half-field">
                 <h3>Options</h3>
                 <ul class="api-options" id="options">
-            <li class="api-option"><input type="radio" class="api-radio" name="option" id="option-1" checked="checked" value="Table of Contents"><label class="api-label" for="option-1">Table of Contents<sup>default</sup></label></li>
-            <li class="api-option"><input type="radio" class="api-radio" name="option" id="option-2" value="Customize Title"><label for="option-2" class="api-label">Customize Title</label></li>
-            <li class="api-option"><input type="radio" class="api-radio" name="option" id="option-3" value="Example"><label for="option-3" class="api-label">Example</label></li>
-            <li class="api-option"><input type="radio" class="api-radio" name="option" id="option-4" value="AutocJS API"><label for="option-4" class="api-label">AutocJS API</label></li>
+            <li class="api-option"><input type="radio" class="api-radio" name="option" id="option-1" checked="checked" value="false"><label class="api-label" for="option-1">false<sup>default</sup> - Create directory navigation and anchors</label></li>
+            <li class="api-option"><input type="radio" class="api-radio" name="option" id="option-2" value="true"><label for="option-2" class="api-label">true</label> - Create anchors only</li>
                 </ul>
             </div>
             <div class="api-half-field">
                 <h3>Code</h3>
     <pre class="api-code"><code id="code">new AutocJS({
     article: '#container',
-    // 设置标题文本为： <span class="option-value">Table of Contents</span>
-    title: '<span class="option-value">Table of Contents</span>'
+    // 只创建 Anchors 为： <span class="option-value">false</span>
+    isAnchorsOnly: <span class="option-value">false</span>
 });</code></pre>
             </div>
         </div>
@@ -85,17 +83,17 @@
     var $options = $('#options'),
         $code = $('#code'),
         ArticleTOC = $( '#demo' ).autoc( {
-            isAnchorsOnly: false
+            title: 'Create anchors only'
         } ),
         changeOption = function(){
             var $radio = $(this),
-                option = $radio.val();
+                option = $radio.val() === 'false' ? false : true;
 
             ArticleTOC.reload({
-                title: option
+                isAnchorsOnly: option
             });
 
-            $code.find('.option-value').html(option);
+            $code.find('.option-value').html($radio.val());
         };
 
     $options.delegate('.api-radio', 'click', changeOption);

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
+    <meta name="author" content="Robert Yao - yaohaixiao.com">
+    <meta name="keyword" content="AutocJS,jQuery,jQuery Plugin">
+    <meta name="description" content="AutocJS: Automatically create directory navigation for your article.">
+    <!-- Mobile Specific Meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>API Documentation - AutocJS</title>
+    <link href="../asset/normalize/normalize.css" type="text/css" rel="stylesheet" media="all">
+    <link href="../css/api.css" type="text/css" rel="stylesheet">
+    <link href="../css/autoc.css" type="text/css" rel="stylesheet">
+    <link href="../css/tip.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<div class="api-header">
+    <h1 class="api-project">AutocJS</h1>
+    <ul class="api-navigation">
+        <li><a href="../index.htm">Home</a></li>
+        <li class="api-active"><a href="index.htm">API Documentation</a></li>
+        <li><a href="../examples/index.htm">Examples</a></li>
+        <li><a href="https://github.com/yaohaixiao/AutocJS/archive/master.zip">Download</a></li>
+    </ul>
+</div>
+<div class="api-wrap" id="documentation">
+    <h1 class="api-subject">API Documentation</h1>
+    <div class="api-container" id="container">
+        <div class="api-content options" id="options">
+            <h2>Options</h2>
+            <ul class="api-list">
+                <li class="tip" data-position="top-left" data-tip="页面中显示文章正文的 DOM 节点或者 ID 选择器"><a href="options.htm#article"><span class="api-key">article</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="标题标签的选择器，默认值：'h1,h2,h3,h4,h5,h6'"><a href="options.htm#selector"><span class="api-key">selector</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="导航菜单的标题文字，默认值：'Table of Contents'"><a href="options.htm#title"><span class="api-key">title</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="是否只创建标题链接，默认值：false"><a href="options.htm#isAnchorsOnly"><span class="api-key">isAnchorsOnly</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="是否使用动画滚动定位，默认值：true"><a href="options.htm#isAnimateScroll"><span class="api-key">isAnimateScroll</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="是否在文章中创建目录导航，默认值：false"><a href="options.htm#hasDirectoryInArticle"><span class="api-key">hasDirectoryInArticle</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="是否在文章标题中显示该标题的段落索引编号，默认值：false"><a href="options.htm#hasChapterCodeAtHeadings"><span class="api-key">hasChapterCodeAtHeadings</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="标题标签中创建的标题链接的 HTML 模板代码"><a href="options.htm#anchor"><span class="api-key">ANCHOR</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="AutocJS 菜单根节点的 HTML 模板代码"><a href="options.htm#wrap"><span class="api-key">WRAP</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="AutocJS 菜单标题栏的 HTML 模板代码"><a href="options.htm#header"><span class="api-key">HEADER</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="AutocJS 菜单内容节点的 HTML 模板代码"><a href="options.htm#body"><span class="api-key">BODY</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="AutocJS 菜单页脚节点的 HTML 模板代码"><a href="options.htm#footer"><span class="api-key">FOOTER</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="AutocJS 菜单展开显示开关的 HTML 模板代码"><a href="options.htm#switcher"><span class="api-key">SWITCHER</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="AutocJS 菜单返回顶部按钮的 HTML 模板代码"><a href="options.htm#top"><span class="api-key">TOP</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="AutocJS 导航目录列表的 HTML 模板代码"><a href="options.htm#chapters"><span class="api-key">CHAPTERS</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="AutocJS 导航子目录列表的 HTML 模板代码"><a href="options.htm#subjects"><span class="api-key">SUBJECTS</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="AutocJS 导航段落章节的 HTML 模板代码"><a href="options.htm#chapter"><span class="api-key">CHAPTER</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="AutocJS 导航段落章节链接的 HTML 模板代码"><a href="options.htm#text"><span class="api-key">TEXT</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="AutocJS 段落章节索引编码的 HTML 模板代码"><a href="options.htm#code"><span class="api-key">Code</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="AutocJS 菜单展开时遮罩层的 HTML 模板代码"><a href="options.htm#overlay"><span class="api-key">OVERLAY</span></a></li>
+            </ul>
+        </div>
+        <div class="api-content properties">
+            <h2>Properties</h2>
+            <ul class="api-list">
+                <li class="tip" data-position="top-left" data-tip="存储的是 AutocJS 对象默认配置选项（静态属性）"><a href="properties.htm#defaults"><span class="api-key">defaults<sup>STATIC</sup></span></a></li>
+                <li class="tip" data-position="top-left" data-tip="存储的是 AutocJS 当前的版本号"><a href="properties.htm#version"><span class="api-key">version</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="存储的是 AutocJS 对象当前的所有配置信息"><a href="properties.htm#attributes"><span class="api-key">attributes</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="存储的是 AutocJS 对象相关的所有 DOM 节点"><a href="properties.htm#elements"><span class="api-key">elements</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="存储的是 AutocJS 对象相关的所有数据信息"><a href="properties.htm#data"><span class="api-key">data</span></a></li>
+            </ul>
+        </div>
+        <div class="api-content methods">
+            <h2>Methods</h2>
+            <ul class="api-list">
+                <li class="tip" data-position="top-left" data-tip="初始化程序"><a href="methods.htm#init"><span class="api-key">init</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="初始化属性"><a href="methods.htm#initProps"><span class="api-key">initProps</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="重启程序"><a href="methods.htm#reload"><span class="api-key">reload</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="设置 attributes 属性"><a href="methods.htm#set"><span class="api-key">set</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="返回某个 attributes 属性"><a href="methods.htm#"><span class="api-key">get</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="设置或返回 data.headings 数据"><a href="methods.htm#headings"><span class="api-key">headings</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="设置或返回 data.chapters 数据"><a href="methods.htm#chapters"><span class="api-key">chapters</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="设置或返回 data.anchors 数据"><a href="methods.htm#anchors"><span class="api-key">anchors</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="返回 data.chapters 根据 pid 分组的文章段落数据"><a href="methods.htm#getFormattedChapters"><span class="api-key">getFormattedChapters</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="返回文章中所有（选择器匹配）的标题节点"><a href="methods.htm#getArticleHeadings"><span class="api-key">getArticleHeadings</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="返回 getArticleHeadings() 方法对应的文章段落信息数据"><a href="methods.htm#getArticleChapters"><span class="api-key">getArticleChapters</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="返回 getArticleChapters() 方法对应创建的标题锚点链接节点"><a href="methods.htm#getArticleAnchors"><span class="api-key">getArticleAnchors</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="返回 chapter 在 data.list 中对应段落层次位置索引值"><a href="methods.htm#getChapterIndex"><span class="api-key">getChapterIndex</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="绘制 UI 界面"><a href="methods.htm#render"><span class="api-key">render</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="在文章开始处绘制目录导航"><a href="methods.htm#renderArticleDirectory"><span class="api-key">renderArticleDirectory</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="绘制标题锚点链接和标题段落章节索引代码"><a href="methods.htm#renderAnchors"><span class="api-key">renderAnchors</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="在文章标题中绘制其对应的段落章节索引编码"><a href="methods.htm#renderHeadingChapterCode"><span class="api-key">renderHeadingChapterCode</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="绘制侧边栏的目录导航菜单"><a href="methods.htm#renderSidebarDirectory"><span class="api-key">renderSidebarDirectory</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="绘制侧边栏菜单的框架"><a href="methods.htm#renderElements"><span class="api-key">renderElements</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="绘制文章章节索引"><a href="methods.htm#renderChapters"><span class="api-key">renderChapters</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="展开侧边栏菜单"><a href="methods.htm#show"><span class="api-key">show</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="收起侧边栏菜单"><a href="methods.htm#hide"><span class="api-key">hide</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="收起/展开侧边栏菜单"><a href="methods.htm#toggle"><span class="api-key">toggle</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="根据当前窗口高度更新侧边栏菜单界面高度"><a href="methods.htm#updateLayout"><span class="api-key">updateLayout</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="将窗口的滚动条滚动到指定 top 值的位置"><a href="methods.htm#scrollTo"><span class="api-key">scrollTo</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="移除所有绘制的 DOM 节点，并移除绑定的事件处理器"><a href="methods.htm#destroy"><span class="api-key">destroy</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="给 AutocJS 相关的所有 DOM 节点绑定事件处理器"><a href="methods.htm#attachEvents"><span class="api-key">attachEvents</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="文章标题节点 mouseenter 事件处理器"><a href="methods.htm#onHeadingMouseEnter"><span class="api-key">onHeadingMouseEnter</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="文章标题节点 mouseleave 事件处理器"><a href="methods.htm#onHeadingMouseLeave"><span class="api-key">onHeadingMouseLeave</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="文章开始处文章导航链接的 click 事件处理器"><a href="methods.htm#onArticleChapterClick"><span class="api-key">onArticleChapterClick</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="侧边栏菜单的展开/收起按钮的 click 事件处理器"><a href="methods.htm#onSwitcherClick"><span class="api-key">onSwitcherClick</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="侧边栏菜单的返回顶部按钮菜单的 click 事件处理器"><a href="methods.htm#onTopClick"><span class="api-key">onTopClick</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="侧边栏菜单的文章索引链接的 click 事件处理器"><a href="methods.htm#onSidebarChapterClick"><span class="api-key">onSidebarChapterClick</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="遮罩层的 click 事件处理器"><a href="methods.htm#onOverlayClick"><span class="api-key">onOverlayClick</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="窗口的 resize 事件处理器"><a href="methods.htm#onWindowResize"><span class="api-key">onWindowResize</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="返回移除 JavaScript 代码后的字符串"><a href="methods.htm#stripScripts"><span class="api-key">stripScripts<sup>STATIC</sup></span></a></li>
+                <li class="tip" data-position="top-left" data-tip="返回将 HTML 标签代码转义成对应的实体字符串"><a href="methods.htm#encodeHTML"><span class="api-key">encodeHTML<sup>STATIC</sup></span></a></li>
+                <li class="tip" data-position="top-left" data-tip="返回将 HTML 实体字符串转义成对应的 HTML 标签代码"><a href="methods.htm#decodeHTML"><span class="api-key">decodeHTML<sup>STATIC</sup></span></a></li>
+                <li class="tip" data-position="top-left" data-tip="返回安全的 HTML 代码"><a href="methods.htm#safetyHTML"><span class="api-key">safetyHTML<sup>STATIC</sup></span></a></li>
+                <li class="tip" data-position="top-left" data-tip="一个简单的 HTML 模板工具"><a href="methods.htm#template"><span class="api-key">template<sup>STATIC</sup></span></a></li>
+                <li class="tip" data-position="top-left" data-tip="生成唯一的 id"><a href="methods.htm#guid"><span class="api-key">guid<sup>STATIC</sup></span></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="api-footer">
+    <p class="api-author"><span class="api-version">AutocJS</span> · Created by <a href="http://www.yaohaixiao.com/">Robert
+        Yao</a></p>
+    <p class="api-license">Code licensed under <a href="http://opensource.org/licenses/mit-license.html">MIT License</a> ·
+        Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p>
+    <p class="api-issues"><a href="https://github.com/yaohaixiao/AutocJS">GitHub Project</a> · <a
+            href="https://github.com/yaohaixiao/AutocJS/issues">Issues</a></p>
+</div>
+<script type="text/javascript" src="../asset/jquery/jquery.js"></script>
+<script type="text/javascript" src="../js/autoc.js"></script>
+<script type="text/javascript" src="../js/tip.js"></script>
+<script type="text/javascript">
+    $('#container').autoc({
+        title:'Documentation'
+    });
+
+    $(".tip").tip();
+</script>
+</body>
+</html>

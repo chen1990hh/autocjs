@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
+    <meta name="author" content="Robert Yao - yaohaixiao.com">
+    <meta name="keyword" content="AutocJS,jQuery,jQuery Plugin">
+    <meta name="description" content="AutocJS: Automatically create directory navigation for your article.">
+    <!-- Mobile Specific Meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Properties - API Documentation - AutocJS</title>
+    <link href="../asset/normalize/normalize.css" type="text/css" rel="stylesheet" media="all">
+    <link href="../css/api.css" type="text/css" rel="stylesheet">
+    <link href="../css/autoc.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<div class="api-header">
+    <h1 class="api-project">AutocJS</h1>
+    <ul class="api-navigation">
+        <li><a href="../index.htm">Home</a></li>
+        <li class="api-active"><a href="index.htm">API Documentation</a></li>
+        <li><a href="../examples/index.htm">Examples</a></li>
+        <li><a href="https://github.com/yaohaixiao/AutocJS/archive/master.zip">Download</a></li>
+    </ul>
+</div>
+<div class="api-wrap" id="properties">
+    <h1 class="api-subject">Properties</h1>
+    <div class="api-container" id="container">
+        <div class="api-content defaults" id="defaults">
+            <h2>defaults</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Object</dd>
+            </dl>
+            <p>静态属性，存储的是 AutocJS 对象默认配置选项。</p>
+            <h3>Values</h3>
+            <dl class="api-params">
+                <dt>article：</dt>
+                <dd>页面中显示文章正文的 DOM 节点或者 ID 选择器。</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>selector：</dt>
+                <dd>article 节点下，要生成导航的标题标签的选择器。</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>title：</dt>
+                <dd>AutocJS 自动创建的导航菜单标题文字</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>isAnchorsOnly：</dt>
+                <dd>是否只创建标题链接</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>isAnimateScroll：</dt>
+                <dd>是否使用动画滚动定位</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>hasDirectoryInArticle：</dt>
+                <dd>是否在文章中创建目录导航</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>hasCodeAtHeadings：</dt>
+                <dd>是否在文章标题中显示该标题的段落索引编号</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>ANCHOR：</dt>
+                <dd>标题标签中创建的标题链接的 HTML 模板代码</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>WRAP：</dt>
+                <dd>AutocJS 菜单根节点的 HTML 模板代码</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>HEADER：</dt>
+                <dd>AutocJS 菜单标题栏的 HTML 模板代码</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>BODY：</dt>
+                <dd>AutocJS 菜单内容节点的 HTML 模板代码</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>FOOTER：</dt>
+                <dd>AutocJS 菜单页脚节点的 HTML 模板代码</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>SWITCHER：</dt>
+                <dd>AutocJS 菜单展开显示开关的 HTML 模板代码</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>TOP：</dt>
+                <dd>AutocJS 菜单返回顶部按钮的 HTML 模板代码</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>CHAPTERS：</dt>
+                <dd>AutocJS 导航目录列表的 HTML 模板代码</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>SUBJECTS：</dt>
+                <dd>AutocJS 导航子目录列表的 HTML 模板代码</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>CHAPTER：</dt>
+                <dd>AutocJS 导航段落章节的 HTML 模板代码</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>TEXT：</dt>
+                <dd>AutocJS 导航段落章节链接的 HTML 模板代码</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>CODE：</dt>
+                <dd>AutocJS 段落章节索引编码的 HTML 模板代码</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>OVERLAY：</dt>
+                <dd>AutocJS 菜单展开时遮罩层的 HTML 模板代码</dd>
+            </dl>
+        </div>
+        <div class="api-content version" id="version">
+            <h2>version</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>String</dd>
+            </dl>
+            <p>存储的是 AutocJS 当前的版本号。</p>
+        </div>
+        <div class="api-content attributes" id="attributes">
+            <h2>attributes</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Object</dd>
+            </dl>
+            <p>存储的是 AutocJS 对象当前的所有配置信息（具体信息请参考 <a href="properties.htm#defaults">defaults</a> 属性）。</p>
+        </div>
+        <div class="api-content elements" id="elements">
+            <h2>elements</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Array</dd>
+            </dl>
+            <p>存储的是 AutocJS 对象相关的所有 DOM 节点。</p>
+            <h3>Values</h3>
+            <dl class="api-params">
+                <dt>article：</dt>
+                <dd>AutocJS 对象要收集的文章正文显示区域的 DOM 节点。</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>chapters：</dt>
+                <dd>AutocJS 对象将 hasDirectoryInArticle 设置为 true 时，在文章正文开始处创建的目录导航列表 DOM 节点。</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>wrap：</dt>
+                <dd>AutocJS 对象创建的目录导航菜单的根节点。</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>header：</dt>
+                <dd>AutocJS 对象创建的目录导航菜单的标题栏 DOM 节点。</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>body：</dt>
+                <dd>AutocJS 对象创建的目录导航菜单的正文内容 DOM 节点。</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>list：</dt>
+                <dd>AutocJS 对象创建的目录导航菜单的列表 DOM 节点。</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>footer：</dt>
+                <dd>AutocJS 对象创建的目录导航菜单的页脚 DOM 节点。</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>switcher：</dt>
+                <dd>AutocJS 对象创建的目录导航菜单的隐藏显示开关 DOM 节点。</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>top：</dt>
+                <dd>AutocJS 对象创建的目录导航菜单中的返回顶部 DOM 节点。</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>overlay：</dt>
+                <dd>AutocJS 对象创建的目录导航菜单的遮罩层 DOM 节点。</dd>
+            </dl>
+        </div>
+        <div class="api-content data" id="data">
+            <h2>data</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>String</dd>
+            </dl>
+            <p>存储的是 AutocJS 对象相关的所有数据信息。</p>
+            <h3>Values</h3>
+            <dl class="api-params">
+                <dt>headings：</dt>
+                <dd>AutocJS 对象收集的所有文章标题节点。</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>chapters：</dt>
+                <dd>AutocJS 对象根据 data.headings 收集的（一一对应）的文章章节信息。</dd>
+            </dl>
+            <p>chapters 的数据示例如下：</p>
+            <pre class="api-code"><code>{
+   // id 编号
+   id: 0,
+   // 标题节点标签的层级级别
+   level: 1,
+   // 标题节点的文字
+   text: '文章标题',
+   // 标题节点 tagName.toUpperCase()
+   tag: 'H1',
+   // 标题节点的父级节点　id 编号
+   pid: 0
+}</code></pre>
+            <dl class="api-params">
+                <dt>anchors：</dt>
+                <dd>AutocJS 对象根据 data.headings 一一对应的创建的标题锚点链接 DOM 节点（NodeList）。</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>list：</dt>
+                <dd>AutocJS 对象根据 data.chapters 将它的值按照 pid 分组后的（二维数组）数据。</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<div class="api-footer">
+    <p class="api-author"><span class="api-version">AutocJS</span> · Created by <a href="http://www.yaohaixiao.com/">Robert
+        Yao</a></p>
+    <p class="api-license">Code licensed under <a href="http://opensource.org/licenses/mit-license.html">MIT License</a> ·
+        Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p>
+    <p class="api-issues"><a href="https://github.com/yaohaixiao/AutocJS">GitHub Project</a> · <a
+            href="https://github.com/yaohaixiao/AutocJS/issues">Issues</a></p>
+</div>
+<script type="text/javascript" src="../asset/jquery/jquery.js"></script>
+<script type="text/javascript" src="../js/autoc.js"></script>
+<script type="text/javascript">
+    $('#container').autoc({
+        title:'Properties'
+    });
+</script>
+</body>
+</html>

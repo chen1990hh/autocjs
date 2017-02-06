@@ -1,30 +1,28 @@
-# AutocJS v0.2.3
+# AutocJS v1.0.0
+
 
 ## Idea
-[AnchorJS](http://bryanbraun.github.io/anchorjs/) 是 AutocJS 的创作灵感。既然 AnchorJS 可创建标题的链接，为什么不直接给文章生成一个目录（Table of Contents）导航呢？ 于是就有了AutocJS。
+[AnchorJS](http://bryanbraun.github.io/anchorjs/) 是 AutocJS 的创作灵感。既然 AnchorJS 可创建标题的链接，为什么不直接给文章生成一个目录（Table of Contents）导航呢？ 于是就有了 AutocJS。
 
 
 ## What is AutocJS?
-AutocJS 是一个专门用来给文章生成目录（Table of Contents）导航菜单的工具。AutocJS 会查找文章指定区域中的所有h1~h6的标签，并自动生成文章的目录导航菜单。
+AutocJS 是一个专门用来生成文章目录（Table of Contents）导航的工具。AutocJS 会查找文章指定区域中的所有 h1~h6 的标签，并自动分析文章的层次结构，生成文章的目录导航（独立的侧边栏菜单，或者在文章的开始处生成文章目录）。
 
 
 ## Why AutocJS?
-AnchorJS 由于是国外的程序员开发的，所以对中文支持不好，无法给中文标题生成锚点。AutocJS 就是一个即支持英文也支持中文的解决方案。
+AnchorJS 由于是国外的程序员开发的，所以对中文支持不好，无法给中文标题生成锚点。而 AutocJS 即支持英文也支持中文。AutocJS 在拥有 AnchorJS 的基础功能同时，还可以自动分析文章的层次结构，生成文章的目录导航。
 
+## Features
 
-### AutocJS 的特点
-
-  * 全面支持中文和英文
-  * 简洁大方的界面，采用绝对应为导航，不会破坏页面的美观
-  * 弹性的界面布局，可以根据不同的窗口高度，自动调节菜单布局
-  * 精确的章节统计，文章层次结构一目了然
-  * 支持 AMD 和 CMD 规范
-  * 可以作为 jQuery 插件使用
-
-
-## Examples
-演示地址：[http://yaohaixiao.github.io/AutocJS/](http://yaohaixiao.github.io/AutocJS/)
-
+* 支持 AMD 和 CMD 规范；
+* 可以作为独立模块使用，也可以作为 jQuery 插件使用；
+* 支持中文和英文（标题文字）；
+* 界面简洁大方；
+* 拥有 AnchorJS 的基础功能；
+* 即支持生成独立文章目录导航菜单，又可以直接在文章中生成目录导航；
+* 可直接在段落标题上显示段落层级索引值；
+* 配置灵活，丰富，让你随心所欲掌控 AutocJS；
+   
 
 ## Install
 
@@ -59,7 +57,7 @@ $('#article').autoc({
 });
 ```
 
-### Use as an independent Object
+### Use as an independent Module
 
 ```js
 new AutocJS({
@@ -71,120 +69,186 @@ new AutocJS({
 
 ## API Documentation
 
-### Configuration Options
+This task primarily delegates to [AutocJS][], so please consider the [AutocJS documentation][] as required reading for advanced configuration.
 
-```js
-new AutocJS({
-    // 页面正文容器的 DOM 节点或者检点的 ID 选择器
-    article: '#article',
-    // 页面正文中要收集的文章标点的选择器
-    selector: 'h1,h2,h3,h4,h5,h6',
-    // 文章标题自动添加链接的 id 的前缀
-    prefix: 'anchor',
-    // 导航菜单的标题文本
-    title: 'Table of Contents',
-    // 段落定位，是否为动画滚动定位。
-    // true - 动画滚动定位 （默认值）
-    // false - 链接锚点定位
-    isAnimateScroll: true,
-    // 是否在文章中显示段落索引导航
-    // true - 显示段落索引
-    // false - 不显示段落索引（默认值）
-    showTocInArticle: false,
-    // 是否只显示段落标题链接，不生成段落导航菜单
-    // true - 行为和 AnchorJS 一样
-    // false - 则会出现导航菜单（默认值）
-    onlyAnchors: false,
-    // 是否在文章标题中显示段落索引
-    // true - 显示段落索引
-    // false - 不显示段落索引（默认值）
-    showIndexAtAnchors: false,
-    // 正文要收集的每个标题自动生成的锚点链接 HTML 模板
-    ANCHOR_LINK: '<a aria-hidden="true" class="toc-anchor-link"></a>',
-    // AutocJS 菜单的标题文字
-    title: 'Table of Contents',
-    // AutocJS 菜单的根节点的 HTML 模板
-    WRAP: '<div id="toc" class="toc toc-hide" aria-hidden="true"></div>',
-    // AutocJS 菜单的标题栏的 HTML 模板
-    TITLE: '<h3 class="toc-title" id="toc-title" aria-hidden="true">{title}</h3>',
-    // AutocJS 菜单的伸缩按钮框的 HTML 模板
-    BAR: '<div class="toc-bar" aria-hidden="true"></div>',
-    // AutocJS 菜单的显示隐藏按钮的 HTML 模板
-    SWITCH: '<h2 class="toc-switch" class="toc-switch" title="Toggle Menu" aria-hidden="true">Ξ</h2>',
-    // AutocJS 菜单的返回顶部按钮的 HTML 模板
-    TOP: '<a class="toc-top" id="toc-top" href="#top" aria-hidden="true">TOP</a>',
-    // AutocJS 菜单的主内容节点的 HTML 模板
-    BODY: '<nav id="toc-bd" class="toc-bd" aria-hidden="true"></nav>',
-    // AutocJS 菜单的索引列表的 HTML 模板
-    LIST: '<ol id="toc-list" class="toc-list" aria-hidden="true"></ol>',
-    // AutocJS 菜单的子索引列表的 HTML 模板
-    SUB_LIST: '<ol class="toc-sub-list" aria-hidden="true"></ol>',
-    // AutocJS 菜单的子索引列表的 HTML 模板
-    ITEM: '<li class="toc-item" aria-hidden="true"></li>',
-    // AutocJS 菜单的引列表的标题链接 HTML 模板
-    LINK: '<a aria-hidden="true"></a>',
-    // AutocJS 菜单的引列表的标题文字的 HTML 模板
-    CHAPTER: '<em class="toc-chapter" aria-hidden="true"></em>',
-    // AutocJS 菜单展开时遮罩层的 HTML 模板
-    OVERLAY: '<div id="toc-overlay" class="toc-overlay toc-hide" aria-hidden="true"></div>'
-});
-```
+[AutocJS]: https://github.com/yaohaixiao/AutocJS
+[AutocJS documentation]: http://yaohaixiao.github.io/AutocJS/
 
-### Attributes
+### Options
 
-* article
-* selector
-* prefix
-* [title](http://yaohaixiao.github.io/AutocJS/examples.htm#title)
-* [isAnimateScroll](http://yaohaixiao.github.io/AutocJS/examples.htm#isAnimateScroll)
-* [showTocInArticle](http://yaohaixiao.github.io/AutocJS/examples.htm#showTocInArticle)
-* [onlyAnchors](http://yaohaixiao.github.io/AutocJS/examples.htm#onlyAnchors)
-* [showIndexAtAnchors](http://yaohaixiao.github.io/AutocJS/examples.htm#showIndexAtAnchors)
-* ANCHOR_LINK
-* WRAP
-* TITLE
-* BAR
-* SWITCH
-* TOP
-* BODY
-* LIST
-* SUB_LIST
-* ITEM
-* LINK
-* CHAPTER
-* OVERLAY
+#### article
+Type: `String` `HTMLElement`  
+Default: `''`
+
+必选，用来指定页面中显示文章正文的 DOM 节点或者 ID 选择器。如果没有指定它，则程序将不会执行。[查看详情](http://yaohaixiao.github.io/AutocJS/api/options.htm#article)
+
+#### selector
+Type: `String`
+Default: `'h1,h2,h3,h4,h5,h6'`
+
+可选，用来指定 <a href="options.htm#article">article</a> 节点下，要生成导航的标题标签的选择器。[查看详情](http://yaohaixiao.github.io/AutocJS/api/options.htm#selector)
+
+#### title
+Type: `String` 
+Default: `'Table of Contents'`
+
+可选，用来指定 AutocJS 自动创建的文章导读索引导航菜单的标题文字。[查看详情](http://yaohaixiao.github.io/AutocJS/api/options.htm#title)
+
+#### isAnchorsOnly
+Type: `Boolean`
+Default: `false`
+
+可选，用来指定是否只创建标题链接。[查看详情](http://yaohaixiao.github.io/AutocJS/api/options.htm#isAnchorsOnly)
+
+#### isAnimateScroll
+Type: `Boolean` 
+Default: `true`
+
+可选，用来指定在点击段落索引导航链接时，是使用动画滚动定位，还是使用默认的锚点链接行为。[查看详情](http://yaohaixiao.github.io/AutocJS/api/options.htm#isAnimateScroll)
+
+#### hasDirectoryInArticle
+Type: `Boolean`
+Default: `false`
+
+可选，用来指定是否在文章（开始位置）中创建目录导航。[查看详情](http://yaohaixiao.github.io/AutocJS/api/options.htm#hasDirectoryInArticle)
+
+#### hasChapterCodeAtHeadings
+Type: `Boolean`
+Default: `false`
+
+可选，用来指定是否在文章标题中显示该标题的段落索引编号。[查看详情](http://yaohaixiao.github.io/AutocJS/api/options.htm#hasChapterCodeAtHeadings)
+
      
 ### Properties
-* attributes - AutocJS 对象设置的配置信息
-* elements - AutocJS 对象的所有 HTML 节点的集合
-* data - AutocJS 对象的数据，包括 anchors、chapters、list
-* defaults - （静态属性）AutocJS 对象默认的配置信息
+
+#### defaults
+Type: `Objects`
+
+静态属性，存储的是 AutocJS 对象默认配置选项。[查看详情](http://yaohaixiao.github.io/AutocJS/api/properties.htm#defaults)
+
+#### version
+Type: `String`
+
+存储的是 AutocJS 当前的版本号。[查看详情](http://yaohaixiao.github.io/AutocJS/api/properties.htm#version)
+
+#### attributes
+Type: `Objects`
+
+存储的是 AutocJS 对象当前的所有配置信息。[查看详情](http://yaohaixiao.github.io/AutocJS/api/properties.htm#attributes)
+
+#### elements
+Type: `Objects`
+
+存储的是 AutocJS 对象相关的所有 DOM 节点。[查看详情](http://yaohaixiao.github.io/AutocJS/api/properties.htm#elements)
+
+#### data
+Type: `Objects`
+
+存储的是 AutocJS 对象相关的所有数据信息。[查看详情](http://yaohaixiao.github.io/AutocJS/api/properties.htm#data)
+
 
 ### Methods
 
-* [init( options )](http://yaohaixiao.github.io/AutocJS/methods.htm#init)
-* [reload( options )](http://yaohaixiao.github.io/AutocJS/methods.htm#reload)
-* [set( config )](http://yaohaixiao.github.io/AutocJS/methods.htm#set)
-* [get( prop )](http://yaohaixiao.github.io/AutocJS/methods.htm#get)
-* [anchors( data )](http://yaohaixiao.github.io/AutocJS/methods.htm#anchors)
-* [chapters( data )](http://yaohaixiao.github.io/AutocJS/methods.htm#chapters)
-* [getArticleAnchors( )](http://yaohaixiao.github.io/AutocJS/methods.htm#getArticleAnchors)
-* [getArticleChapters( )](http://yaohaixiao.github.io/AutocJS/methods.htm#getArticleChapters)
-* [getChaptersDataList( )](http://yaohaixiao.github.io/AutocJS/methods.htm#getChaptersDataList)
-* [getChapterIndex( )](http://yaohaixiao.github.io/AutocJS/methods.htm#getChapterIndex)
-* [getPidByDiffer( )](http://yaohaixiao.github.io/AutocJS/methods.htm#getPidByDiffer)
-* [render( )](http://yaohaixiao.github.io/AutocJS/methods.htm#render)
-* [renderTocInArticle( )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderTocInArticle)
-* [renderAnchors( )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderAnchors)
-* [renderAnchorIndex( )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderAnchorIndex)
-* [renderToc( )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderToc)
-* [renderElements( )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderElements)
-* [renderChapters( list )](http://yaohaixiao.github.io/AutocJS/methods.htm#renderChapters)
-* [show( )](http://yaohaixiao.github.io/AutocJS/methods.htm#show)
-* [hide( )](http://yaohaixiao.github.io/AutocJS/methods.htm#hide)
-* [toggle( )](http://yaohaixiao.github.io/AutocJS/methods.htm#toggle)
-* [updateLayout( )](http://yaohaixiao.github.io/AutocJS/methods.htm#updateLayout)
-* [scrollTo( top )](http://yaohaixiao.github.io/AutocJS/methods.htm#scrollTo)
+* [init](http://yaohaixiao.github.io/AutocJS/api/methods.htm#init) - 初始化程序
+* [initProps](http://yaohaixiao.github.io/AutocJS/api/methods.htm#initProps) - 初始化属性
+* [set](http://yaohaixiao.github.io/AutocJS/api/methods.htm#set) - 设置 attributes 属性
+* [get](http://yaohaixiao.github.io/AutocJS/api/methods.htm#get) - 返回某个 attributes 属性
+* [headings](http://yaohaixiao.github.io/AutocJS/api/methods.htm#headings) - 设置或返回 data.headings 数据
+* [chapters](http://yaohaixiao.github.io/AutocJS/api/methods.htm#chapters) - 设置或返回 data.headings 数据
+* [anchors](http://yaohaixiao.github.io/AutocJS/api/methods.htm#anchors) - 设置或返回 data.anchors 数据
+* [getFormattedChapters](http://yaohaixiao.github.io/AutocJS/api/methods.htm#getFormattedChapters) - 返回 data.chapters 根据 pid 分组的文章段落数据
+* [getArticleHeadings](http://yaohaixiao.github.io/AutocJS/api/methods.htm#getArticleHeadings) - 返回文章中所有（选择器匹配）的标题节点
+* [getArticleChapters](http://yaohaixiao.github.io/AutocJS/api/methods.htm#getArticleChapters) - 返回 getArticleHeadings() 方法对应的文章段落信息数据
+* [getArticleAnchors](http://yaohaixiao.github.io/AutocJS/api/methods.htm#getArticleAnchors) - 返回 getArticleChapters() 方法对应创建的标题锚点链接节点
+* [getChapterIndex](http://yaohaixiao.github.io/AutocJS/api/methods.htm#getChapterIndex) - 返回 chapter 在 data.list 中对应段落层次位置索引值
+* [render](http://yaohaixiao.github.io/AutocJS/api/methods.htm#render) - 绘制 UI 界面
+* [renderArticleDirectory](http://yaohaixiao.github.io/AutocJS/api/methods.htm#renderArticleDirectory) - 在文章开始处绘制目录导航
+* [renderAnchors](http://yaohaixiao.github.io/AutocJS/api/methods.htm#renderAnchors) - 绘制标题锚点链接和标题段落章节索引代码
+* [renderHeadingChapterCode](http://yaohaixiao.github.io/AutocJS/api/methods.htm#renderHeadingChapterCode) - 在文章标题中绘制其对应的段落章节索引编码
+* [renderSidebarDirectory](http://yaohaixiao.github.io/AutocJS/api/methods.htm#renderSidebarDirectory) - 绘制侧边栏的目录导航菜单
+* [renderElements](http://yaohaixiao.github.io/AutocJS/api/methods.htm#renderElements) - 绘制侧边栏菜单的框架
+* [renderChapters](http://yaohaixiao.github.io/AutocJS/api/methods.htm#renderChapters) - 绘制文章章节索引
+* [show](http://yaohaixiao.github.io/AutocJS/api/methods.htm#show) - 展开侧边栏菜单
+* [hide](http://yaohaixiao.github.io/AutocJS/api/methods.htm#hide) - 收起侧边栏菜单
+* [toggle](http://yaohaixiao.github.io/AutocJS/api/methods.htm#toggle) - 收起/展开侧边栏菜单
+* [updateLayout](http://yaohaixiao.github.io/AutocJS/api/methods.htm#updateLayout) - 根据当前窗口高度更新侧边栏菜单界面高度
+* [scrollTo](http://yaohaixiao.github.io/AutocJS/api/methods.htm#scrollTo) - 将窗口的滚动条滚动到指定 top 值的位置
+* [destroy](http://yaohaixiao.github.io/AutocJS/api/methods.htm#destroy) - 移除所有绘制的 DOM 节点，并移除绑定的事件处理器
+
+
+## Examples
+
+#### Customize selector
+
+```js
+new AutocJS({
+    article: '#container',
+    // 只收集文章中的 h2　标题标签
+    selector: 'h2'
+});
+```
+
+演示地址：[http://yaohaixiao.github.io/AutocJS/examples/customize-selector.htm](http://yaohaixiao.github.io/AutocJS/examples/customize-selector.htm)
+
+#### Customize title
+
+```js
+new AutocJS({
+    article: '#container',
+    title: 'Customize Title'
+});
+```
+
+演示地址：[http://yaohaixiao.github.io/AutocJS/examples/customize-title.htm](http://yaohaixiao.github.io/AutocJS/examples/customize-title.htm)
+
+#### Create anchors only
+
+```js
+new AutocJS({
+    article: '#container',
+    isAnchorsOnly: true
+});
+```
+
+演示地址：[http://yaohaixiao.github.io/AutocJS/examples/create-anchors-only.htm](http://yaohaixiao.github.io/AutocJS/examples/create-anchors-only.htm)
+
+#### Positioning behavior
+
+```js
+new AutocJS({
+    article: '#container',
+    // 不配置 isAnimateScroll 或者设置为 true 则是默认的动画滚动定位
+    isAnimateScroll: false
+});
+```
+
+演示地址：[http://yaohaixiao.github.io/AutocJS/examples/positioning-behavior.htm](http://yaohaixiao.github.io/AutocJS/examples/positioning-behavior.htm)
+
+#### Create directory navigation in the article
+
+```js
+new AutocJS({
+    article: '#container',
+    // 不配置 hasDirectoryInArticle 或者设置为 false，则不会在文章开始位置显示目录导航
+    hasDirectoryInArticle: true,
+    // 通常这个时候就不需要侧边栏的导航菜单了，当然你也可以两个都要（isAnchorsOnly: false 即可）。
+    onlyAnchors: true
+});
+```
+
+演示地址：[http://yaohaixiao.github.io/AutocJS/examples/create-directory-navigation-in-the-article.htm](http://yaohaixiao.github.io/AutocJS/examples/create-directory-navigation-in-the-article.htm)
+
+#### Has chapter code at the headings
+
+```js
+new AutocJS({
+    article: '#container',
+    // 不配置 hasCodeAtHeadings 或者设置为 false，则不会在文章中的标题上显示段落章节索引编码
+    hasCodeAtHeadings: true
+});
+```
+
+演示地址：[http://yaohaixiao.github.io/AutocJS/examples/has-chapter-code-at-the-headings.htm](http://yaohaixiao.github.io/AutocJS/examples/has-chapter-code-at-the-headings.htm)
 
 
 ## Release History
@@ -194,8 +258,6 @@ See the [CHANGELOG](https://github.com/yaohaixiao/AutocJS/blob/master/CHANGELOG.
 
 ## License
 
-Copyright (c) 2016-2017 [Yaohaixiao](http://www.yaohaixiao.com/), all right reserved.
-
-Code licensed under [MIT License](http://opensource.org/licenses/mit-license.html).
+Code licensed under [MIT License](http://opensource.org/licenses/mit-license.html). 
 
 API Documentation licensed under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/).

@@ -1,9 +1,9 @@
 {
   "name": "autocjs",
-  "version": "0.2.3",
+  "version": "1.0.0",
   "author": "yaohaixiao",
   "license": "MIT",
-  "description": "Simple & Fast to create a table of contents menu for your article.",
+  "description": "Automatically create directory navigation for your article.",
   "main": "build/autoc.min.js",
   "files": [
     "build/autoc.min.js",
@@ -24,8 +24,7 @@
     "grunt-contrib-csslint": "^2.0.0",
     "grunt-contrib-cssmin": "^0.4.2",
     "grunt-contrib-jshint": "^1.1.0",
-    "grunt-contrib-uglify": "^0.5.1",
-    "jshint-stylish": "^2.2.1"
+    "grunt-contrib-uglify": "^0.5.1"
   },
   "scripts": {
     "grunt": "grunt"

@@ -1,6 +1,6 @@
 {
   "name": "autocjs",
-  "description": "Simple & Fast to create a table of contents menu for your article.",
+  "description": "Automatically create directory navigation for your article.",
   "main": "src/autoc.js",
   "authors": [
     "yaohaixiao"
