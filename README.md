@@ -83,37 +83,37 @@ Default: `''`
 必选，用来指定页面中显示文章正文的 DOM 节点或者 ID 选择器。如果没有指定它，则程序将不会执行。[查看详情](http://yaohaixiao.github.io/AutocJS/api/options.htm#article)
 
 #### selector
-Type: `String`
+Type: `String`  
 Default: `'h1,h2,h3,h4,h5,h6'`
 
 可选，用来指定 <a href="options.htm#article">article</a> 节点下，要生成导航的标题标签的选择器。[查看详情](http://yaohaixiao.github.io/AutocJS/api/options.htm#selector)
 
 #### title
-Type: `String` 
+Type: `String`  
 Default: `'Table of Contents'`
 
 可选，用来指定 AutocJS 自动创建的文章导读索引导航菜单的标题文字。[查看详情](http://yaohaixiao.github.io/AutocJS/api/options.htm#title)
 
 #### isAnchorsOnly
-Type: `Boolean`
+Type: `Boolean`  
 Default: `false`
 
 可选，用来指定是否只创建标题链接。[查看详情](http://yaohaixiao.github.io/AutocJS/api/options.htm#isAnchorsOnly)
 
 #### isAnimateScroll
-Type: `Boolean` 
+Type: `Boolean`  
 Default: `true`
 
 可选，用来指定在点击段落索引导航链接时，是使用动画滚动定位，还是使用默认的锚点链接行为。[查看详情](http://yaohaixiao.github.io/AutocJS/api/options.htm#isAnimateScroll)
 
 #### hasDirectoryInArticle
-Type: `Boolean`
+Type: `Boolean`  
 Default: `false`
 
 可选，用来指定是否在文章（开始位置）中创建目录导航。[查看详情](http://yaohaixiao.github.io/AutocJS/api/options.htm#hasDirectoryInArticle)
 
 #### hasChapterCodeAtHeadings
-Type: `Boolean`
+Type: `Boolean`  
 Default: `false`
 
 可选，用来指定是否在文章标题中显示该标题的段落索引编号。[查看详情](http://yaohaixiao.github.io/AutocJS/api/options.htm#hasChapterCodeAtHeadings)
