@@ -156,10 +156,6 @@ Type: `Objects`
 * [headings](http://yaohaixiao.github.io/AutocJS/api/methods.htm#headings) - 设置或返回 data.headings 数据
 * [chapters](http://yaohaixiao.github.io/AutocJS/api/methods.htm#chapters) - 设置或返回 data.headings 数据
 * [anchors](http://yaohaixiao.github.io/AutocJS/api/methods.htm#anchors) - 设置或返回 data.anchors 数据
-* [getFormattedChapters](http://yaohaixiao.github.io/AutocJS/api/methods.htm#getFormattedChapters) - 返回 data.chapters 根据 pid 分组的文章段落数据
-* [getArticleHeadings](http://yaohaixiao.github.io/AutocJS/api/methods.htm#getArticleHeadings) - 返回文章中所有（选择器匹配）的标题节点
-* [getArticleChapters](http://yaohaixiao.github.io/AutocJS/api/methods.htm#getArticleChapters) - 返回 getArticleHeadings() 方法对应的文章段落信息数据
-* [getArticleAnchors](http://yaohaixiao.github.io/AutocJS/api/methods.htm#getArticleAnchors) - 返回 getArticleChapters() 方法对应创建的标题锚点链接节点
 * [getChapterIndex](http://yaohaixiao.github.io/AutocJS/api/methods.htm#getChapterIndex) - 返回 chapter 在 data.list 中对应段落层次位置索引值
 * [render](http://yaohaixiao.github.io/AutocJS/api/methods.htm#render) - 绘制 UI 界面
 * [renderArticleDirectory](http://yaohaixiao.github.io/AutocJS/api/methods.htm#renderArticleDirectory) - 在文章开始处绘制目录导航

@@ -246,41 +246,31 @@ ArticleTOC.anchors([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
                 </div>
             </div>
         </div>
-        <div class="api-content getFormattedChapters" id="getFormattedChapters">
-            <h2>getFormattedChapters( )</h2>
-            <p><strong>getFormattedChapters( )</strong> 方法返回将 data.chapters 按 pid 分组的二维数组。</p>
+        <div class="api-content list" id="list">
+            <h2>list( data )</h2>
+            <p><strong>list( data )</strong> 方法返回或者设置 data.list （标题 DOM 节点集合）数据。传入 data 参数，用来设置 data.list 数据，没有传入参数，则获取 data.list 数据。</p>
+            <h3>Parameters</h3>
+            <dl class="api-params">
+                <dt>data</dt>
+                <dd>{Array} - （可选）标题 DOM 节点集合。</dd>
+            </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>data.list</dt>
-                <dd>{Array} - 将 data.chapters 按 pid 分组的二维数组。</dd>
+                <dt>AutocJS | data.list</dt>
+                <dd>{Object|Array} - 设置了 data 参数，则为 AutocJS 对象，没有为 data.list 数据。</dd>
             </dl>
-        </div>
-        <div class="api-content getArticleHeadings" id="getArticleHeadings">
-            <h2>getArticleHeadings( )</h2>
-            <p><strong>getArticleAnchors( )</strong> 方法返回文章中所有（选择器匹配）的标题节点。</p>
-            <h3>Returns</h3>
-            <dl class="api-params">
-                <dt>All headings NodeList</dt>
-                <dd>{Array} - 文章中所有（选择器匹配）的标题节点。</dd>
-            </dl>
-        </div>
-        <div class="api-content getArticleChapters" id="getArticleChapters">
-            <h2>getArticleChapters( )</h2>
-            <p><strong>getArticleChapters( )</strong> 方法返回 getArticleHeadings() 方法对应的文章段落信息数据。</p>
-            <h3>Returns</h3>
-            <dl class="api-params">
-                <dt>All chapters data</dt>
-                <dd>{Array} - getArticleHeadings() 方法对应的文章段落信息数据。</dd>
-            </dl>
-        </div>
-        <div class="api-content getArticleAnchors" id="getArticleAnchors">
-            <h2>getArticleAnchors( )</h2>
-            <p><strong>getArticleAnchors( )</strong> 方法返回 getArticleChapters() 方法对应动态创建的标题锚点链接节点。</p>
-            <h3>Returns</h3>
-            <dl class="api-params">
-                <dt>All anchors NodeList</dt>
-                <dd>{Array} - getArticleChapters() 方法对应动态创建的标题锚点链接节点。</dd>
-            </dl>
+            <h3>Code</h3>
+            <div class="api-item">
+                <div class="api-demo">
+<pre class="api-code"><code>var ArticleTOC = new AutocJS({
+     article: '#article',
+     title: 'AutocJS v0.2.0'
+});
+
+ArticleTOC.list() // -> data.list
+ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
+                </div>
+            </div>
         </div>
         <div class="api-content getChapterIndex" id="getChapterIndex">
             <h2>getChapterIndex( chapter )</h2>

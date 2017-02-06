@@ -13,7 +13,6 @@ changes:
   * 进一步完善了 API 文档； 
 * 完善了 autoc.js 源代码中的注释； 
 * 修复 reload() 方法无法正确运行的 BUG；
-* 将 getPidByDiffer() 方法调整为私有方法；
 * 移除了 prefix 配置参数；
 * 变更了部分配置参数的名称：
   * isAnchorsOnly （新）—— onlyAnchors（旧）；
@@ -42,8 +41,14 @@ changes:
   * onSidebarChapterClick（新）—— _onChapterClick（旧）；
   * onOverlayClick（新）—— _onOverlayClick（旧）；
   * onWindowResize（新）—— onWindowResize（旧）；
-* 新增 4 公共方法：
+* 将部分共有方法方法调整为私有方法：
+  * getChapters（新）—— getArticleChapters（旧）；
+  * getAnchors（新）—— getArticleAnchors（旧）；
+  * getList（新）—— getChpatersDataList（旧）；
+  * getPidByDiffer（新）—— _getPidByDiffer（旧）；
+* 新增 5 公共方法：
   * headings；
+  * list；
   * getArticleHeadings；
   * destroy；
   * onArticleChapterClick；

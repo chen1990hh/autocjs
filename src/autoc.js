@@ -134,6 +134,144 @@
     }
 
     /**
+     * 返回 getArticleHeadings() 方法对应的文章段落信息数据
+     *
+     * @returns {Array}
+     */
+    function getChapters ( headings ) {
+        var chapters = [],
+            previous = 1,
+            level = 0;
+
+        // 获得目录索引信息
+        $( headings ).each( function ( i, heading ) {
+            var $heading = $( heading ),
+                text = $heading.html(),
+                current = parseInt( $heading[ 0 ].tagName.toUpperCase().replace( /[H]/ig, '' ), 10 ),
+                pid = -1;
+
+            // 1.（父标题，子标题）：当前标题的序号 > 前一个标题的序号
+            if ( current > previous ) {
+                level += 1;
+
+                // 第一层级的 pid 是 -1
+                if ( level === 1 ) {
+                    pid = -1;
+                }
+                else {
+                    pid = i - 1;
+                }
+            }
+            else {
+                // 2.（同级标题，同级标题）
+                // A. 当前标题的序号 === 前一个标题的序号
+                // B. 当前标题的序号 < 前一个标题的序号 && 当前标题的序号 > 等级
+                if ( current === previous || (current < previous && current > level) ) {
+
+                    // H1 的层级肯定是 1
+                    if ( current === 1 ) {
+                        level = 1;
+
+                        pid = -1;
+                    }
+                    else {
+                        pid = chapters[ i - 1 ].pid;
+                    }
+                }
+                else {
+                    // 3.（子标题，父级标题）：当前标题的序号 < 前一个标题的序号
+                    if ( current <= level ) {
+
+                        // H1 的层级肯定是 1
+                        if ( current === 1 ) {
+                            level = 1;
+                        }
+                        else {
+                            level = level - (previous - current);
+                        }
+
+                        // 第一级的标题
+                        if ( level === 1 ) {
+                            pid = -1;
+                        }
+                        else {
+                            // 虽然看上去差点，不过能工作啊
+                            pid = getPidByDiffer( chapters, previous - current, i );
+                        }
+                    }
+                }
+            }
+
+            previous = current;
+
+            chapters.push( {
+                id: i,
+                level: level,
+                text: text,
+                tag: heading.tagName,
+                pid: pid
+            } );
+        } );
+
+        return chapters;
+    }
+
+    /**
+     * 返回 getArticleChapters() 方法对应动态创建的标题锚点链接节点
+     *
+     * @returns {Array}
+     */
+    function getAnchors (chapters) {
+        var self = this,
+            anchors = [];
+
+        $( chapters ).each( function ( i, chapter ) {
+            var id = chapter.id,
+                $anchor = $( self.get( 'ANCHOR' ) ).attr( {
+                    id: CLS_ANCHOR + '-' + id,
+                    'href': '#' + CLS_HEADING + '-' + id,
+                    'aria-label': chapter.text
+                } ).addClass( CLS_ANCHOR ).addClass( CLS_HIDE );
+
+            anchors.push( $anchor );
+        } );
+
+        return anchors;
+    }
+
+    /**
+     * 返回 data.chapters 根据 pid 分组的文章段落数据
+     *
+     * @returns {Array}
+     */
+    function getList (chapters) {
+        var temp = {},
+            list = [];
+
+        $( chapters ).each( function ( i, chapter ) {
+            var key = chapter.pid === -1 ? 'H1' : chapter.pid.toString();
+
+            if ( !temp[ key ] ) {
+                temp[ key ] = [];
+            }
+        } );
+
+        $.each( temp, function ( key ) {
+            $( chapters ).each( function ( i, chapter ) {
+                var pid = chapter.pid === -1 ? 'H1' : chapter.pid.toString();
+
+                if ( key === pid ) {
+                    temp[ key ].push( chapter );
+                }
+            } );
+
+            list.push( temp[ key ] );
+        } );
+
+        return list;
+    }
+
+    /**
      * 根据两个相邻的标题标签的数字的差值，获得父级的 id 值
      *
      * @method getPidByDiffer
@@ -413,9 +551,9 @@
             // 获得所有数据
             $.extend( this.data, {
                 headings: self.getArticleHeadings(),
-                chapters: self.getArticleChapters(),
-                anchors: self.getArticleAnchors(),
-                list: self.getFormattedChapters()
+                chapters: getChapters( self.headings() ),
+                anchors: getAnchors( self.chapters() ),
+                list: getList( self.chapters() )
             } );
 
             return this;
@@ -510,8 +648,6 @@
 
             return this;
         },
-        list: function () {
-        },
         /**
          * 返回文章中所有（选择器匹配）的标题节点
          *
@@ -519,143 +655,6 @@
          */
         getArticleHeadings: function () {
             return this.elements.article.find( this.get( 'selector' ) );
-        },
-        /**
-         * 返回 getArticleHeadings() 方法对应的文章段落信息数据
-         *
-         * @returns {Array}
-         */
-        getArticleChapters: function () {
-            var self = this,
-                chapters = [],
-                previous = 1,
-                level = 0;
-
-            // 获得目录索引信息
-            $( this.getArticleHeadings() ).each( function ( i, heading ) {
-                var $heading = $( heading ),
-                    text = $heading.html(),
-                    current = parseInt( $heading[ 0 ].tagName.toUpperCase().replace( /[H]/ig, '' ), 10 ),
-                    pid = -1;
-
-                // 1.（父标题，子标题）：当前标题的序号 > 前一个标题的序号
-                if ( current > previous ) {
-                    level += 1;
-
-                    // 第一层级的 pid 是 -1
-                    if ( level === 1 ) {
-                        pid = -1;
-                    }
-                    else {
-                        pid = i - 1;
-                    }
-                }
-                else {
-                    // 2.（同级标题，同级标题）
-                    // A. 当前标题的序号 === 前一个标题的序号
-                    // B. 当前标题的序号 < 前一个标题的序号 && 当前标题的序号 > 等级
-                    if ( current === previous || (current < previous && current > level) ) {
-
-                        // H1 的层级肯定是 1
-                        if ( current === 1 ) {
-                            level = 1;
-
-                            pid = -1;
-                        }
-                        else {
-                            pid = chapters[ i - 1 ].pid;
-                        }
-                    }
-                    else {
-                        // 3.（子标题，父级标题）：当前标题的序号 < 前一个标题的序号
-                        if ( current <= level ) {
-
-                            // H1 的层级肯定是 1
-                            if ( current === 1 ) {
-                                level = 1;
-                            }
-                            else {
-                                level = level - (previous - current);
-                            }
-
-                            // 第一级的标题
-                            if ( level === 1 ) {
-                                pid = -1;
-                            }
-                            else {
-                                // 虽然看上去差点，不过能工作啊
-                                pid = getPidByDiffer( chapters, previous - current, i );
-                            }
-                        }
-                    }
-                }
-
-                previous = current;
-
-                chapters.push( {
-                    id: i,
-                    level: level,
-                    text: text,
-                    tag: heading.tagName,
-                    pid: pid
-                } );
-            } );
-
-            return chapters;
-        },
-        /**
-         * 返回 getArticleChapters() 方法对应动态创建的标题锚点链接节点
-         *
-         * @returns {Array}
-         */
-        getArticleAnchors: function () {
-            var self = this,
-                anchors = [];
-
-            $( this.getArticleChapters() ).each( function ( i, chapter ) {
-                var id = chapter.id,
-                    $anchor = $( self.get( 'ANCHOR' ) ).attr( {
-                        id: CLS_ANCHOR + '-' + id,
-                        'href': '#' + CLS_HEADING + '-' + id,
-                        'aria-label': chapter.text
-                    } ).addClass( CLS_ANCHOR ).addClass( CLS_HIDE );
-
-                anchors.push( $anchor );
-            } );
-
-            return anchors;
-        },
-        /**
-         * 返回 data.chapters 根据 pid 分组的文章段落数据
-         *
-         * @returns {Array}
-         */
-        getFormattedChapters: function () {
-            var chapters = this.chapters(),
-                temp = {},
-                list = [];
-
-            $( chapters ).each( function ( i, chapter ) {
-                var key = chapter.pid === -1 ? 'H1' : chapter.pid.toString();
-
-                if ( !temp[ key ] ) {
-                    temp[ key ] = [];
-                }
-            } );
-
-            $.each( temp, function ( key ) {
-                $( chapters ).each( function ( i, chapter ) {
-                    var pid = chapter.pid === -1 ? 'H1' : chapter.pid.toString();
-
-                    if ( key === pid ) {
-                        temp[ key ].push( chapter );
-                    }
-                } );
-
-                list.push( temp[ key ] );
-            } );
-
-            return list;
         },
         /**
          * 返回根某个文章标题对应的段落章节信息在 data.list 中对应段落层次位置索引值
