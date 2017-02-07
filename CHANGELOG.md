@@ -1,3 +1,13 @@
+## v1.0.1
+
+date: 2017-02-06
+
+changes:
+
+* 修复调用 reload() 移除所有内容，无法在创建导航的问题
+* 修复 getChapters() 获得 headings() 的文本时的BUG
+
+
 ## v1.0.0
 
 date: 2017-02-06

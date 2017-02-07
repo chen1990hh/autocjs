@@ -146,7 +146,7 @@
         // 获得目录索引信息
         $( headings ).each( function ( i, heading ) {
             var $heading = $( heading ),
-                text = $heading.html(),
+                text = $heading.text(),
                 current = parseInt( $heading[ 0 ].tagName.toUpperCase().replace( /[H]/ig, '' ), 10 ),
                 pid = -1;
 
@@ -382,7 +382,8 @@
          * 存储的是 AutocJS 对象创建的所有 DOM 元素
          *
          * @property
-         * @type {{chapters: null, wrap: null, header: null, body: null, list: null, footer: null, switcher: null, top: null, overlay: null}}
+         * @type {{chapters: null, wrap: null, header: null, body: null, list: null, footer: null, switcher: null, top:
+         *     null, overlay: null}}
          * @private
          */
         this.elements = {
@@ -497,7 +498,7 @@
     AutocJS.guid = guid;
 
     AutocJS.prototype = {
-        version: '1.0.0',
+        version: '1.0.1',
         constructor: AutocJS,
         /**
          * 初始化方法：
@@ -517,7 +518,7 @@
                 this.set( options );
             }
 
-            if(!this.article()[0]){
+            if ( !this.article()[ 0 ] ) {
                 return this;
             }
 
@@ -569,9 +570,9 @@
          * @since 1.0.0
          * @returns {AutocJS}
          */
-        initData: function(){
+        initData: function () {
 
-            this.chapters(this.headings());
+            this.chapters( this.headings() );
 
             return this;
         },
@@ -638,7 +639,7 @@
          * @returns {Array}
          */
         anchors: function () {
-            return getAnchors( getChapters( this.headings() ), this.get( 'ANCHOR' ) );
+            return getAnchors( this.chapters(), this.get( 'ANCHOR' ) );
         },
         /**
          * 返回 elements 属性，AutocJS 对象创建的所有 DOM 元素
@@ -646,7 +647,7 @@
          * @since 1.0.0
          * @returns {Object}
          */
-        dom: function(){
+        dom: function () {
             return this.elements;
         },
         /**
@@ -658,10 +659,10 @@
          */
         chapters: function ( headings ) {
 
-            if(headings){
+            if ( headings ) {
                 this.data = getChapters( headings );
             }
-            else{
+            else {
                 return getChapters( this.headings() );
             }
 
