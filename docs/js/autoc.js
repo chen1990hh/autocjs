@@ -431,7 +431,7 @@
          */
         this.data = [];
 
-        this.init( options );
+        this.set( AutocJS.defaults ).init( options );
 
         return this;
     };
@@ -512,8 +512,6 @@
          * @returns {AutocJS}
          */
         init: function ( options ) {
-
-            this.set( AutocJS.defaults );
 
             if ( $.isPlainObject( options ) ) {
                 this.set( options );
