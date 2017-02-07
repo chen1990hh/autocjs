@@ -1,4 +1,4 @@
-# AutocJS v1.0.0 pre-release
+# AutocJS v1.0.0
 
 
 ## Idea
@@ -131,38 +131,27 @@ Type: `String`
 
 存储的是 AutocJS 当前的版本号。[查看详情](http://yaohaixiao.github.io/AutocJS/api/properties.htm#version)
 
-#### attributes
-Type: `Objects`
-
-存储的是 AutocJS 对象当前的所有配置信息。[查看详情](http://yaohaixiao.github.io/AutocJS/api/properties.htm#attributes)
-
-#### elements
-Type: `Objects`
-
-存储的是 AutocJS 对象相关的所有 DOM 节点。[查看详情](http://yaohaixiao.github.io/AutocJS/api/properties.htm#elements)
-
-#### data
-Type: `Objects`
-
-存储的是 AutocJS 对象相关的所有数据信息。[查看详情](http://yaohaixiao.github.io/AutocJS/api/properties.htm#data)
-
 
 ### Methods
 
 * [init](http://yaohaixiao.github.io/AutocJS/api/methods.htm#init) - 初始化程序
-* [initProps](http://yaohaixiao.github.io/AutocJS/api/methods.htm#initProps) - 初始化属性
+* [initElements](http://yaohaixiao.github.io/AutocJS/api/methods.htm#initElements) - 初始化 elements 属性（AutocJS 对象相关 DOM 元素）
+* [initData](http://yaohaixiao.github.io/AutocJS/api/methods.htm#initData) - 初始化 data 属性（文章段落章节数据）
 * [set](http://yaohaixiao.github.io/AutocJS/api/methods.htm#set) - 设置 attributes 属性
 * [get](http://yaohaixiao.github.io/AutocJS/api/methods.htm#get) - 返回某个 attributes 属性
-* [headings](http://yaohaixiao.github.io/AutocJS/api/methods.htm#headings) - 设置或返回 data.headings 数据
-* [chapters](http://yaohaixiao.github.io/AutocJS/api/methods.htm#chapters) - 设置或返回 data.headings 数据
-* [anchors](http://yaohaixiao.github.io/AutocJS/api/methods.htm#anchors) - 设置或返回 data.anchors 数据
+* [article](http://yaohaixiao.github.io/AutocJS/api/methods.htm#article) - 返回页面文章正文的容器 DOM 元素
+* [headings](http://yaohaixiao.github.io/AutocJS/api/methods.htm#headings) - 返回 article 中 selector 匹配的所有（标题） DOM 元素
+* [chapters](http://yaohaixiao.github.io/AutocJS/api/methods.htm#chapters) - 设置 data 属性或者返回 headings() 方法分析所得的文章段落数据
+* [anchors](http://yaohaixiao.github.io/AutocJS/api/methods.htm#anchors) - 返回根据 headings() 方法对应自动创建的标题锚点链接 DOM 元素
+* [dom](http://yaohaixiao.github.io/AutocJS/api/methods.htm#dom) - 返回 elements 属性
+* [list](http://yaohaixiao.github.io/AutocJS/api/methods.htm#list) - 返回 data 属性（文章段落数据）按 pid 分组的二维数组
 * [getChapterIndex](http://yaohaixiao.github.io/AutocJS/api/methods.htm#getChapterIndex) - 返回 chapter 在 data.list 中对应段落层次位置索引值
 * [render](http://yaohaixiao.github.io/AutocJS/api/methods.htm#render) - 绘制 UI 界面
 * [renderArticleDirectory](http://yaohaixiao.github.io/AutocJS/api/methods.htm#renderArticleDirectory) - 在文章开始处绘制目录导航
 * [renderAnchors](http://yaohaixiao.github.io/AutocJS/api/methods.htm#renderAnchors) - 绘制标题锚点链接和标题段落章节索引代码
 * [renderHeadingChapterCode](http://yaohaixiao.github.io/AutocJS/api/methods.htm#renderHeadingChapterCode) - 在文章标题中绘制其对应的段落章节索引编码
 * [renderSidebarDirectory](http://yaohaixiao.github.io/AutocJS/api/methods.htm#renderSidebarDirectory) - 绘制侧边栏的目录导航菜单
-* [renderElements](http://yaohaixiao.github.io/AutocJS/api/methods.htm#renderElements) - 绘制侧边栏菜单的框架
+* [renderSidebarOutline](http://yaohaixiao.github.io/AutocJS/api/methods.htm#renderSidebarOutline) - 绘制侧边栏菜单的框架
 * [renderChapters](http://yaohaixiao.github.io/AutocJS/api/methods.htm#renderChapters) - 绘制文章章节索引
 * [show](http://yaohaixiao.github.io/AutocJS/api/methods.htm#show) - 展开侧边栏菜单
 * [hide](http://yaohaixiao.github.io/AutocJS/api/methods.htm#hide) - 收起侧边栏菜单

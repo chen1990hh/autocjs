@@ -59,30 +59,32 @@
             <ul class="api-list">
                 <li class="tip" data-position="top-left" data-tip="存储的是 AutocJS 对象默认配置选项（静态属性）"><a href="properties.htm#defaults"><span class="api-key">defaults<sup>STATIC</sup></span></a></li>
                 <li class="tip" data-position="top-left" data-tip="存储的是 AutocJS 当前的版本号"><a href="properties.htm#version"><span class="api-key">version</span></a></li>
-                <li class="tip" data-position="top-left" data-tip="存储的是 AutocJS 对象当前的所有配置信息"><a href="properties.htm#attributes"><span class="api-key">attributes</span></a></li>
-                <li class="tip" data-position="top-left" data-tip="存储的是 AutocJS 对象相关的所有 DOM 节点"><a href="properties.htm#elements"><span class="api-key">elements</span></a></li>
-                <li class="tip" data-position="top-left" data-tip="存储的是 AutocJS 对象相关的所有数据信息"><a href="properties.htm#data"><span class="api-key">data</span></a></li>
             </ul>
         </div>
         <div class="api-content methods">
             <h2>Methods</h2>
             <ul class="api-list">
                 <li class="tip" data-position="top-left" data-tip="初始化程序"><a href="methods.htm#init"><span class="api-key">init</span></a></li>
-                <li class="tip" data-position="top-left" data-tip="初始化属性"><a href="methods.htm#initProps"><span class="api-key">initProps</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="初始化 elements 属性（AutocJS 对象相关 DOM 元素）"><a href="methods.htm#initElements"><span class="api-key">initElements</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="初始化 data 属性（文章段落章节数据）"><a href="methods.htm#initData"><span class="api-key">initData</span></a></li>
                 <li class="tip" data-position="top-left" data-tip="重启程序"><a href="methods.htm#reload"><span class="api-key">reload</span></a></li>
                 <li class="tip" data-position="top-left" data-tip="设置 attributes 属性"><a href="methods.htm#set"><span class="api-key">set</span></a></li>
-                <li class="tip" data-position="top-left" data-tip="返回某个 attributes 属性"><a href="methods.htm#"><span class="api-key">get</span></a></li>
-                <li class="tip" data-position="top-left" data-tip="设置或返回 data.headings 数据"><a href="methods.htm#headings"><span class="api-key">headings</span></a></li>
-                <li class="tip" data-position="top-left" data-tip="设置或返回 data.chapters 数据"><a href="methods.htm#chapters"><span class="api-key">chapters</span></a></li>
-                <li class="tip" data-position="top-left" data-tip="设置或返回 data.anchors 数据"><a href="methods.htm#anchors"><span class="api-key">anchors</span></a></li>
-                <li class="tip" data-position="top-left" data-tip="设置或返回 data.list 数据"><a href="methods.htm#list"><span class="api-key">list</span></a></li>
-                <li class="tip" data-position="top-left" data-tip="返回 chapter 在 data.list 中对应段落层次位置索引值"><a href="methods.htm#getChapterIndex"><span class="api-key">getChapterIndex</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="返回某个 attributes 属性"><a href="methods.htm#get"><span class="api-key">get</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="返回页面文章正文的容器 DOM 元素"><a href="methods.htm#article"><span class="api-key">article</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="返回 article 中 selector 匹配的所有（标题） DOM 元素"><a href="methods.htm#headings"><span class="api-key">headings</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="返回根据 headings() 方法对应自动创建的标题锚点链接 DOM 元素"><a href="methods.htm#anchors"><span class="api-key">anchors</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="返回 elements 属性"><a href="methods.htm#dom"><span class="api-key">dom</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="设置 data 属性或者返回 headings() 方法分析所得的文章段落数据"><a href="methods.htm#chapters"><span class="api-key">chapters</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="返回 data 属性（文章段落数据）按 pid 分组的二维数组"><a href="methods.htm#list"><span class="api-key">list</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="返回 chapter 在 list() 返回的数据中对应段落层次位置索引值"><a href="methods.htm#getChapterIndex"><span class="api-key">getChapterIndex</span></a></li>
                 <li class="tip" data-position="top-left" data-tip="绘制 UI 界面"><a href="methods.htm#render"><span class="api-key">render</span></a></li>
                 <li class="tip" data-position="top-left" data-tip="在文章开始处绘制目录导航"><a href="methods.htm#renderArticleDirectory"><span class="api-key">renderArticleDirectory</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="绘制文章中的目录导航的具体章节内容"><a href="methods.htm#renderArticleChapters"><span class="api-key">renderArticleChapters</span></a></li>
                 <li class="tip" data-position="top-left" data-tip="绘制标题锚点链接和标题段落章节索引代码"><a href="methods.htm#renderAnchors"><span class="api-key">renderAnchors</span></a></li>
                 <li class="tip" data-position="top-left" data-tip="在文章标题中绘制其对应的段落章节索引编码"><a href="methods.htm#renderHeadingChapterCode"><span class="api-key">renderHeadingChapterCode</span></a></li>
                 <li class="tip" data-position="top-left" data-tip="绘制侧边栏的目录导航菜单"><a href="methods.htm#renderSidebarDirectory"><span class="api-key">renderSidebarDirectory</span></a></li>
-                <li class="tip" data-position="top-left" data-tip="绘制侧边栏菜单的框架"><a href="methods.htm#renderElements"><span class="api-key">renderElements</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="绘制侧边栏菜单的框架"><a href="methods.htm#renderSidebarOutline"><span class="api-key">renderSidebarOutline</span></a></li>
+                <li class="tip" data-position="top-left" data-tip="绘制侧边栏导航菜单中的目录导航的具体章节内容"><a href="methods.htm#renderSidebarChapters"><span class="api-key">renderSidebarChapters</span></a></li>
                 <li class="tip" data-position="top-left" data-tip="绘制文章章节索引"><a href="methods.htm#renderChapters"><span class="api-key">renderChapters</span></a></li>
                 <li class="tip" data-position="top-left" data-tip="展开侧边栏菜单"><a href="methods.htm#show"><span class="api-key">show</span></a></li>
                 <li class="tip" data-position="top-left" data-tip="收起侧边栏菜单"><a href="methods.htm#hide"><span class="api-key">hide</span></a></li>
@@ -121,8 +123,8 @@
 <script type="text/javascript" src="../js/autoc.js"></script>
 <script type="text/javascript" src="../js/tip.js"></script>
 <script type="text/javascript">
-    $('#container').autoc({
-        title:'Documentation'
+    var TOC = $('#container').autoc({
+        title:'API Documentation'
     });
 
     $(".tip").tip();

@@ -1,3 +1,27 @@
+## v1.0.0
+
+date: 2017-02-06
+
+changes:
+
+* 更新了 API 文档；
+* 移除了 elements 属性中的 article 属性
+* 变更了 data 属性，移除了之前的所有子属性 
+* 移除了 initProps() 方法，现在它的功能由 initElements() 和 initData() 分别实现； 
+* 将 renderElements() 方法更名为 renderSidebarOutline()；
+* 变更了 3 个方法的功能：
+  * headings() 现在只用来获取文章中的标题 DOM 元素
+  * anchors() 现在只用来获取自动创建的辩题锚点链接 DOM 元素
+  * chapters() 现在用来初始化 data 属性，或者获取文章中实际存在的标题 DOM 元素分析获得的文章段落索引信息
+* 新增了 6 个方法：
+  * initElements；
+  * initData；
+  * article；
+  * dom；
+  * renderArticleChapters；
+  * renderSidebarChapters；
+
+
 ## v1.0.0 pre-release
 
 date: 2017-02-05

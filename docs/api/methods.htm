@@ -33,19 +33,20 @@
             <p><strong>init( options )</strong> 是 AutocJS 的初始化方法：</p>
             <ol>
                 <li>初始化配置参数；</li>
-                <li>初始化 DOM 节点和数据信息；</li>
+                <li>初始化所有 DOM 元素；</li>
+                <li>初始化数据</li>
                 <li>绘制 UI 界面；</li>
-                <li>给 AutocJS 相关的 DOM 节点绑定事件处理器；</li>
+                <li>给 AutocJS 相关的 DOM 元素绑定事件处理器；</li>
             </ol>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>options</dt>
-                <dd>{Object} - （可选）初始化的配置参数，详见 <a href="options.htm">Configuration Options</a>。</dd>
+                <dt>{Object}</dt>
+                <dd>options - （可选）初始化的配置参数，详见 <a href="options.htm">Configuration Options</a>。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
             <h3>Code</h3>
             <div class="api-item">
@@ -59,36 +60,40 @@ ArticleOutline.init({
                 </div>
             </div>
         </div>
-        <div class="api-content initProps" id="initProps">
-            <h2>initProps( )</h2>
-            <p><strong>initProps( )</strong> 是 AutocJS 的属性初始化方法：</p>
-            <ol>
-                <li>初始化 attributes 配置参数属性；</li>
-                <li>初始化 elements （DOM 节点）属性；</li>
-                <li>初始化 data （数据）属性；</li>
-            </ol>
+        <div class="api-content initElements" id="initElements">
+            <h2>initElements( )</h2>
+            <p><strong>initElements( )</strong> 是 AutocJS 的 elements 属性（AutocJS 对象相关 DOM 元素）初始化方法：</p>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
+            </dl>
+        </div>
+        <div class="api-content initData" id="initData">
+            <h2>initData( )</h2>
+            <p><strong>initData( )</strong> 是 AutocJS 的 data 属性（文章段落章节数据）初始化方法：</p>
+            <h3>Returns</h3>
+            <dl class="api-params">
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content reload" id="reload">
             <h2>reload( options )</h2>
             <p><strong>reload( options )</strong> 是（根据新的配置信息）重启程序方法：</p>
             <ol>
-            <li>先移除所有绘制的 DOM 结合和绑定的事件处理器；</li>
+            <li>先移除所有绘制的 DOM 元素和绑定的事件处理器；</li>
             <li>重新初始化程序；</li>
             </ol>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>options</dt>
-                <dd>{Object} - （可选）初始化的配置参数，详见 <a href="options.htm">Configuration Options</a>。</dd>
+                <dt>{Object}</dt>
+                <dd>options - （可选）初始化的配置参数，详见 <a href="options.htm">Configuration Options</a>。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
             <h3>Code</h3>
             <div class="api-item">
@@ -109,13 +114,13 @@ ArticleTOC.reload({
             <p><strong>set( options )</strong> 用来设置 attributes（配置）属性。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>config</dt>
-                <dd>{Object} - （可选）初始化的配置参数，详见 <a href="options.htm">Configuration Options</a>。</dd>
+                <dt>{Object}</dt>
+                <dd>options - （可选）初始化的配置参数，详见 <a href="options.htm">Configuration Options</a>。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
             <h3>Code</h3>
             <div class="api-item">
@@ -132,13 +137,33 @@ ArticleTOC.reload({
             <p><strong>get( prop )</strong> 方法返回某个 attributes 属性。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>prop</dt>
-                <dd>{String} - 想要获取的 attributes 属性名称。</dd>
+                <dt>{String}</dt>
+                <dd>prop - 想要获取的 attributes 属性名称。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>attributes 中对应的属性</dt>
-                <dd>{Any} - attributes 属性值。</dd>
+                <dt>{String|Boolean}</dt>
+                <dd>attributes 属性值。</dd>
+            </dl>
+            <h3>Code</h3>
+            <div class="api-item">
+                <div class="api-demo">
+<pre class="api-code"><code>var ArticleTOC = new AutocJS({
+     article: '#article',
+     title: 'AutocJS v0.2.0'
+});
+
+ArticleTOC.get('title'); // -> 'AutocJS v0.2.0'</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="api-content article" id="article">
+            <h2>article( )</h2>
+            <p><strong>article( )</strong> 方法返回页面中的文章正文容器 DOM 元素。</p>
+            <h3>Returns</h3>
+            <dl class="api-params">
+                <dt>{HTMLElement}</dt>
+                <dd>文章正文容器 DOM 元素。</dd>
             </dl>
             <h3>Code</h3>
             <div class="api-item">
@@ -153,17 +178,21 @@ ArticleTOC.get('title'); // -> 'AutocJS v0.2.0'</code></pre>
             </div>
         </div>
         <div class="api-content headings" id="headings">
-            <h2>headings( data )</h2>
-            <p><strong>headings( data )</strong> 方法返回或者设置 data.headings （标题 DOM 节点集合）数据。传入 data 参数，则用来设置 data.headings 数据，没有传入，则获取 data.headings 数据。</p>
-            <h3>Parameters</h3>
-            <dl class="api-params">
-                <dt>data</dt>
-                <dd>{Array} - （可选）标题 DOM 节点集合。</dd>
-            </dl>
+            <h2>headings( )</h2>
+            <p><strong>headings( )</strong> 方法返回 article 中 selector 匹配的所有（标题） DOM 元素。</p>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS | data.headings</dt>
-                <dd>{Object|Array} - 传入 data 参数，则为 AutocJS 对象，没有则为 data.headings 数据。</dd>
+                <dt>{HTMLElement}</dt>
+                <dd>article 中 selector 匹配的所有（标题） DOM 元素。</dd>
+            </dl>
+        </div>
+        <div class="api-content anchors" id="anchors">
+            <h2>anchors( )</h2>
+            <p><strong>anchors( )</strong> 方法返回根据 headings() 方法对应自动创建的标题锚点链接 DOM 元素。</p>
+            <h3>Returns</h3>
+            <dl class="api-params">
+                <dt>{HTMLElement}</dt>
+                <dd>headings() 方法对应自动创建的标题锚点链接 DOM 元素。</dd>
             </dl>
             <h3>Code</h3>
             <div class="api-item">
@@ -173,23 +202,32 @@ ArticleTOC.get('title'); // -> 'AutocJS v0.2.0'</code></pre>
      title: 'AutocJS v0.2.0'
 });
 
-ArticleTOC.anchors() // -> data.headings
+ArticleTOC.anchors() // -> data.anchors
 ArticleTOC.anchors([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
                 </div>
             </div>
         </div>
+        <div class="api-content dom" id="dom">
+            <h2>dom( )</h2>
+            <p><strong>dom( )</strong> 方法返回 elements 属性，AutocJS 对象创建的所有 DOM 元素。</p>
+            <h3>Returns</h3>
+            <dl class="api-params">
+                <dt>{Object}</dt>
+                <dd>elements 属性，AutocJS 对象创建的所有 DOM 元素。</dd>
+            </dl>
+        </div>
         <div class="api-content chapters" id="chapters">
-            <h2>chapters( data )</h2>
-            <p><strong>chapters( data )</strong> 方法返回或者设置 data.chapters （文章段落章节数据集合）数据。传入 data 参数，用来设置 data.chapters 数据，没有传入参数，则获取 data.chapters 数据。</p>
+            <h2>chapters( headings )</h2>
+            <p><strong>chapters( headings )</strong> 方法传入 headings 参数，则设置 data 属性，没有传入 headings 数据，则返回 headings() 方法收集的的标题节点分析整理的 chapters 数据。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>data</dt>
-                <dd>{Array} - （可选）文章段落章节数据集合。</dd>
+                <dt>{Array}</dt>
+                <dd>headings - （可选）标题 DOM 元素集合。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS | data.chapters</dt>
-                <dd>{Object|Array} - 传入 data 参数，则为 AutocJS 对象，没有则为 data.chapters 数据。</dd>
+                <dt>{AutocJS|Array}</dt>
+                <dd>没有 headings　参数，返回　AutocJS　对象，否则返回　chapters 数据。</dd>
             </dl>
             <h3>Code</h3>
             <div class="api-item">
@@ -199,7 +237,7 @@ ArticleTOC.anchors([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
      title: 'AutocJS v0.2.0'
 });
 
-ArticleTOC.chapters(); // -> data.chapters
+ArticleTOC.chapters(); // -> 返回　chapters 数据
 ArticleTOC.chapters([{
     id: 0,
     level: 1,
@@ -220,70 +258,27 @@ ArticleTOC.chapters([{
                 </div>
             </div>
         </div>
-        <div class="api-content anchors" id="anchors">
-            <h2>anchors( data )</h2>
-            <p><strong>anchors( data )</strong> 方法返回或者设置 data.anchors （标题 DOM 节点集合）数据。传入 data 参数，用来设置 data.anchors 数据，没有传入参数，则获取 data.anchors 数据。</p>
-            <h3>Parameters</h3>
-            <dl class="api-params">
-                <dt>data</dt>
-                <dd>{Array} - （可选）标题 DOM 节点集合。</dd>
-            </dl>
-            <h3>Returns</h3>
-            <dl class="api-params">
-                <dt>AutocJS | data.anchors</dt>
-                <dd>{Object|Array} - 设置了 data 参数，则为 AutocJS 对象，没有为 data.anchors 数据。</dd>
-            </dl>
-            <h3>Code</h3>
-            <div class="api-item">
-                <div class="api-demo">
-<pre class="api-code"><code>var ArticleTOC = new AutocJS({
-     article: '#article',
-     title: 'AutocJS v0.2.0'
-});
-
-ArticleTOC.anchors() // -> data.anchors
-ArticleTOC.anchors([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
-                </div>
-            </div>
-        </div>
         <div class="api-content list" id="list">
-            <h2>list( data )</h2>
-            <p><strong>list( data )</strong> 方法返回或者设置 data.list （标题 DOM 节点集合）数据。传入 data 参数，用来设置 data.list 数据，没有传入参数，则获取 data.list 数据。</p>
-            <h3>Parameters</h3>
-            <dl class="api-params">
-                <dt>data</dt>
-                <dd>{Array} - （可选）标题 DOM 节点集合。</dd>
-            </dl>
+            <h2>list( )</h2>
+            <p><strong>list( )</strong> 方法返回 data 属性（文章段落数据）按 pid 分组的二维数组。</p>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS | data.list</dt>
-                <dd>{Object|Array} - 设置了 data 参数，则为 AutocJS 对象，没有为 data.list 数据。</dd>
+                <dt>{Array}</dt>
+                <dd>data 属性（文章段落数据）按 pid 分组的二维数组。</dd>
             </dl>
-            <h3>Code</h3>
-            <div class="api-item">
-                <div class="api-demo">
-<pre class="api-code"><code>var ArticleTOC = new AutocJS({
-     article: '#article',
-     title: 'AutocJS v0.2.0'
-});
-
-ArticleTOC.list() // -> data.list
-ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
-                </div>
-            </div>
         </div>
         <div class="api-content getChapterIndex" id="getChapterIndex">
             <h2>getChapterIndex( chapter )</h2>
-            <p><strong>getHeadingIndex( chapter )</strong> 方法返回某个 chapter (文章标题对应的段落章节信息）在 data.list 中对应段落层次位置索引值。</p>
+            <p><strong>getHeadingIndex( chapter )</strong> 方法返回 chapter 在 list() 返回的数据中对应段落层次位置索引值。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>chapter</dt>
-                <dd>{Object} - 某个标题对应的 chapter 数据。</dd>
+                <dt>{Object}</dt>
+                <dd>chapter - 某个标题对应的 chapter 数据。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>index</dt>
-                <dd>{Number} - chapter 数据在 data.list 中对应的索引值。</dd>
+                <dt>{Number}</dt>
+                <dd>chapter 在 list() 返回的数据中对应段落层次位置索引值。</dd>
             </dl>
         </div>
         <div class="api-content render" id="render">
@@ -296,8 +291,8 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             </ol>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content renderArticleDirectory" id="renderArticleDirectory">
@@ -305,8 +300,17 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>renderArticleDirectory( )</strong> 方法用来在文章中显示段落索引导航。</p>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
+            </dl>
+        </div>
+        <div class="api-content renderArticleChapters" id="renderArticleChapters">
+            <h2>renderArticleChapters( )</h2>
+            <p><strong>renderArticleChapters( )</strong> 方法用来绘制文章中的目录导航的具体章节内容。</p>
+            <h3>Returns</h3>
+            <dl class="api-params">
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content renderAnchors" id="renderAnchors">
@@ -314,8 +318,8 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>renderAnchors( )</strong> 方法用来绘制标题锚点链接（这个是借鉴的 AnchorsJS 的思路）和标题段落章节索引代码。</p>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content renderHeadingChapterCode" id="renderHeadingChapterCode">
@@ -323,8 +327,8 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>renderHeadingChapterCode( chapter )</strong> 方法用在文章标题中绘制其对应的段落章节索引编码。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>chapter</dt>
-                <dd>{Object} - 某个标题对应的 chapter 数据。</dd>
+                <dt>{Object}</dt>
+                <dd>chapter - 某个标题对应的 chapter 数据。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
@@ -337,17 +341,26 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>renderSidebarDirectory( )</strong> 方法用来绘制完整的导航菜单。</p>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
-        <div class="api-content renderElements" id="renderElements">
-            <h2>renderElements( )</h2>
-            <p><strong>renderElements( )</strong> 方法用来绘制侧边栏菜单的框架。</p>
+        <div class="api-content renderSidebarOutline" id="renderSidebarOutline">
+            <h2>renderSidebarOutline( )</h2>
+            <p><strong>renderSidebarOutline( )</strong> 方法用来绘制侧边栏菜单的框架。</p>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
+            </dl>
+        </div>
+        <div class="api-content renderSidebarChapters" id="renderSidebarChapters">
+            <h2>renderSidebarChapters( )</h2>
+            <p><strong>renderSidebarChapters( )</strong> 方法用来绘制侧边栏导航菜单中的目录导航的具体章节内容。</p>
+            <h3>Returns</h3>
+            <dl class="api-params">
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content renderChapters" id="renderChapters">
@@ -355,13 +368,13 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>renderChapters( list )</strong> 方法用来绘制文章章节索引。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>list</dt>
-                <dd>{HTMLElement} - 绘制索引的目标列表 DOM 节点。</dd>
+                <dt>{HTMLElement}</dt>
+                <dd>list - 绘制索引的目标列表 DOM 元素。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content show" id="show">
@@ -369,8 +382,8 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>show( )</strong> 方法用来展开侧边栏菜单。</p>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content hide" id="hide">
@@ -378,8 +391,8 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>hide( )</strong> 方法用来收起侧边栏菜单。</p>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - 返回 AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content toggle" id="toggle">
@@ -387,8 +400,8 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>toggle( )</strong> 方法用来收起/展开侧边栏菜单。</p>
             <h3>Returns</h3>
             <dl class="params">
-                <dt>AutocJS</dt>
-                <dd>{AutocJS} - 返回 AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content updateLayout" id="updateLayout">
@@ -396,8 +409,8 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>updateLayout( )</strong> 方法会根据当前窗口高度更新侧边栏菜单界面高度。</p>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content scrollTo" id="scrollTo">
@@ -405,13 +418,13 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>scrollTo( top )</strong> 方法用于将窗口的滚动条滚动到指定 top 值的位置。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>top</dt>
-                <dd>{Number} - 页面要滚动的 top 数值。</dd>
+                <dt>{Number}</dt>
+                <dd>top - 页面要滚动的 top 数值。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content destroy" id="destroy">
@@ -419,13 +432,13 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>destroy( )</strong> 方法用于移除所有绘制的 DOM 节点，并移除绑定的事件处理器。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>top</dt>
-                <dd>{Number} - 页面要滚动的 top 数值。</dd>
+                <dt>{Number}</dt>
+                <dd>top - 页面要滚动的 top 数值。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content attachEvents" id="attachEvents">
@@ -433,8 +446,8 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>attachEvents( )</strong> 方法用于给 AutocJS 相关的所有 DOM 节点绑定事件处理器。</p>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content onHeadingMouseEnter" id="onHeadingMouseEnter">
@@ -442,13 +455,13 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>onHeadingMouseEnter( evt )</strong> 方法是文章标题节点 mouseenter 事件处理器。在鼠标滑过文章标题，显示自动创建的锚点链接。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>evt</dt>
-                <dd>{Event} - Event 对象。</dd>
+                <dt>{Event}</dt>
+                <dd>evt - Event 对象。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content onHeadingMouseLeave" id="onHeadingMouseLeave">
@@ -456,13 +469,13 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>onHeadingMouseLeave( evt )</strong> 方法是文章标题节点 mouseleave 事件处理器。在鼠标离开文章标题，隐藏自动创建的锚点链接。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>evt</dt>
-                <dd>{Event} - Event 对象。</dd>
+                <dt>{Event}</dt>
+                <dd>evt - Event 对象。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content onArticleChapterClick" id="onArticleChapterClick">
@@ -470,13 +483,13 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>onArticleChapterClick( evt )</strong> 方法是文章开始处文章导航链接的 click 事件处理器。点击链接时，滚动定位到相应的段落开始位置。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>evt</dt>
-                <dd>{Event} - Event 对象。</dd>
+                <dt>{Event}</dt>
+                <dd>evt - Event 对象。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>evt</dt>
-                <dd>{Event} - Event 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content onSwitcherClick" id="onSwitcherClick">
@@ -484,13 +497,13 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>onSwitcherClick( evt )</strong> 方法是侧边栏菜单的展开/收起按钮的 click 事件处理器。点击后会根据菜单展开状态，展开或收起。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>evt</dt>
-                <dd>{Event} - Event 对象。</dd>
+                <dt>{Event}</dt>
+                <dd>evt - Event 对象。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content onTopClick" id="onTopClick">
@@ -498,13 +511,13 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>onTopClick( evt )</strong> 方法是侧边栏菜单的返回顶部按钮菜单的 click 事件处理器。点击后会滚动到页面顶部。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>evt</dt>
-                <dd>{Event} - Event 对象。</dd>
+                <dt>{Event}</dt>
+                <dd>evt - Event 对象。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content onSidebarChapterClick" id="onSidebarChapterClick">
@@ -512,13 +525,13 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>onSidebarChapterClick( evt )</strong> 方法是侧边栏菜单的文章索引链接的 click 事件处理器。点击后会会滚动定位到文章相关章节标题的位置。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>evt</dt>
-                <dd>{Event} - Event 对象。</dd>
+                <dt>{Event}</dt>
+                <dd>evt - Event 对象。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content onOverlayClick" id="onOverlayClick">
@@ -526,13 +539,13 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>onOverlayClick( evt )</strong> 方法是遮罩层的 click 事件处理器。点击后隐藏遮罩层，收起菜单。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>evt</dt>
-                <dd>{Event} - Event 对象。</dd>
+                <dt>{Event}</dt>
+                <dd>evt - Event 对象。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content onWindowResize" id="onWindowResize">
@@ -540,13 +553,13 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>onWindowResize( evt )</strong> 方法是窗口的 resize 事件处理器。窗口大小变更后，将立即更新侧边栏高度。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>evt</dt>
-                <dd>{Event} - Event 对象。</dd>
+                <dt>{Event}</dt>
+                <dd>evt - Event 对象。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>AutocJS</dt>
-                <dd>{Object} - AutocJS 对象。</dd>
+                <dt>{AutocJS}</dt>
+                <dd>AutocJS 对象。</dd>
             </dl>
         </div>
         <div class="api-content stripScripts" id="stripScripts">
@@ -554,13 +567,13 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>stripScripts( html )</strong> （静态）方法返回移除 JavaScript 代码后的字符串。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>html</dt>
-                <dd>{String} - 要处理的字符串。</dd>
+                <dt>{String}</dt>
+                <dd>html - 要处理的字符串。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>html</dt>
-                <dd>{String} - 处理后的字符串。</dd>
+                <dt>{String}</dt>
+                <dd>处理后的字符串。</dd>
             </dl>
         </div>
         <div class="api-content encodeHTML" id="encodeHTML">
@@ -568,13 +581,13 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>encodeHTML( html )</strong> （静态）方法返回将 HTML 标签代码转义成对应的实体字符串。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>html</dt>
-                <dd>{String} - 要处理的字符串。</dd>
+                <dt>{String}</dt>
+                <dd>html - 要处理的字符串。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>html</dt>
-                <dd>{String} - 处理后的字符串。</dd>
+                <dt>{String}</dt>
+                <dd>处理后的字符串。</dd>
             </dl>
         </div>
         <div class="api-content decodeHTML" id="decodeHTML">
@@ -582,13 +595,13 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>decodeHTML( html )</strong> （静态）方法返回将 HTML 实体字符串转义成对应的 HTML 标签代码。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>html</dt>
-                <dd>{String} - 要处理的字符串。</dd>
+                <dt>{String}</dt>
+                <dd>html - 要处理的字符串。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>html</dt>
-                <dd>{String} - 处理后的字符串。</dd>
+                <dt>{String}</dt>
+                <dd>处理后的字符串。</dd>
             </dl>
         </div>
         <div class="api-content safetyHTML" id="safetyHTML">
@@ -596,13 +609,13 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>safetyHTML( html )</strong> （静态）方法返回安全的 HTML 代码。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>html</dt>
-                <dd>{String} - 要处理的字符串。</dd>
+                <dt>{String}</dt>
+                <dd>html - 要处理的字符串。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>html</dt>
-                <dd>{String} - 处理后的字符串。</dd>
+                <dt>{String}</dt>
+                <dd>处理后的字符串。</dd>
             </dl>
         </div>
         <div class="api-content template" id="template">
@@ -610,20 +623,20 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>template( options )</strong> （静态）方法返回用 JSON 数据中的值替换特殊字符后 HTML 模板字符串。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>data</dt>
-                <dd>{Object} - 模板的 JSON 对象格式数据。</dd>
+                <dt>{Object}</dt>
+                <dd>data - 模板的 JSON 对象格式数据。</dd>
             </dl>
             <dl class="api-params">
-                <dt>html</dt>
-                <dd>{String} - 模板的 HTML 代码片段。</dd>
+                <dt>{String}</dt>
+                <dd>html - 模板的 HTML 代码片段。</dd>
             </dl>
             <dl class="api-params">
-                <dt>data</dt>
-                <dd>{Object} - HTML 代码片段中特殊字符的开始标签。</dd>
+                <dt>{String}</dt>
+                <dd>startTag - HTML 代码片段中特殊字符的开始标签。</dd>
             </dl>
             <dl class="api-params">
-                <dt>data</dt>
-                <dd>{Object} - HTML 代码片段中特殊字符的结束标签。</dd>
+                <dt>{String}</dt>
+                <dd>endTag - HTML 代码片段中特殊字符的结束标签。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
@@ -636,13 +649,13 @@ ArticleTOC.list([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
             <p><strong>guid( prefix )</strong> （静态）方法返回唯一的 id。</p>
             <h3>Parameters</h3>
             <dl class="api-params">
-                <dt>prefix</dt>
-                <dd>{String} - 前缀字符串。</dd>
+                <dt>{String}</dt>
+                <dd>prefix - 前缀字符串。</dd>
             </dl>
             <h3>Returns</h3>
             <dl class="api-params">
-                <dt>id</dt>
-                <dd>{String} - 唯一的 id。</dd>
+                <dt>{String}</dt>
+                <dd>唯一的 id。</dd>
             </dl>
         </div>
     </div>
