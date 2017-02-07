@@ -497,7 +497,7 @@
     AutocJS.guid = guid;
 
     AutocJS.prototype = {
-        version: '1.0.0 pre-release',
+        version: '1.0.0',
         constructor: AutocJS,
         /**
          * 初始化方法：
@@ -533,6 +533,7 @@
         /**
          * 初始化 elements 属性（AutocJS 对象相关 DOM 元素）
          *
+         * @since 1.0.0
          * @returns {AutocJS}
          */
         initElements: function () {
@@ -567,6 +568,7 @@
         /**
          * 初始化 data 属性（文章段落章节数据）
          *
+         * @since 1.0.0
          * @returns {AutocJS}
          */
         initData: function(){
@@ -617,6 +619,7 @@
         /**
          * 返回页面中的文章正文容器 DOM 元素
          *
+         * @since 1.0.0
          * @returns {HTMLElement}
          */
         article: function () {
@@ -642,6 +645,7 @@
         /**
          * 返回 elements 属性，AutocJS 对象创建的所有 DOM 元素
          *
+         * @since 1.0.0
          * @returns {Object}
          */
         dom: function(){
@@ -668,6 +672,7 @@
         /**
          * 返回 data 属性（文章段落数据）按 pid 分组的二维数组
          *
+         * @since 1.0.0
          * @returns {Array}
          */
         list: function () {
@@ -712,6 +717,7 @@
         /**
          * 当设置了 hasDirectoryInArticle 为 true 时，则在文章开始处绘制目录导航
          *
+         * @since 1.0.0
          * @returns {AutocJS}
          */
         renderArticleDirectory: function () {
@@ -730,6 +736,7 @@
         /**
          * 绘制文章中的目录导航的具体章节内容
          *
+         * @since 1.0.0
          * @returns {AutocJS}
          */
         renderArticleChapters: function () {
@@ -773,6 +780,7 @@
         /**
          * 在文章标题中绘制其对应的段落章节索引编码
          *
+         * @since 1.0.0
          * @param {Object} chapter - 某个文章标题对应的段落章节信息
          * @returns {AutocJS}
          */
@@ -816,6 +824,7 @@
         /**
          * 绘制侧边栏的目录导航菜单
          *
+         * @since 1.0.0
          * @returns {AutocJS}
          */
         renderSidebarDirectory: function () {
@@ -839,6 +848,7 @@
         /**
          * 绘制侧边栏菜单的框架
          *
+         * @since 1.0.0
          * @returns {AutocJS}
          */
         renderSidebarOutline: function () {
@@ -872,6 +882,7 @@
         /**
          * 绘制侧边栏导航菜单中的目录导航的具体章节内容
          *
+         * @since 1.0.0
          * @returns {AutocJS}
          */
         renderSidebarChapters: function () {
