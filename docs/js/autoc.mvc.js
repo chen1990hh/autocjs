@@ -356,7 +356,7 @@
         return this;
     };
     AutocJS.prototype = {
-        version: '1.0.1',
+        version: '1.0.2',
         initialize: function ( options ) {
 
             var model = this.model.initialize( options ),
