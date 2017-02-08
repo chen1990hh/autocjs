@@ -1,3 +1,11 @@
+## v1.0.2
+
+date: 2017-02-07
+
+changes:
+
+* 修复调用 reload() 反复创建anchors的BUG
+
 ## v1.0.1
 
 date: 2017-02-06
