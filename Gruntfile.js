@@ -6,9 +6,13 @@
             options: {
                 banner: '/* \n AutocJS - <%=pkg.description%> \n Copyright (c) 2016 yaohaixiao, all right reserved. \n homepage: <%=pkg.homepage%> \n version: <%=pkg.version%> \n author: <%=pkg.author%>  \n license: <%=pkg.license%> \n */\n'
             },
-            build: {
+            normal: {
                 src: 'src/autoc.js',
                 dest: 'build/autoc.min.js'
+            },
+            mvc: {
+                src: 'src/autoc.mvc.js',
+                dest: 'build/autoc.mvc.min.js'
             }
         },
         cssmin: {

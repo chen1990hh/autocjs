@@ -1073,8 +1073,7 @@
          * @returns {AutocJS}
          */
         destroy: function () {
-            var $anchors = this.anchors(),
-                $headings = this.headings(),
+            var $headings = this.headings(),
                 elements = this.dom(),
                 $article = this.article(),
                 $chapters = elements.chapters,
@@ -1087,12 +1086,13 @@
 
             $( $headings ).each( function ( i, heading ) {
                 var $heading = $( heading ),
+                    $anchors = $heading.find('.'+CLS_ANCHOR),
                     $code = $heading.find( '.' + CLS_CODE );
 
                 $heading.removeClass( CLS_HEADING ).removeAttr( 'id' );
                 $code.remove();
 
-                $anchors[ i ].remove();
+                $anchors.remove();
             } );
 
             $wrap.off().remove();
