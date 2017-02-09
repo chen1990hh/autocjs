@@ -356,7 +356,7 @@
         return this;
     };
     AutocJS.prototype = {
-        version: '1.1.2',
+        version: '1.1.0',
         initialize: function ( options ) {
 
             var model = this.model.initialize( options ),
@@ -438,7 +438,7 @@
         return this;
     };
     AutocJS.Model.prototype = {
-        version: '1.1.2',
+        version: '1.1.0',
         initialize: function ( options ) {
 
             if ( $.isPlainObject( options ) ) {
@@ -560,7 +560,7 @@
         return this;
     };
     AutocJS.View.prototype = {
-        version: '1.1.2',
+        version: '1.1.0',
         initialize: function ( model ) {
 
             if ( model ) {
@@ -913,7 +913,7 @@
         return this;
     };
     AutocJS.Controller.prototype = {
-        version: '1.1.2',
+        version: '1.1.0',
         initialize: function ( model, view ) {
 
             if ( isObject( model ) ) {

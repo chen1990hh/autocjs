@@ -461,7 +461,7 @@
         hasDirectoryInArticle: false,
         // 是否在文章标题中显示该标题的段落索引编号，默认值：false
         hasChapterCodeAtHeadings: false,
-        // 是否在侧边栏上显示章节索引代码
+        // 是否在导航菜单中显示段落索引编号，默认值：true
         hasChapterCodeInDirectory: true,
         // 标题标签中创建的标题链接的 HTML 模板代码
         ANCHOR: ANCHOR,
@@ -499,7 +499,7 @@
     AutocJS.guid = guid;
 
     AutocJS.prototype = {
-        version: '1.0.2',
+        version: '1.1.0',
         constructor: AutocJS,
         /**
          * 初始化方法：

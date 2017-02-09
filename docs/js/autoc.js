@@ -499,7 +499,7 @@
     AutocJS.guid = guid;
 
     AutocJS.prototype = {
-        version: '1.1.2',
+        version: '1.1.0',
         constructor: AutocJS,
         /**
          * 初始化方法：

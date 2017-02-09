@@ -356,7 +356,7 @@
         return this;
     };
     AutocJS.prototype = {
-        version: '1.0.2',
+        version: '1.1.0',
         initialize: function ( options ) {
 
             var model = this.model.initialize( options ),
@@ -438,7 +438,7 @@
         return this;
     };
     AutocJS.Model.prototype = {
-        version: '1.0.1',
+        version: '1.1.0',
         initialize: function ( options ) {
 
             if ( $.isPlainObject( options ) ) {
@@ -560,7 +560,7 @@
         return this;
     };
     AutocJS.View.prototype = {
-        version: '1.0.1',
+        version: '1.1.0',
         initialize: function ( model ) {
 
             if ( model ) {
@@ -913,7 +913,7 @@
         return this;
     };
     AutocJS.Controller.prototype = {
-        version: '1.0.1',
+        version: '1.1.0',
         initialize: function ( model, view ) {
 
             if ( isObject( model ) ) {
@@ -1110,6 +1110,7 @@
         hasDirectoryInArticle: false,
         // 是否在文章标题中显示该标题的段落索引编号，默认值：false
         hasChapterCodeAtHeadings: false,
+        // 是否在导航菜单中显示段落索引编号，默认值：true
         hasChapterCodeInDirectory: true,
         // 标题标签中创建的标题链接的 HTML 模板代码
         ANCHOR: ANCHOR,
