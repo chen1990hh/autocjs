@@ -356,7 +356,7 @@
         return this;
     };
     AutocJS.prototype = {
-        version: '1.0.2',
+        version: '1.1.2',
         initialize: function ( options ) {
 
             var model = this.model.initialize( options ),
@@ -368,10 +368,10 @@
 
             return this;
         },
-        chapters: function(headings){
-            return this.model.chapters(headings);
+        chapters: function ( headings ) {
+            return this.model.chapters( headings );
         },
-        list: function(){
+        list: function () {
             return this.model.list();
         },
         reload: function ( options ) {
@@ -438,7 +438,7 @@
         return this;
     };
     AutocJS.Model.prototype = {
-        version: '1.0.1',
+        version: '1.1.2',
         initialize: function ( options ) {
 
             if ( $.isPlainObject( options ) ) {
@@ -560,7 +560,7 @@
         return this;
     };
     AutocJS.View.prototype = {
-        version: '1.0.1',
+        version: '1.1.2',
         initialize: function ( model ) {
 
             if ( model ) {
@@ -800,9 +800,11 @@
                     chapterCode = $parent.find( '.' + CLS_CODE ).html() + '.' + chapterIndex;
                 }
 
-                // 绘制段落章节编码
-                $code.attr( 'data-chapter', chapterCode ).html( chapterCode );
-                $code.insertBefore( $text );
+                if ( model.get( 'hasChapterCodeInDirectory' ) ) {
+                    // 绘制段落章节编码
+                    $code.attr( 'data-chapter', chapterCode ).html( chapterCode );
+                    $code.insertBefore( $text );
+                }
             } );
 
             return this;
@@ -911,7 +913,7 @@
         return this;
     };
     AutocJS.Controller.prototype = {
-        version: '1.0.1',
+        version: '1.1.2',
         initialize: function ( model, view ) {
 
             if ( isObject( model ) ) {
@@ -989,7 +991,7 @@
          */
         onArticleChapterClick: function ( evt ) {
             var context = evt.data.context,
-                isAnimateScroll = context.get( 'isAnimateScroll' ),
+                isAnimateScroll = context.model.get( 'isAnimateScroll' ),
                 $chapter = $( '#' + $( this ).attr( 'rel' ) );
 
             if ( isAnimateScroll ) {
@@ -1025,7 +1027,7 @@
          */
         onTopClick: function ( evt ) {
             var context = evt.data.context,
-                isAnimateScroll = context.get( 'isAnimateScroll' );
+                isAnimateScroll = context.model.get( 'isAnimateScroll' );
 
             if ( isAnimateScroll ) {
                 context.view.scrollTo( 0 );
@@ -1108,6 +1110,8 @@
         hasDirectoryInArticle: false,
         // 是否在文章标题中显示该标题的段落索引编号，默认值：false
         hasChapterCodeAtHeadings: false,
+        // 是否在导航菜单中显示段落索引编号，默认值：true
+        hasChapterCodeInDirectory: true,
         // 标题标签中创建的标题链接的 HTML 模板代码
         ANCHOR: ANCHOR,
         // AutocJS 菜单根节点的 HTML 模板代码

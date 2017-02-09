@@ -83,16 +83,27 @@
             </div>
             <p>演示地址：<a href="create-directory-navigation-in-the-article.htm">create-directory-navigation-in-the-article.htm</a></p>
         </div>
-        <div class="api-content hasCodeAtHeadings" id="hasCodeAtHeadings">
+        <div class="api-content hasChapterCodeAtHeadings" id="hasChapterCodeAtHeadings">
             <h2>Has chapter code at the headings</h2>
             <div class="api-item">
 <pre class="api-code"><code>new AutocJS({
     article: '#container',
-    // 不配置 hasCodeAtHeadings 或者设置为 false，则不会在文章中的标题上显示段落章节索引编码
-    hasCodeAtHeadings: true
+    // 不配置 hasChapterCodeAtHeadings 或者设置为 false，则不会在文章中的标题上显示段落章节索引编码
+    hasChapterCodeAtHeadings: true
 });</code></pre>
             </div>
             <p>演示地址：<a href="has-chapter-code-at-the-headings.htm">has-chapter-code-at-the-headings.htm</a></p>
+        </div>
+        <div class="api-content hasChapterCodeInDirectory" id="hasChapterCodeInDirectory">
+            <h2>Has chapter code in the directory</h2>
+            <div class="api-item">
+<pre class="api-code"><code>new AutocJS({
+    article: '#container',
+    // 不配置 hasChapterCodeInDirectory 设置为 false，则不会在导航菜单中显示段落索引编号
+    hasChapterCodeInDirectory: false
+});</code></pre>
+            </div>
+            <p>演示地址：<a href="has-chapter-code-in-the-directory.htm">has-chapter-code-in-the-directory.htm</a></p>
         </div>
     </div>
 </div>

@@ -36,7 +36,33 @@
             '`': '&#x60;'
         },
         SCRIPT_FRAGMENT = '<script[^>]*>([\\S\\s]*?)<\/script\\s*>',
-        uid = -1;
+        uid = -1,
+        ARTICLE_PREFIX = 'article-',
+        CLS_HEADING = 'autocjs-heading',
+        CLS_ANCHOR = 'autocjs-anchor',
+        CLS_WRAP = 'autocjs',
+        CLS_CHAPTERS = 'autocjs-chapters',
+        CLS_ARTICLE_CHAPTERS = ARTICLE_PREFIX + CLS_CHAPTERS,
+        CLS_SUBJECTS = 'autocjs-subjects',
+        CLS_CHAPTER = 'autocjs-chapter',
+        CLS_TEXT = 'autocjs-text',
+        CLS_CODE = 'autocjs-code',
+        CLS_SHOW = 'autocjs-show',
+        CLS_HIDE = 'autocjs-hide',
+        ANCHOR = '<a class="' + CLS_ANCHOR + '" aria-hidden="true"></a>',
+        WRAP = '<div id="{id}" class="' + CLS_WRAP + ' ' + CLS_HIDE + '" aria-hidden="true"></div>',
+        HEADER = '<h2 class="autocjs-hd" aria-hidden="true">{title}</h2>',
+        BODY = '<nav class="autocjs-bd" aria-hidden="true"></nav>',
+        CHAPTERS = '<ol class="' + CLS_CHAPTERS + '" aria-hidden="true"></ol>',
+        SUBJECTS = '<ol class="' + CLS_SUBJECTS + '" aria-hidden="true"></ol>',
+        CHAPTER = '<li class="' + CLS_CHAPTER + '" aria-hidden="true"></li>',
+        TEXT = '<a class="' + CLS_TEXT + '" aria-hidden="true"></a>',
+        CODE = '<em class="' + CLS_CODE + '" aria-hidden="true"></em>',
+        FOOTER = '<div class="autocjs-ft" aria-hidden="true"></div>',
+        SWITCHER = '<h2 class="autocjs-switcher" title="Toggle Menu" aria-hidden="true">&#926;</h2>',
+        TOP = '<a class="autocjs-top" href="#top" aria-hidden="true">TOP</a>',
+        OVERLAY = '<div class="autocjs-overlay ' + CLS_HIDE + '" aria-hidden="true"></div>',
+        SELECTOR = 'h1,h2,h3,h4,h5,h6';
 
     /**
      * 返回移除 JavaScript 代码后的字符串
@@ -310,33 +336,6 @@
         return pid;
     }
 
-    var ARTICLE_PREFIX = 'article-',
-        CLS_HEADING = 'autocjs-heading',
-        CLS_ANCHOR = 'autocjs-anchor',
-        CLS_WRAP = 'autocjs',
-        CLS_CHAPTERS = 'autocjs-chapters',
-        CLS_ARTICLE_CHAPTERS = ARTICLE_PREFIX + CLS_CHAPTERS,
-        CLS_SUBJECTS = 'autocjs-subjects',
-        CLS_CHAPTER = 'autocjs-chapter',
-        CLS_TEXT = 'autocjs-text',
-        CLS_CODE = 'autocjs-code',
-        CLS_SHOW = 'autocjs-show',
-        CLS_HIDE = 'autocjs-hide',
-        ANCHOR = '<a class="' + CLS_ANCHOR + '" aria-hidden="true"></a>',
-        WRAP = '<div id="{id}" class="' + CLS_WRAP + ' ' + CLS_HIDE + '" aria-hidden="true"></div>',
-        HEADER = '<h2 class="autocjs-hd" aria-hidden="true">{title}</h2>',
-        BODY = '<nav class="autocjs-bd" aria-hidden="true"></nav>',
-        CHAPTERS = '<ol class="' + CLS_CHAPTERS + '" aria-hidden="true"></ol>',
-        SUBJECTS = '<ol class="' + CLS_SUBJECTS + '" aria-hidden="true"></ol>',
-        CHAPTER = '<li class="' + CLS_CHAPTER + '" aria-hidden="true"></li>',
-        TEXT = '<a class="' + CLS_TEXT + '" aria-hidden="true"></a>',
-        CODE = '<em class="' + CLS_CODE + '" aria-hidden="true"></em>',
-        FOOTER = '<div class="autocjs-ft" aria-hidden="true"></div>',
-        SWITCHER = '<h2 class="autocjs-switcher" title="Toggle Menu" aria-hidden="true">&#926;</h2>',
-        TOP = '<a class="autocjs-top" href="#top" aria-hidden="true">TOP</a>',
-        OVERLAY = '<div class="autocjs-overlay ' + CLS_HIDE + '" aria-hidden="true"></div>',
-        SELECTOR = 'h1,h2,h3,h4,h5,h6';
-
     /**
      * AutocJS 构造函数
      *
@@ -462,6 +461,8 @@
         hasDirectoryInArticle: false,
         // 是否在文章标题中显示该标题的段落索引编号，默认值：false
         hasChapterCodeAtHeadings: false,
+        // 是否在侧边栏上显示章节索引代码
+        hasChapterCodeInDirectory: true,
         // 标题标签中创建的标题链接的 HTML 模板代码
         ANCHOR: ANCHOR,
         // AutocJS 菜单根节点的 HTML 模板代码
@@ -975,9 +976,11 @@
                     chapterCode = $parent.find( '.' + CLS_CODE ).html() + '.' + chapterIndex;
                 }
 
-                // 绘制段落章节编码
-                $code.attr( 'data-chapter', chapterCode ).html( chapterCode );
-                $code.insertBefore( $text );
+                if ( self.get( 'hasChapterCodeInDirectory' ) ) {
+                    // 绘制段落章节编码
+                    $code.attr( 'data-chapter', chapterCode ).html( chapterCode );
+                    $code.insertBefore( $text );
+                }
             } );
 
             return this;
@@ -1086,7 +1089,7 @@
 
             $( $headings ).each( function ( i, heading ) {
                 var $heading = $( heading ),
-                    $anchors = $heading.find('.'+CLS_ANCHOR),
+                    $anchors = $heading.find( '.' + CLS_ANCHOR ),
                     $code = $heading.find( '.' + CLS_CODE );
 
                 $heading.removeClass( CLS_HEADING ).removeAttr( 'id' );

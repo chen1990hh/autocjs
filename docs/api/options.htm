@@ -198,12 +198,38 @@
             <h4>No index code at the headings</h4>
             <pre class="api-code"><code>new AutocJS({
     article: '#article'
-    // 不配置 hasTocInArticle 属性，就不会创建索引导航
+    // 不配置 hasChapterCodeAtHeadings 属性，就不会在文章标题中显示该标题的段落索引编号
 });</code></pre>
             <h4>Has index code at the headings</h4>
             <pre class="api-code"><code>new AutocJS({
     article: $('#article'),
-    hasCodeAtHeadings: true
+    hasChapterCodeAtHeadings: true
+    ...
+});</code></pre>
+            <p>演示：<a href="../examples/has-chapter-code-at-the-headings.htm">Has chapter code at the headings</a></p>
+        </div>
+        <div class="api-content hasChapterCodeInDirectory" id="hasChapterCodeInDirectory">
+            <h2>hasChapterCodeInDirectory</h2>
+            <h3>Description</h3>
+            <dl class="api-params">
+                <dt>Type：</dt>
+                <dd>Boolean</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>Default：</dt>
+                <dd>true</dd>
+            </dl>
+            <p>可选，用来指定是否在导航菜单中显示段落索引编号。</p>
+            <h3>Usage</h3>
+            <h4>No index code at the headings</h4>
+            <pre class="api-code"><code>new AutocJS({
+    article: '#article'
+    // 不配置 hasChapterCodeInDirectory 属性，就会在导航菜单中显示段落索引编号
+});</code></pre>
+            <h4>Has index code at the headings</h4>
+            <pre class="api-code"><code>new AutocJS({
+    article: $('#article'),
+    hasChapterCodeInDirectory: false
     ...
 });</code></pre>
             <p>演示：<a href="../examples/has-chapter-code-at-the-headings.htm">Has chapter code at the headings</a></p>

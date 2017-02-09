@@ -1,3 +1,13 @@
+## v1.1.2
+
+date: 2017-02-09
+
+changes:
+
+* 新增 hasChapterCodeInDirectory 参数
+* 新增 hasChapterCodeInDirectory 对应的 Demo 示例
+
+
 ## v1.0.2
 
 date: 2017-02-07
@@ -5,6 +15,7 @@ date: 2017-02-07
 changes:
 
 * 修复调用 reload() 反复创建anchors的BUG
+
 
 ## v1.0.1
 

@@ -118,6 +118,12 @@ Default: `false`
 
 可选，用来指定是否在文章标题中显示该标题的段落索引编号。[查看详情](http://yaohaixiao.github.io/AutocJS/api/options.htm#hasChapterCodeAtHeadings)
 
+#### hasChapterCodeInDirectory
+Type: `Boolean`  
+Default: `true`
+
+可选，用来指定是否在导航菜单中显示段落索引编号。[查看详情](http://yaohaixiao.github.io/AutocJS/api/options.htm#hasChapterCodeInDirectory)
+
      
 ### Properties
 
