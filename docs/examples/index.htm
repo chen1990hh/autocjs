@@ -49,6 +49,24 @@
             </div>
             <p>演示地址：<a href="customize-title.htm">customize-title.htm</a></p>
         </div>
+        <div class="api-content chapters" id="chapters">
+            <h2>Customize chapters</h2>
+            <div class="api-item">
+<pre class="api-code"><code>var AutocNAV = new AutocJS({
+    article: '#container'
+});
+var headings = [
+    $( '&lt;h1 rel="http://www.baidu.com/"&gt;Robert&lt;/h1&gt;' ),
+    $( '&lt;h2 rel="http://www.yahoo.com/"&gt;First Name&lt;/h2&gt;' ),
+    $( '&lt;h2 rel="http://www.oschina.net/"&gt;Last Name&lt;/h2&gt;' ),
+    $( '&lt;h1 rel="http://www.yaohaixiao.com/"&gt;Gender&lt;/h1&gt;' ),
+    $( '&lt;h2 rel="http://www.nodejs.org/"&gt;Male&lt;/h2&gt;' ),
+    $( '&lt;h2 rel="http://www.npmjs.com/"&gt;Female&lt;/h2&gt;' )
+];
+AutocNAV.chapters(headings, false);</code></pre>
+            </div>
+            <p>演示地址：<a href="customize-chapters.htm">customize-chapters.htm</a></p>
+        </div>
         <div class="api-content isAnchorsOnly" id="isAnchorsOnly">
             <h2>Create anchors only</h2>
             <div class="api-item">
@@ -81,7 +99,8 @@
     onlyAnchors: true
 });</code></pre>
             </div>
-            <p>演示地址：<a href="create-directory-navigation-in-the-article.htm">create-directory-navigation-in-the-article.htm</a></p>
+            <p>演示地址：<a href="create-directory-navigation-in-the-article.htm">create-directory-navigation-in-the-article.htm</a>
+            </p>
         </div>
         <div class="api-content hasChapterCodeAtHeadings" id="hasChapterCodeAtHeadings">
             <h2>Has chapter code at the headings</h2>
@@ -112,8 +131,8 @@
         Yao</a></p>
     <p class="license">Code licensed under <a href="http://opensource.org/licenses/mit-license.html">MIT License</a> ·
         Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></p>
-    <p class="issues"><a href="https://github.com/yaohaixiao/AutocJS">GitHub Project</a> · <a
-            href="https://github.com/yaohaixiao/AutocJS/issues">Issues</a></p>
+    <p class="issues"><a href="https://github.com/yaohaixiao/AutocJS">GitHub Project</a> ·
+        <a href="https://github.com/yaohaixiao/AutocJS/issues">Issues</a></p>
 </div>
 <script type="text/javascript" src="../asset/jquery/jquery.js"></script>
 <script type="text/javascript" src="../js/autoc.js"></script>
@@ -121,6 +140,17 @@
     var ArticleTOC = $( '#container' ).autoc( {
         title: 'Examples'
     } );
+
+    var headings = [
+        $( '<h1 rel="http://www.baidu.com/">Robert</h1>' ),
+        $( '<h2 rel="http://www.yahoo.com/">First Name</h2>' ),
+        $( '<h2 rel="http://www.oschina.net/">Last Name</h2>' ),
+        $( '<h1 rel="http://www.yaohaixiao.com/">Gender</h1>' ),
+        $( '<h2 rel="http://www.nodejs.org/">Male</h2>' ),
+        $( '<h2 rel="http://www.npmjs.com/">Female</h2>' )
+    ];
+
+    ArticleTOC.chapters( headings , false);
 </script>
 </body>
 </html>

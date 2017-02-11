@@ -10,7 +10,7 @@
     <!-- Mobile Specific Meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>Customize selector - Examples - AutocJS</title>
+    <title>Customize chapters - Examples - AutocJS</title>
     <link href="../asset/normalize/normalize.css" type="text/css" rel="stylesheet" media="all">
     <link href="../css/api.css" type="text/css" rel="stylesheet">
     <link href="../css/autoc.css" type="text/css" rel="stylesheet">
@@ -26,25 +26,24 @@
     </ul>
 </div>
 <div class="api-wrap" id="examples">
-    <h1 class="api-subject">Customize selector</h1>
+    <h1 class="api-subject">Customize chapters</h1>
     <div class="api-container" id="container">
         <div class="api-content">
             <div class="api-half-field">
                 <h3>Options</h3>
                 <ul class="api-options" id="options">
-            <li class="api-option"><input type="radio" class="api-radio" name="option" id="option-1" checked="checked" value="h2"><label class="api-label" for="option-1">h2</label></li>
-            <li class="api-option"><input type="radio" class="api-radio" name="option" id="option-2" value="h2,h3"><label for="option-2" class="api-label">h2,h3</label></li>
-            <li class="api-option"><input type="radio" class="api-radio" name="option" id="option-3" value="h2,h3,h4"><label for="option-3" class="api-label">h2,h3,h4</label></li>
-            <li class="api-option"><input type="radio" class="api-radio" name="option" id="option-4" value="h2,h3,h4,h5"><label for="option-4" class="api-label">h2,h3,h4,h5</label></li>
+            <li class="api-option"><input type="radio" class="api-radio" name="option" id="option-1" checked="checked" value="defaultHeadings"><label class="api-label" for="option-1">defaultHeadings</label></li>
+            <li class="api-option"><input type="radio" class="api-radio" name="option" id="option-2" value="customizeHeadings"><label for="option-2" class="api-label">customizeHeadings</label></li>
                 </ul>
             </div>
             <div class="api-half-field">
                 <h3>Code</h3>
-    <pre class="api-code"><code id="code">new AutocJS({
-    article: '#container',
-    // 只收集文章中的 <span class="option-value">h2</span>　标题标签
-    selector: '<span class="option-value">h2</span>'
-});</code></pre>
+    <pre class="api-code"><code id="code">var AutocNAV = new AutocJS({
+    article: '#container'
+});
+var defaultHeadings = $('#container').find('h1,h2,h3,h4,h5');
+var customizeHeadings = [$( '&lt;h1 rel="http://www.baidu.com/"&gt;Robert&lt;/h1&gt;' ),...,$( '&lt;h2 rel="http://www.npmjs.com/"&gt;Female&lt;/h2&gt;' )];
+AutocNAV.chapters('<span class="option-value"></span>', false);</code></pre>
             </div>
         </div>
         <div class="api-content" id="demo">
@@ -86,17 +85,31 @@
         $code = $('#code'),
         ArticleTOC = $( '#demo' ).autoc( {
             title: 'Customize Selector',
-            selector: 'h2',
             isAnchorsOnly: true,
             hasDirectoryInArticle: true
         } ),
+        defaultHeadings = $('#demo').find('h1,h2,h3,h4,h5'),
+        customizeHeadings = [
+            $( '<h1 rel="http://www.baidu.com/">Robert</h1>' ),
+            $( '<h2 rel="http://www.yahoo.com/">First Name</h2>' ),
+            $( '<h2 rel="http://www.oschina.net/">Last Name</h2>' ),
+            $( '<h1 rel="http://www.yaohaixiao.com/">Gender</h1>' ),
+            $( '<h2 rel="http://www.nodejs.org/">Male</h2>' ),
+            $( '<h2 rel="http://www.npmjs.com/">Female</h2>' )
+        ],
         changeOption = function(){
             var $radio = $(this),
-                option = $radio.val();
+                option = $radio.val(),
+                headings;
 
-            ArticleTOC.reload({
-                selector: option
-            });
+            if(option==='defaultHeadings'){
+                headings = defaultHeadings;
+            }
+            else{
+                headings = customizeHeadings;
+            }
+
+            ArticleTOC.chapters(headings, false);
 
             $code.find('.option-value').html(option);
         };

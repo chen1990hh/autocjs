@@ -160,6 +160,43 @@
     }
 
     /**
+     * 根据两个相邻的标题标签的数字的差值，获得父级的 id 值
+     *
+     * @method getPidByDiffer
+     * @param {Array} chapters -
+     * @param {Number} differ -
+     * @param {Number} index -
+     * @returns {Number}
+     */
+    function getPidByDiffer( chapters, differ, index ) {
+        var pid = -1;
+
+        // 最大只有5系的差距
+        switch ( differ ) {
+            case 1:
+                pid = chapters[ chapters[ index - 1 ].pid ].pid;
+                break;
+            case 2:
+                pid = chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid;
+                break;
+            case 3:
+                pid = chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid;
+                break;
+            case 4:
+                pid = chapters[ chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid ].pid;
+                break;
+            case 5:
+                pid = chapters[ chapters[ chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid ].pid ].pid;
+                break;
+            default:
+                pid = chapters[ chapters[ index - 1 ].pid ].pid;
+                break;
+        }
+
+        return pid;
+    }
+
+    /**
      * 返回 headings 对应的文章段落信息数据
      *
      * @returns {Array}
@@ -173,6 +210,7 @@
         $( headings ).each( function ( i, heading ) {
             var $heading = $( heading ),
                 text = $heading.text(),
+                rel = $heading.attr('rel') ? $heading.attr('rel') : '',
                 current = parseInt( $heading[ 0 ].tagName.toUpperCase().replace( /[H]/ig, '' ), 10 ),
                 pid = -1;
 
@@ -235,7 +273,8 @@
                 level: level,
                 text: text,
                 tag: heading.tagName,
-                pid: pid
+                pid: pid,
+                rel: rel
             } );
         } );
 
@@ -300,43 +339,6 @@
     }
 
     /**
-     * 根据两个相邻的标题标签的数字的差值，获得父级的 id 值
-     *
-     * @method getPidByDiffer
-     * @param {Array} chapters -
-     * @param {Number} differ -
-     * @param {Number} index -
-     * @returns {Number}
-     */
-    function getPidByDiffer( chapters, differ, index ) {
-        var pid = -1;
-
-        // 最大只有5系的差距
-        switch ( differ ) {
-            case 1:
-                pid = chapters[ chapters[ index - 1 ].pid ].pid;
-                break;
-            case 2:
-                pid = chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid;
-                break;
-            case 3:
-                pid = chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid;
-                break;
-            case 4:
-                pid = chapters[ chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid ].pid;
-                break;
-            case 5:
-                pid = chapters[ chapters[ chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid ].pid ].pid;
-                break;
-            default:
-                pid = chapters[ chapters[ index - 1 ].pid ].pid;
-                break;
-        }
-
-        return pid;
-    }
-
-    /**
      * AutocJS 构造函数
      *
      * @constructor
@@ -371,21 +373,22 @@
          * 存储的是 AutocJS 对象当前的所有配置信息
          *
          * @property
-         * @type {{}}
          * @see AutocJS.defaults
          * @private
          */
         this.attributes = {};
 
         /**
-         * 存储的是 AutocJS 对象创建的所有 DOM 元素
+         * 存储的是 AutocJS 对象相关的所有 DOM 元素
          *
          * @property
-         * @type {{chapters: null, wrap: null, header: null, body: null, list: null, footer: null, switcher: null, top:
-         *     null, overlay: null}}
          * @private
          */
         this.elements = {
+            // 文章正文内容容器 DOM 元素
+            article: null,
+            // 文章中的所有（selector 匹配）的标题 DOM 元素
+            headings: null,
             // 将 hasDirectoryInArticle 参数设置为 true 时，在文章正文开始处创建的目录导航列表 DOM 节点
             chapters: null,
             // AutocJS 对象创建的目录导航菜单的根节点
@@ -407,10 +410,14 @@
         };
 
         /**
-         * 存储的是段落章节数据，单个的 chapter 数据格式如下：
+         * 存储的是 AutocJS 根据标题 DOM 元素分析的数据：
+         * 1. chapters 标题章节索引数据；
+         * 2. anchors 各个标题对应的标题锚点链接 DOM 元素
+         * 3. list 将 chapters 数据按 pid 属性分组后的章节索引数据
          *
          * <pre>
          * <code>
+         * // 单个 chapter 数据示例
          * {
          *    // id 编号
          *    id: 0,
@@ -421,15 +428,20 @@
          *    // 标题节点 tagName.toUpperCase()
          *    tag: 'H1',
          *    // 标题节点的父级节点　id 编号
-         *    pid: 0
+         *    pid: 0,
+         *    // 标题外部链接
+         *    rel: 'http://www.yaohaixiao.com/'
          * }
          * </code>
          * </pre>
          * @property
-         * @type {Array}
          * @private
          */
-        this.data = [];
+        this.data = {
+            chapters: [],
+            anchors: [],
+            list: []
+        };
 
         this.set( AutocJS.defaults ).init( options );
 
@@ -440,10 +452,6 @@
      * AutocJS 对象默认配置选项
      *
      * @property
-     * @type {{article: string, headings: Array, selector: string, title: string, isAnchorsOnly: boolean,
-     *     isAnimateScroll: boolean, hasDirectoryInArticle: boolean, hasChapterCodeAtHeadings: boolean, ANCHOR: string,
-     *     WRAP: string, HEADER: string, BODY: string, FOOTER: string, SWITCHER: string, TOP: string, CHAPTERS: string,
-     *     SUBJECTS: string, CHAPTER: string, TEXT: string, CODE: string, OVERLAY: string}}
      * @static
      */
     AutocJS.defaults = {
@@ -499,7 +507,7 @@
     AutocJS.guid = guid;
 
     AutocJS.prototype = {
-        version: '1.1.0',
+        version: '1.2.0',
         constructor: AutocJS,
         /**
          * 初始化方法：
@@ -519,10 +527,6 @@
                 this.set( options );
             }
 
-            if ( !this.article()[ 0 ] ) {
-                return this;
-            }
-
             this.initElements()
                 .initData()
                 .render()
@@ -540,10 +544,12 @@
             var self = this,
                 elements = this.dom();
 
-            // 初始化文章开始处的导航列表
-            elements.chapters = $( this.get( 'CHAPTERS' ) ).addClass( CLS_ARTICLE_CHAPTERS );
+            // 初始化文章中存在的 DOM 元素
+            elements.article = $( this.get( 'article' ) );
+            elements.headings = elements.article.find( this.get( 'selector' ) );
 
-            // 初始化 DOM 部件
+            // 初始化动态创建的 DOM 元素
+            elements.chapters = $( this.get( 'CHAPTERS' ) ).addClass( CLS_ARTICLE_CHAPTERS );
             elements.wrap = $( template( {
                 data: {
                     id: guid( CLS_WRAP )
@@ -572,8 +578,13 @@
          * @returns {AutocJS}
          */
         initData: function () {
+            var data = this.data;
 
-            this.chapters( this.headings() );
+            data.chapters = getChapters( this.headings() );
+
+            data.anchors = getAnchors( this.chapters(), this.get( 'ANCHOR' ) );
+
+            data.list = getList( this.chapters() );
 
             return this;
         },
@@ -617,32 +628,6 @@
             return this.attributes[ prop ];
         },
         /**
-         * 返回页面中的文章正文容器 DOM 元素
-         *
-         * @since 1.0.0
-         * @returns {HTMLElement}
-         */
-        article: function () {
-            // 获得文章内容的 DOM 节点
-            return $( this.get( 'article' ) );
-        },
-        /**
-         * 返回 article 中 selector 匹配的所有（标题） DOM 元素
-         *
-         * @returns {AutocJS|Array}
-         */
-        headings: function () {
-            return this.article().find( this.get( 'selector' ) );
-        },
-        /**
-         * 返回根据 headings() 方法对应自动创建的标题锚点链接 DOM 元素
-         *
-         * @returns {Array}
-         */
-        anchors: function () {
-            return getAnchors( this.chapters(), this.get( 'ANCHOR' ) );
-        },
-        /**
          * 返回 elements 属性，AutocJS 对象创建的所有 DOM 元素
          *
          * @since 1.0.0
@@ -652,31 +637,70 @@
             return this.elements;
         },
         /**
-         * 传入 headings 参数，则设置 data 属性，
-         * 没有传入 headings 数据，则返回 headings() 方法收集的的标题节点分析整理的 chapters 数据。
+         * 返回页面中的文章正文容器 DOM 元素
          *
-         * @param {Array} [headings] - 文章段落章节数据集合
+         * @since 1.0.0
+         * @returns {HTMLElement}
+         */
+        article: function () {
+            // 获得文章内容的 DOM 节点
+            return this.dom().article;
+        },
+        /**
+         * 返回 article 中 selector 匹配的所有标题 DOM 元素
+         *
          * @returns {AutocJS|Array}
          */
-        chapters: function ( headings ) {
+        headings: function () {
+            return this.dom().headings;
+        },
+        /**
+         * 传入 headings 参数，则设置 data.chapters 属性，如果设置 isSilent 为 true，则会更新所有的章节导航，返回 AutocJS 对象。
+         * 没有传入 headings 数据，则返回 data.chapters 属性。
+         *
+         * @param {Array} [headings] - 标题标签 DOM 元素数组
+         * @param {Boolean} [isSilent] - 是否安静更新数据，默认值：true
+         * @returns {AutocJS|Array}
+         */
+        chapters: function ( headings, isSilent ) {
+            isSilent = isSilent === false ? false : true;
 
             if ( headings ) {
-                this.data = getChapters( headings );
+                this.data.chapters = getChapters( headings );
+
+                if ( !isSilent ) {
+
+                    if ( this.get( 'hasDirectoryInArticle' ) ) {
+                        this.renderArticleChapters();
+                    }
+
+                    if ( !this.get( 'isAnchorsOnly' ) ) {
+                        this.renderSidebarChapters();
+                    }
+                }
             }
             else {
-                return getChapters( this.headings() );
+                return this.data.chapters;
             }
 
             return this;
         },
         /**
-         * 返回 data 属性（文章段落数据）按 pid 分组的二维数组
+         * 返回 data.anchors 属性
+         *
+         * @returns {Array}
+         */
+        anchors: function () {
+            return this.data.anchors;
+        },
+        /**
+         * 返回 data.list 属性
          *
          * @since 1.0.0
          * @returns {Array}
          */
         list: function () {
-            return getList( this.data );
+            return this.data.list;
         },
         /**
          * 返回 chapter 在 list() 返回的数据中对应段落层次位置索引值
@@ -909,6 +933,7 @@
                 var pid = chapter.pid,
                     id = chapter.id,
                     headingId = CLS_HEADING + '-' + id,
+                    url = chapter.rel ? chapter.rel : '#' + headingId,
                     $parent = null,
                     $chapter = $( self.get( 'CHAPTER' ) ),
                     $code = $( self.get( 'CODE' ) ),
@@ -939,7 +964,7 @@
                 // 创建菜单的链接
                 $text.attr( {
                     id: linkId,
-                    href: '#' + headingId,
+                    href: url,
                     rel: headingId
                 } ).html( chapter.text );
 

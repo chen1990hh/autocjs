@@ -1,3 +1,19 @@
+## v1.2.0
+
+date: 2017-02-10
+
+changes:
+
+* 更新API，添加新的示例；
+* 调整 elements 属性，新增了 article 和 headings 属性；
+* 调整 data 属性，变更为对象类型，添加了 chapters, anchors, list 属性；
+* 调整 anchors() 方法，返回值是 data.anchors；
+* 调整 list() 方法，返回 data.list；　　
+* 调整 getChapters() 私有方法，可以根据标题标签的rel参数自定义外部链接；
+* 调整 renderChapters() 方法，根据 getChapters() 的变更，可以生成外部链接；
+* 调整 chapters() 方法，添加 isSilent 参数，设置或者返回 data.chapters，isSilent 为 true，实时更新侧边栏菜单；
+
+
 ## v1.1.0
 
 date: 2017-02-09

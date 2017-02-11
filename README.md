@@ -10,7 +10,7 @@ AutocJS 是一个专门用来生成文章目录（Table of Contents）导航的�
 
 
 ## Why AutocJS?
-AnchorJS 由于是国外的程序员开发的，所以对中文支持不好，无法给中文标题生成锚点。而 AutocJS 即支持英文也支持中文。AutocJS 在拥有 AnchorJS 的基础功能同时，还可以自动分析文章的层次结构，生成文章的目录导航。
+AnchorJS 由于不是中国工程师开发的，所以对中文支持不好，无法给中文标题生成锚点。而 AutocJS 即支持英文也支持中文。AutocJS 在拥有 AnchorJS 的基础功能同时，还可以自动分析文章的层次结构，生成文章的目录导航。
 
 ## Features
 
@@ -143,14 +143,15 @@ Type: `String`
 * [init](http://yaohaixiao.github.io/AutocJS/api/methods.htm#init) - 初始化程序
 * [initElements](http://yaohaixiao.github.io/AutocJS/api/methods.htm#initElements) - 初始化 elements 属性（AutocJS 对象相关 DOM 元素）
 * [initData](http://yaohaixiao.github.io/AutocJS/api/methods.htm#initData) - 初始化 data 属性（文章段落章节数据）
+* [reload](http://yaohaixiao.github.io/AutocJS/api/methods.htm#reload) - （根据新的配置信息）重启程序
 * [set](http://yaohaixiao.github.io/AutocJS/api/methods.htm#set) - 设置 attributes 属性
 * [get](http://yaohaixiao.github.io/AutocJS/api/methods.htm#get) - 返回某个 attributes 属性
-* [article](http://yaohaixiao.github.io/AutocJS/api/methods.htm#article) - 返回页面文章正文的容器 DOM 元素
-* [headings](http://yaohaixiao.github.io/AutocJS/api/methods.htm#headings) - 返回 article 中 selector 匹配的所有（标题） DOM 元素
-* [chapters](http://yaohaixiao.github.io/AutocJS/api/methods.htm#chapters) - 设置 data 属性或者返回 headings() 方法分析所得的文章段落数据
-* [anchors](http://yaohaixiao.github.io/AutocJS/api/methods.htm#anchors) - 返回根据 headings() 方法对应自动创建的标题锚点链接 DOM 元素
 * [dom](http://yaohaixiao.github.io/AutocJS/api/methods.htm#dom) - 返回 elements 属性
-* [list](http://yaohaixiao.github.io/AutocJS/api/methods.htm#list) - 返回 data 属性（文章段落数据）按 pid 分组的二维数组
+* [article](http://yaohaixiao.github.io/AutocJS/api/methods.htm#article) - 返回页面文章正文的容器 DOM 元素
+* [headings](http://yaohaixiao.github.io/AutocJS/api/methods.htm#headings) - 返回 article 中 selector 匹配的所有标题 DOM 元素
+* [chapters](http://yaohaixiao.github.io/AutocJS/api/methods.htm#chapters) - 设置或者返回 data.chapters 属性
+* [anchors](http://yaohaixiao.github.io/AutocJS/api/methods.htm#anchors) - 返回 data.anchors 属性
+* [list](http://yaohaixiao.github.io/AutocJS/api/methods.htm#list) - 返回 data.list 属性
 * [getChapterIndex](http://yaohaixiao.github.io/AutocJS/api/methods.htm#getChapterIndex) - 返回 chapter 在 data.list 中对应段落层次位置索引值
 * [render](http://yaohaixiao.github.io/AutocJS/api/methods.htm#render) - 绘制 UI 界面
 * [renderArticleDirectory](http://yaohaixiao.github.io/AutocJS/api/methods.htm#renderArticleDirectory) - 在文章开始处绘制目录导航

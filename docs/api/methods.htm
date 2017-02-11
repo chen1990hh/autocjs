@@ -157,9 +157,18 @@ ArticleTOC.get('title'); // -> 'AutocJS v0.2.0'</code></pre>
                 </div>
             </div>
         </div>
+        <div class="api-content dom" id="dom">
+            <h2>dom( )</h2>
+            <p><strong>dom( )</strong> 方法返回 elements 属性，AutocJS 对象相关的所有 DOM 元素。</p>
+            <h3>Returns</h3>
+            <dl class="api-params">
+                <dt>{Object}</dt>
+                <dd>elements 属性，AutocJS 对象创建的所有 DOM 元素。</dd>
+            </dl>
+        </div>
         <div class="api-content article" id="article">
             <h2>article( )</h2>
-            <p><strong>article( )</strong> 方法返回页面中的文章正文容器 DOM 元素。</p>
+            <p><strong>article( )</strong> 方法返回 elements.article （页面中的文章正文容器 DOM 元素）属性。</p>
             <h3>Returns</h3>
             <dl class="api-params">
                 <dt>{HTMLElement}</dt>
@@ -179,16 +188,55 @@ ArticleTOC.get('title'); // -> 'AutocJS v0.2.0'</code></pre>
         </div>
         <div class="api-content headings" id="headings">
             <h2>headings( )</h2>
-            <p><strong>headings( )</strong> 方法返回 article 中 selector 匹配的所有（标题） DOM 元素。</p>
+            <p><strong>headings( )</strong> 方法返回 elements.article （ article 中 selector 匹配的所有（标题） DOM 元素）属性。</p>
             <h3>Returns</h3>
             <dl class="api-params">
                 <dt>{HTMLElement}</dt>
                 <dd>article 中 selector 匹配的所有（标题） DOM 元素。</dd>
             </dl>
         </div>
+        <div class="api-content chapters" id="chapters">
+            <h2>chapters( headings, isSilent )</h2>
+            <p><strong>chapters( headings, isSilent )</strong> 方法设置或者返回 data.chapters 属性。</p>
+            <ol>
+                <li>设置 headings 参数，则返回根据 headings 数据，分析出对应的文章段落数据。如果设置 isSilent 参数为；则立即更新所有章节导航。</li>
+                <li>没有设置 headings 参数，则返回 data.chapters 属性；</li>
+            </ol>
+            <h3>Parameters</h3>
+            <dl class="api-params">
+                <dt>{Array}</dt>
+                <dd>headings - （可选）标题 DOM 元素集合，chapters() 方法会根据 headings 数据，分析出对应的文章段落数据。</dd>
+            </dl>
+            <dl class="api-params">
+                <dt>{Boolean}</dt>
+                <dd>isSilent - （可选）是否安静更新属性，默认值：true。设置为 false，则立即更新所有章节导航。</dd>
+            </dl>
+            <h3>Returns</h3>
+            <dl class="api-params">
+                <dt>{AutocJS|Array}</dt>
+                <dd>没有 headings　参数，返回　AutocJS　对象，否则返回　chapters 数据。</dd>
+            </dl>
+            <h3>Code</h3>
+            <div class="api-item">
+                <div class="api-demo">
+<pre class="api-code"><code>var ArticleTOC = new AutocJS({
+     article: '#article',
+     title: 'AutocJS v0.2.0'
+});
+
+ArticleTOC.chapters(); // -> 返回　data.chapters 数据
+ArticleTOC.chapters([
+    $( '&lt;h1 rel="http://www.baidu.com/"&gt;Robert&lt;/h1&gt;' ),
+    ...,
+    $( '&lt;h1 rel="http://www.baidu.com/"&gt;Yao&lt;/h1&gt;' )
+]); // -> AutocJS</code></pre>
+                </div>
+                <p>演示地址：<a href="../examples/customize-chapters.htm">customize-chapters.htm</a></p>
+            </div>
+        </div>
         <div class="api-content anchors" id="anchors">
             <h2>anchors( )</h2>
-            <p><strong>anchors( )</strong> 方法返回根据 headings() 方法对应自动创建的标题锚点链接 DOM 元素。</p>
+            <p><strong>anchors( )</strong> 方法返回 data.anchors （根据 headings() 方法对应自动创建的标题锚点链接 DOM 元素）属性。</p>
             <h3>Returns</h3>
             <dl class="api-params">
                 <dt>{HTMLElement}</dt>
@@ -207,64 +255,13 @@ ArticleTOC.anchors([TitleNode,..,TitleNode]); // -> AutocJS</code></pre>
                 </div>
             </div>
         </div>
-        <div class="api-content dom" id="dom">
-            <h2>dom( )</h2>
-            <p><strong>dom( )</strong> 方法返回 elements 属性，AutocJS 对象创建的所有 DOM 元素。</p>
-            <h3>Returns</h3>
-            <dl class="api-params">
-                <dt>{Object}</dt>
-                <dd>elements 属性，AutocJS 对象创建的所有 DOM 元素。</dd>
-            </dl>
-        </div>
-        <div class="api-content chapters" id="chapters">
-            <h2>chapters( headings )</h2>
-            <p><strong>chapters( headings )</strong> 方法传入 headings 参数，则设置 data 属性，没有传入 headings 数据，则返回 headings() 方法收集的的标题节点分析整理的 chapters 数据。</p>
-            <h3>Parameters</h3>
-            <dl class="api-params">
-                <dt>{Array}</dt>
-                <dd>headings - （可选）标题 DOM 元素集合。</dd>
-            </dl>
-            <h3>Returns</h3>
-            <dl class="api-params">
-                <dt>{AutocJS|Array}</dt>
-                <dd>没有 headings　参数，返回　AutocJS　对象，否则返回　chapters 数据。</dd>
-            </dl>
-            <h3>Code</h3>
-            <div class="api-item">
-                <div class="api-demo">
-<pre class="api-code"><code>var ArticleTOC = new AutocJS({
-     article: '#article',
-     title: 'AutocJS v0.2.0'
-});
-
-ArticleTOC.chapters(); // -> 返回　chapters 数据
-ArticleTOC.chapters([{
-    id: 0,
-    level: 1,
-    pid : -1,
-    tag: "H1",
-    text : "Methods",
-    value : "anchor-0",
-},
-...,
-{
-    id: n,
-    level: 4,
-    pid : 0,
-    tag: "H4",
-    text : "A title",
-    value : "anchor-n",
-}]); // -> AutocJS</code></pre>
-                </div>
-            </div>
-        </div>
         <div class="api-content list" id="list">
             <h2>list( )</h2>
-            <p><strong>list( )</strong> 方法返回 data 属性（文章段落数据）按 pid 分组的二维数组。</p>
+            <p><strong>list( )</strong> 方法返回 data.list （data.chapters 属性按 pid 分组的二维数组）属性。</p>
             <h3>Returns</h3>
             <dl class="api-params">
                 <dt>{Array}</dt>
-                <dd>data 属性（文章段落数据）按 pid 分组的二维数组。</dd>
+                <dd>data.chapters 属性按 pid 分组的二维数组。</dd>
             </dl>
         </div>
         <div class="api-content getChapterIndex" id="getChapterIndex">
