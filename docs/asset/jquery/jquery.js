@@ -3791,7 +3791,7 @@
             return deferred;
         },
 
-        // Deferred helper
+        // Deferred helpers
         when: function( singleValue ) {
             var
 

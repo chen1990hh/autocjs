@@ -22,14 +22,17 @@
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-csslint": "^2.0.0",
     "grunt-contrib-cssmin": "^0.4.2",
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-uglify": "^0.5.1",
-    "grunt-contrib-watch": "^1.0.0"
+    "grunt-contrib-watch": "^1.0.0",
+    "jasmine-jquery": "^2.1.1"
   },
   "scripts": {
-    "grunt": "grunt --force"
+    "grunt": "grunt --force",
+    "test": "grunt test --force"
   },
   "repository": {
     "type": "git",

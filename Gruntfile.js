@@ -3,9 +3,11 @@
     grunt.initConfig( {
         pkg: grunt.file.readJSON( 'package.json' ),
         connect: {
-            server: {
+            api: {
                 options: {
                     port: 8080,
+                    hostname: 'localhost',
+                    livereload: true,
                     base: {
                         path: './docs/',
                         options: {
@@ -32,7 +34,7 @@
             },
             compress: {
                 files: {
-                    'build/autoc.min.css': ['src/autoc.css']
+                    'build/autoc.min.css': [ 'src/autoc.css' ]
                 }
             }
         },
@@ -57,27 +59,45 @@
                 filter: 'isFile'
             }
         },
+        copy: {
+            js: {
+                files: [
+                    {
+                        'docs/js/autoc.js': 'src/autoc.js'
+                    }
+                ]
+            },
+            css: {
+                files: [
+                    {
+                        'docs/css/autoc.css': 'src/autoc.css'
+                    }
+                ]
+            }
+        },
         watch: {
-            uglify: {
-                files: ['src/*.js'],
-                tasks:['uglify:compress']
+            js: {
+                files: [ 'src/*.js' ],
+                tasks: [ 'jshint:check', 'copy:js', 'uglify:compress' ]
             },
-            cssmin: {
-                files: ['src/*.css'],
-                tasks: ['cssmin:compress']
+            css: {
+                files: [ 'src/*.css' ],
+                tasks: [ 'csslint:check', 'copy:css', 'cssmin:compress' ]
             },
-            csslint: {
-                files: ['src/*.css'],
-                tasks: ['csslint:check']
-            },
-            jslint: {
-                files: ['src/*.js'],
-                tasks: ['jshint:check']
+            api: {
+                files: [
+                    'docs/js/*.js',
+                    'docs/css/*.css'
+                ],
+                options: {
+                    livereload: true
+                }
             }
         }
     } );
 
     grunt.loadNpmTasks( 'grunt-contrib-connect' );
+    grunt.loadNpmTasks( 'grunt-contrib-copy' );
     grunt.loadNpmTasks( 'grunt-contrib-uglify' );
     grunt.loadNpmTasks( 'grunt-contrib-cssmin' );
     grunt.loadNpmTasks( 'grunt-contrib-csslint' );
@@ -85,6 +105,13 @@
     grunt.loadNpmTasks( 'grunt-contrib-watch' );
 
     // 注册任务
-    grunt.registerTask( 'default', [ 'connect:server', 'uglify', 'cssmin', 'csslint', 'jshint', 'watch'] );
-
-}
+    grunt.registerTask( 'default', [
+        'connect:api',
+        'uglify',
+        'cssmin',
+        'csslint',
+        'jshint',
+        'copy',
+        'watch'
+    ] );
+};

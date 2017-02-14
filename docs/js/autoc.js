@@ -64,10 +64,6 @@
         OVERLAY = '<div class="autocjs-overlay ' + CLS_HIDE + '" aria-hidden="true"></div>',
         SELECTOR = 'h1,h2,h3,h4,h5,h6';
 
-    function hasChinese(str){
-        return /[\u4e00-\u9fa5]/.test(str);
-    }
-
     /**
      * 返回移除 JavaScript 代码后的字符串
      *
@@ -138,14 +134,13 @@
         var json = options.data,
             html = options.html,
             startTag = options.startTag || '{',
-            endTag = options.endTag || '}',
-            key;
+            endTag = options.endTag || '}';
 
         html += '';
 
-        for ( key in json ) {
-            html = html.replace( new RegExp( startTag + key + endTag, 'img' ), safetyHTML( json[ key ] ) );
-        }
+        $.each( json, function ( key, value ) {
+            html = html.replace( new RegExp( startTag + key + endTag, 'img' ), safetyHTML( value ) );
+        } );
 
         return safetyHTML( html );
     }
@@ -164,6 +159,43 @@
     }
 
     /**
+     * 根据两个相邻的标题标签的数字的差值，获得父级的 id 值
+     *
+     * @method getPidByDiffer
+     * @param {Array} chapters -
+     * @param {Number} differ -
+     * @param {Number} index -
+     * @returns {Number}
+     */
+    function getPidByDiffer( chapters, differ, index ) {
+        var pid;
+
+        // 最大只有5系的差距
+        switch ( differ ) {
+            case 1:
+                pid = chapters[ chapters[ index - 1 ].pid ].pid;
+                break;
+            case 2:
+                pid = chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid;
+                break;
+            case 3:
+                pid = chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid;
+                break;
+            case 4:
+                pid = chapters[ chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid ].pid;
+                break;
+            case 5:
+                pid = chapters[ chapters[ chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid ].pid ].pid;
+                break;
+            default:
+                pid = chapters[ chapters[ index - 1 ].pid ].pid;
+                break;
+        }
+
+        return pid;
+    }
+
+    /**
      * 返回 headings 对应的文章段落信息数据
      *
      * @returns {Array}
@@ -173,11 +205,12 @@
             previous = 1,
             level = 0;
 
+
         // 获得目录索引信息
         $( headings ).each( function ( i, heading ) {
             var $heading = $( heading ),
                 text = $heading.text(),
-                rel = $heading.attr('rel') ? $heading.attr('rel') : '',
+                rel = $heading.attr( 'rel' ) ? $heading.attr( 'rel' ) : '',
                 current = parseInt( $heading[ 0 ].tagName.toUpperCase().replace( /[H]/ig, '' ), 10 ),
                 pid = -1;
 
@@ -193,43 +226,35 @@
                     pid = i - 1;
                 }
             }
-            else {
-                // 2.（同级标题，同级标题）
-                // A. 当前标题的序号 === 前一个标题的序号
-                // B. 当前标题的序号 < 前一个标题的序号 && 当前标题的序号 > 等级
-                if ( current === previous || (current < previous && current > level) ) {
+            else if ( current === previous || (current < previous && current > level) ) {
 
-                    // H1 的层级肯定是 1
-                    if ( current === 1 ) {
-                        level = 1;
+                // H1 的层级肯定是 1
+                if ( current === 1 ) {
+                    level = 1;
 
-                        pid = -1;
-                    }
-                    else {
-                        pid = chapters[ i - 1 ].pid;
-                    }
+                    pid = -1;
                 }
                 else {
-                    // 3.（子标题，父级标题）：当前标题的序号 < 前一个标题的序号
-                    if ( current <= level ) {
+                    pid = chapters[ i - 1 ].pid;
+                }
+            }
+            else if ( current <= level ) {
 
-                        // H1 的层级肯定是 1
-                        if ( current === 1 ) {
-                            level = 1;
-                        }
-                        else {
-                            level = level - (previous - current);
-                        }
+                // H1 的层级肯定是 1
+                if ( current === 1 ) {
+                    level = 1;
+                }
+                else {
+                    level = level - (previous - current);
+                }
 
-                        // 第一级的标题
-                        if ( level === 1 ) {
-                            pid = -1;
-                        }
-                        else {
-                            // 虽然看上去差点，不过能工作啊
-                            pid = getPidByDiffer( chapters, previous - current, i );
-                        }
-                    }
+                // 第一级的标题
+                if ( level === 1 ) {
+                    pid = -1;
+                }
+                else {
+                    // 虽然看上去差点，不过能工作啊
+                    pid = getPidByDiffer( chapters, previous - current, i );
                 }
             }
 
@@ -303,43 +328,6 @@
         } );
 
         return list;
-    }
-
-    /**
-     * 根据两个相邻的标题标签的数字的差值，获得父级的 id 值
-     *
-     * @method getPidByDiffer
-     * @param {Array} chapters -
-     * @param {Number} differ -
-     * @param {Number} index -
-     * @returns {Number}
-     */
-    function getPidByDiffer( chapters, differ, index ) {
-        var pid = -1;
-
-        // 最大只有5系的差距
-        switch ( differ ) {
-            case 1:
-                pid = chapters[ chapters[ index - 1 ].pid ].pid;
-                break;
-            case 2:
-                pid = chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid;
-                break;
-            case 3:
-                pid = chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid;
-                break;
-            case 4:
-                pid = chapters[ chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid ].pid;
-                break;
-            case 5:
-                pid = chapters[ chapters[ chapters[ chapters[ chapters[ chapters[ index - 1 ].pid ].pid ].pid ].pid ].pid ].pid;
-                break;
-            default:
-                pid = chapters[ chapters[ index - 1 ].pid ].pid;
-                break;
-        }
-
-        return pid;
     }
 
     /**
@@ -503,7 +491,6 @@
         OVERLAY: OVERLAY
     };
 
-    AutocJS.hasChinese = hasChinese;
     AutocJS.stripScripts = stripScripts;
     AutocJS.encodeHTML = encodeHTML;
     AutocJS.decodeHTML = decodeHTML;
@@ -939,13 +926,13 @@
                     id = chapter.id,
                     headingId = CLS_HEADING + '-' + id,
                     url = chapter.rel ? chapter.rel : '#' + headingId,
-                    $parent = null,
                     $chapter = $( self.get( 'CHAPTER' ) ),
                     $code = $( self.get( 'CODE' ) ),
                     $text = $( self.get( 'TEXT' ) ),
+                    $subjects,
+                    $parent,
                     chapterCode,
                     chapterIndex,
-                    $subjects,
                     linkId,
                     chapterId,
                     subjectId,

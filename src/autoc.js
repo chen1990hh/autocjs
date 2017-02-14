@@ -134,14 +134,13 @@
         var json = options.data,
             html = options.html,
             startTag = options.startTag || '{',
-            endTag = options.endTag || '}',
-            key;
+            endTag = options.endTag || '}';
 
         html += '';
 
-        for ( key in json ) {
-            html = html.replace( new RegExp( startTag + key + endTag, 'img' ), safetyHTML( json[ key ] ) );
-        }
+        $.each( json, function ( key, value ) {
+            html = html.replace( new RegExp( startTag + key + endTag, 'img' ), safetyHTML( value ) );
+        } );
 
         return safetyHTML( html );
     }
@@ -169,7 +168,7 @@
      * @returns {Number}
      */
     function getPidByDiffer( chapters, differ, index ) {
-        var pid = -1;
+        var pid;
 
         // 最大只有5系的差距
         switch ( differ ) {
@@ -206,11 +205,12 @@
             previous = 1,
             level = 0;
 
+
         // 获得目录索引信息
         $( headings ).each( function ( i, heading ) {
             var $heading = $( heading ),
                 text = $heading.text(),
-                rel = $heading.attr('rel') ? $heading.attr('rel') : '',
+                rel = $heading.attr( 'rel' ) ? $heading.attr( 'rel' ) : '',
                 current = parseInt( $heading[ 0 ].tagName.toUpperCase().replace( /[H]/ig, '' ), 10 ),
                 pid = -1;
 
@@ -226,43 +226,35 @@
                     pid = i - 1;
                 }
             }
-            else {
-                // 2.（同级标题，同级标题）
-                // A. 当前标题的序号 === 前一个标题的序号
-                // B. 当前标题的序号 < 前一个标题的序号 && 当前标题的序号 > 等级
-                if ( current === previous || (current < previous && current > level) ) {
+            else if ( current === previous || (current < previous && current > level) ) {
 
-                    // H1 的层级肯定是 1
-                    if ( current === 1 ) {
-                        level = 1;
+                // H1 的层级肯定是 1
+                if ( current === 1 ) {
+                    level = 1;
 
-                        pid = -1;
-                    }
-                    else {
-                        pid = chapters[ i - 1 ].pid;
-                    }
+                    pid = -1;
                 }
                 else {
-                    // 3.（子标题，父级标题）：当前标题的序号 < 前一个标题的序号
-                    if ( current <= level ) {
+                    pid = chapters[ i - 1 ].pid;
+                }
+            }
+            else if ( current <= level ) {
 
-                        // H1 的层级肯定是 1
-                        if ( current === 1 ) {
-                            level = 1;
-                        }
-                        else {
-                            level = level - (previous - current);
-                        }
+                // H1 的层级肯定是 1
+                if ( current === 1 ) {
+                    level = 1;
+                }
+                else {
+                    level = level - (previous - current);
+                }
 
-                        // 第一级的标题
-                        if ( level === 1 ) {
-                            pid = -1;
-                        }
-                        else {
-                            // 虽然看上去差点，不过能工作啊
-                            pid = getPidByDiffer( chapters, previous - current, i );
-                        }
-                    }
+                // 第一级的标题
+                if ( level === 1 ) {
+                    pid = -1;
+                }
+                else {
+                    // 虽然看上去差点，不过能工作啊
+                    pid = getPidByDiffer( chapters, previous - current, i );
                 }
             }
 
@@ -934,13 +926,13 @@
                     id = chapter.id,
                     headingId = CLS_HEADING + '-' + id,
                     url = chapter.rel ? chapter.rel : '#' + headingId,
-                    $parent = null,
                     $chapter = $( self.get( 'CHAPTER' ) ),
                     $code = $( self.get( 'CODE' ) ),
                     $text = $( self.get( 'TEXT' ) ),
+                    $subjects,
+                    $parent,
                     chapterCode,
                     chapterIndex,
-                    $subjects,
                     linkId,
                     chapterId,
                     subjectId,
