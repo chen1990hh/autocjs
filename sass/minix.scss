@@ -1,0 +1,26 @@
+// mixin
+@mixin anchor($normal: $black, $visited: $black, $hover: $green) {
+  &:link {
+    color: $normal;
+    text-decoration: none;
+  }
+  &:visited {
+    color: $visited;
+    text-decoration: none;
+  }
+  &:hover {
+    color: $hover;
+    text-decoration: underline;
+  }
+}
+
+@mixin shadow($color: $gray) {
+  -moz-box-shadow: 0 0 5px 2px $color;
+  -webkit-box-shadow: 0 0 5px 2px $color;
+  -o-box-shadow: 0 0 5px 2px $color;
+  box-shadow: 0 0 5px 2px $color;
+}
+
+@mixin overflow($value) {
+  overflow: $value;
+}

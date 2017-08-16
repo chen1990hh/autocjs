@@ -1,0 +1,28 @@
+div#option-isAnimateScroll.api-md
+    div.api-hd
+        h3.api-title isAnimateScroll
+    div.api-bd
+        h4 Description
+        dl.api-param
+            dt.api-param-key Type：
+            dd.api-param-value Boolean
+        dl.api-param
+            dt.api-param-key Default：
+            dd.api-param-value true
+        p 可选，用来指定在点击段落索引导航链接时，是使用动画滚动定位，还是使用默认的锚点链接行为。
+        h4 Usage
+        h5 Scroll with animate effect
+        pre.api-code
+            code.
+                new AutocJS({
+                    article: '#article'
+                    // 不配置 isAnimateScroll 属性，即使用动画滚动定位
+                });
+        h5 Act with anchor default behavior
+        pre.api-code
+            code.
+                new AutocJS({
+                    article: $('#article'),
+                    isAnimateScroll: false
+                    ...
+                });

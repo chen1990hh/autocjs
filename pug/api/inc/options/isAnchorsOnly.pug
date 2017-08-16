@@ -1,0 +1,28 @@
+div#option-isAnchorsOnly.api-md
+    div.api-hd
+        h3.api-title isAnchorsOnly
+    div.api-bd
+        h4 Description
+        dl.api-param
+            dt.api-param-key Type：
+            dd.api-param-value Boolean
+        dl.api-param
+            dt.api-param-key Default：
+            dd.api-param-value false
+        p 可选，用来指定是否只创建标题链接。
+        h4 Usage
+        h5 Create directory navigation and anchors
+        pre.api-code
+            code.
+                new AutocJS({
+                    article: '#article'
+                    // 不配置 isAnchorsOnly 属性，即会同时生成导航菜单和创建标题锚点链接
+                });
+        h5 Create anchors only
+        pre.api-code
+            code.
+                new AutocJS({
+                    article: $('#article'),
+                    isOnlyAnchors: false
+                    ...
+                });

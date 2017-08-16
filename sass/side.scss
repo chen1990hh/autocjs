@@ -1,0 +1,60 @@
+/* Side */
+.side {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 230px;
+  margin: 0;
+  height: 100%;
+  background-color: $black;
+  color: $gray;
+  @include shadow;
+  @include overflow(auto);
+
+  a {
+    @include anchor($gray, $gray, $gray);
+  }
+}
+
+.subject {
+  margin: 0 auto;
+  padding: 15px 0 5px;
+  height: 36px;
+  line-height: 36px;
+  font-size: 22px;
+  font-weight: normal;
+  text-align: center;
+  @include overflow(hidden);
+}
+
+.chanel {
+  margin: 0 auto;
+  padding: 0 20px;
+  font-size: 13px;
+  color:$dark-gray;
+  @include overflow(hidden);
+}
+
+.methods {
+  margin: 0;
+  padding: 10px 0;
+  @include overflow(hidden);
+}
+
+.method {
+  height: 26px;
+  line-height: 26px;
+  padding: 0 30px;
+  cursor: pointer;
+  font-size: 13px;
+  @include overflow(hidden);
+
+  &:hover {
+    background-color: #555;
+  }
+}
+
+.method.active {
+  background-color: #555;
+}

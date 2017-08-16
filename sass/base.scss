@@ -1,0 +1,28 @@
+/* ===== Base ===== */
+html,
+body {
+  height: 100%;
+  background: $light-gray;
+  color: $black;
+  font-size: 14px;
+  line-height: 150%;
+  font-family: "Microsoft YaHei UI", Arial, sans-serif;
+  @include overflow(hidden);
+}
+
+a {
+  @include anchor($green, $green, $green);
+}
+
+code {
+  font-family: "Source Code Pro", Monaco, monospace, Arial, sans-serif;
+}
+
+.wrap {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  @include overflow(hidden);
+}

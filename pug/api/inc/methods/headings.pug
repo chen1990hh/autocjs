@@ -1,0 +1,20 @@
+div#method-headings.api-md
+    div.api-hd
+        h3.api-title headings()
+    div.api-bd
+        h4 Description
+        p headings() 方法返回 elements.article （ article 中 selector 匹配的所有（标题） DOM 元素）属性。
+        h4 Returns
+        dl.api-param
+            dt.api-param-key Type：
+            dd.api-param-value HTMLElement
+        p article 中 selector 匹配的所有（标题） DOM 元素。
+        h4 Usage
+        pre.api-code
+            code.
+                var ArticleTOC = new AutocJS({
+                     article: '#article',
+                     title: 'AutocJS v0.2.0'
+                });
+
+                ArticleTOC.headings(); // -> $('#article') 下所有的 h1~h6 标签的 nodeList

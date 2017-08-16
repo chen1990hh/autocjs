@@ -31,7 +31,7 @@
             '<': '&lt;',
             '>': '&gt;',
             '"': '&quot;',
-            '\'': '&#x27;',
+            "'": '&#x27;',
             '/': '&#x2F;',
             '`': '&#x60;'
         },
@@ -71,7 +71,7 @@
      * @param {String} html
      * @returns {String}
      */
-    function stripScripts ( html ) {
+    function stripScripts( html ) {
         return html.replace( new RegExp( SCRIPT_FRAGMENT, 'img' ), '' );
     }
 
@@ -82,7 +82,7 @@
      * @param {String} html
      * @returns {String}
      */
-    function encodeHTML ( html ) {
+    function encodeHTML( html ) {
         return html.replace( /[\r\t\n]/g, ' ' ).replace( /[&<>"'\/`]/g, function ( match ) {
             return HTML_CHARS[ match ];
         } );
@@ -95,7 +95,7 @@
      * @param {String} html
      * @returns {String}
      */
-    function decodeHTML ( html ) {
+    function decodeHTML( html ) {
         return html.replace( /&lt;/g, '<' )
                    .replace( /&gt;/g, '>' )
                    .replace( /&amp;/g, '&' )
@@ -115,7 +115,7 @@
      * @param {String} html
      * @returns {String}
      */
-    function safetyHTML ( html ) {
+    function safetyHTML( html ) {
         return decodeHTML( encodeHTML( stripScripts( html ) ) );
     }
 
@@ -130,7 +130,7 @@
      * @param {String} [options.endTag] - HTML 代码片段中特殊字符的结束标签
      * @returns {String}
      */
-    function template ( options ) {
+    function template( options ) {
         var json = options.data,
             html = options.html,
             startTag = options.startTag || '{',
@@ -152,7 +152,7 @@
      * @param {String} [prefix] - 可选，默认生成数字ID，设置了 prefix 则生成字符串ID
      * @returns {Number|String}
      */
-    function guid ( prefix ) {
+    function guid( prefix ) {
         uid += 1;
 
         return prefix ? prefix + '-' + uid : uid;
@@ -167,7 +167,7 @@
      * @param {Number} index -
      * @returns {Number}
      */
-    function getPidByDiffer ( chapters, differ, index ) {
+    function getPidByDiffer( chapters, differ, index ) {
         var pid;
 
         // 最大只有5系的差距
@@ -200,10 +200,11 @@
      *
      * @returns {Array}
      */
-    function getChapters ( headings ) {
+    function getChapters( headings ) {
         var chapters = [],
             previous = 1,
             level = 0;
+
 
         // 获得目录索引信息
         $( headings ).each( function ( i, heading ) {
@@ -279,7 +280,7 @@
      * @param {String} anchorHTML
      * @returns {Array}
      */
-    function getAnchors ( chapters, anchorHTML ) {
+    function getAnchors( chapters, anchorHTML ) {
         var anchors = [];
 
         $( chapters ).each( function ( i, chapter ) {
@@ -302,7 +303,7 @@
      * @param chapters
      * @returns {Array}
      */
-    function getList ( chapters ) {
+    function getList( chapters ) {
         var temp = {},
             list = [];
 
@@ -1070,11 +1071,12 @@
         scrollTo: function ( top ) {
             var self = this;
 
-            $( 'html,body' ).animate( {
-                scrollTop: top
-            }, 500, 'linear', function () {
-                self.hide();
-            } );
+            $( "html,body" )
+                .animate( {
+                    scrollTop: top
+                }, 500, 'linear', function () {
+                    self.hide();
+                } );
 
             return this;
         },
@@ -1088,7 +1090,7 @@
 
             return this;
         },
-        remove: function () {
+        remove: function(){
             var $headings = this.headings(),
                 elements = this.dom(),
                 $chapters = elements.chapters,
@@ -1113,7 +1115,7 @@
 
             return this;
         },
-        removeListeners: function () {
+        removeListeners: function(){
             var elements = this.dom(),
                 $article = this.article(),
                 $wrap = elements.wrap,
