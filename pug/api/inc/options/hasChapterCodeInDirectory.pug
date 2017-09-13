@@ -1,0 +1,28 @@
+div#option-hasChapterCodeInDirectory.api-md
+    div.api-hd
+        h3.api-title hasChapterCodeInDirectory
+    div.api-bd
+        h4 Description
+        dl.api-param
+            dt.api-param-key Type：
+            dd.api-param-value Boolean
+        dl.api-param
+            dt.api-param-key Default：
+            dd.api-param-value true
+        p 可选，用来指定是否在导航菜单中显示段落索引编号。
+        h4 Usage
+        h5 No index code at the headings
+        pre.api-code
+            code.
+                new AutocJS({
+                    article: '#article'
+                    // 不配置 hasChapterCodeInDirectory 属性，就会在导航菜单中显示段落索引编号
+                });
+        h5 Has index code at the headings
+        pre.api-code
+            code.
+                new AutocJS({
+                    article: $('#article'),
+                    hasChapterCodeInDirectory: false
+                    ...
+                });

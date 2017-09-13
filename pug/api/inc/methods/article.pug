@@ -1,0 +1,20 @@
+div#method-article.api-md
+    div.api-hd
+        h3.api-title article()
+    div.api-bd
+        h4 Description
+        p article() 方法返回 elements.article （页面中的文章正文容器 DOM 元素）属性。
+        h4 Returns
+        dl.api-param
+            dt.api-param-key Type：
+            dd.api-param-value HTMLElement
+        p 文章正文容器 DOM 元素。
+        h4 Usage
+        pre.api-code
+            code.
+                var ArticleTOC = new AutocJS({
+                     article: '#article',
+                     title: 'AutocJS v0.2.0'
+                });
+
+                ArticleTOC.article( ); // -> $('#article')

@@ -1,0 +1,21 @@
+div#method-anchors.api-md
+    div.api-hd
+        h3.api-title anchors ()
+    div.api-bd
+        h4 Description
+        p anchors () 方法返回 data.anchors （根据 headings() 方法对应自动创建的标题锚点链接 DOM 元素）属性。
+        h4 Returns
+        dl.api-param
+            dt.api-param-key Type：
+            dd.api-param-value HTMLElement
+        p headings() 方法对应自动创建的标题锚点链接 DOM 元素。
+        h4 Usage
+        pre.api-code
+            code.
+                var ArticleTOC = new AutocJS({
+                     article: '#article',
+                     title: 'AutocJS v0.2.0'
+                });
+
+                ArticleTOC.anchors() // -> data.anchors
+                ArticleTOC.anchors([TitleNode,..,TitleNode]); // -> AutocJS

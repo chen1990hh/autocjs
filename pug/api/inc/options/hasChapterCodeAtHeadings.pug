@@ -1,0 +1,28 @@
+div#option-hasChapterCodeAtHeadings.api-md
+    div.api-hd
+        h3.api-title hasChapterCodeAtHeadings
+    div.api-bd
+        h4 Description
+        dl.api-param
+            dt.api-param-key Type：
+            dd.api-param-value Boolean
+        dl.api-param
+            dt.api-param-key Default：
+            dd.api-param-value false
+        p 可选，用来指定是否在文章标题中显示该标题的段落索引编号。
+        h4 Usage
+        h5 No index code at the headings
+        pre.api-code
+            code.
+                new AutocJS({
+                    article: '#article'
+                    // 不配置 hasChapterCodeAtHeadings 属性，就不会在文章标题中显示该标题的段落索引编号
+                });
+        h5 Has index code at the headings
+        pre.api-code
+            code.
+                new AutocJS({
+                    article: $('#article'),
+                    hasChapterCodeAtHeadings: true
+                    ...
+                });

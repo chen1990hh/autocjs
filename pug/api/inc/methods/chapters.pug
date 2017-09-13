@@ -1,0 +1,39 @@
+div#method-chapters.api-md
+    div.api-hd
+        h3.api-title chapters ( headings, isSilent )
+    div.api-bd
+        h4 Description
+        p chapters ( headings, isSilent ) 方法设置或者返回 data.chapters 属性。
+        ol
+            li 设置 headings 参数，则返回根据 headings 数据，分析出对应的文章段落数据。如果设置 isSilent 参数为；则立即更新所有章节导航；
+            li 没有设置 headings 参数，则返回 data.chapters 属性；
+        h4 Parameters
+        h5.api-param-name headings
+        dl.api-param
+                dt.api-param-key Type：
+                dd.api-param-value Array
+        p （可选）标题 DOM 元素集合，chapters() 方法会根据 headings 数据，分析出对应的文章段落数据。
+        h5.api-param-name isSilent
+        dl.api-param
+            dt.api-param-key Type：
+            dd.api-param-value Boolean
+        p （可选）是否安静更新属性，默认值：true。设置为 false，则立即更新所有章节导航。
+        h4 Returns
+        dl.api-param
+            dt.api-param-key Type：
+            dd.api-param-value {AutocJS|Array}
+        p 没有 headings　参数，返回　AutocJS　对象，否则返回　chapters 数据。
+        h4 Usage
+        pre.api-code
+            code.
+                var ArticleTOC = new AutocJS({
+                     article: '#article',
+                     title: 'AutocJS v0.2.0'
+                });
+
+                ArticleTOC.chapters(); // -> 返回　data.chapters 数据
+                ArticleTOC.chapters([
+                    $( '&lt;h1 rel="http://www.baidu.com/"&gt;Robert&lt;/h1&gt;' ),
+                    ...,
+                    $( '&lt;h1 rel="http://www.baidu.com/"&gt;Yao&lt;/h1&gt;' )
+                ]); // -> AutocJS
