@@ -40,13 +40,13 @@ AnchorJS 由于不是中国工程师开发的，所以对中文支持不好，�
 ### Install with [npm](https://www.npmjs.com/):
 
 ```sh
-$ npm install stringofit
+$ npm install autocjs
 ```
 
 ### Install width [bower](https://bower.io/)
 
 ```sh
-$ bower install stringofit
+$ bower install autocjs
 ```
 
 ## Usage
